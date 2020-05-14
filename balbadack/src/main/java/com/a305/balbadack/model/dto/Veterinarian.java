@@ -31,7 +31,7 @@ import lombok.Getter;
 @Setter
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Table(name = "Veterinarian")
+@Table(name = "veterinarian")
 public class Veterinarian {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -25,7 +25,7 @@ import lombok.AccessLevel;
 @Setter
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Table(name = "Hospital")
+@Table(name = "hospital")
 public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
