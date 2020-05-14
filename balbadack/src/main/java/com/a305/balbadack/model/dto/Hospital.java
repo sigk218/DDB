@@ -1,5 +1,7 @@
 package com.a305.balbadack.model.dto;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,14 +26,14 @@ import lombok.AccessLevel;
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Table(name = "Hospital")
-public class Hospital {
+public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true, name="h_code")
   private int h_code;
 
-  @OneToMany(mappedBy="vaterinarians")
-  private List<Veterinarian> vaterinarians  
+  @OneToMany(mappedBy="hospital")
+  private List<Veterinarian> veterinarian; 
 
   @Column(nullable = false, length = 50)
   private String h_name;
