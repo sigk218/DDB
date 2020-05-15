@@ -48,6 +48,12 @@ public class Hospital{
   private String h_gu;
 
   @Column(length = 20)
+  private String h_dong;
+  
+  @Column(length = 100)
+  private String h_address;
+
+  @Column(length = 20)
   private String h_station;
 
   @Column(length = 20)
