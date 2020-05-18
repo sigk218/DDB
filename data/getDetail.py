@@ -4,7 +4,7 @@ import re
 import pandas as pd 
 import numpy as np
 
-APIKEY = "AIzaSyAz4n7T5qeNsTtw1DA62ZHxrNRckz7DHM8"
+APIKEY = "Your Api Key"
 
 basicURL = "https://maps.googleapis.com/maps/api/place/details/json?place_id="
 fields = "&fields = permanently_closed, photo, formatted_phone_number, opening_hours, website, price_level, rating, review"
