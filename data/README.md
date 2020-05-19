@@ -53,6 +53,15 @@
 
 - 키워드 추출은 [word rank 알고리즘에 기반한 한국어 핵심 키워드 및 핵심 문장 추출 라이브러리](https://github.com/lovit/KR-WordRank)를 활용함
 
+- 파일과 필드들
+
+  | 파일이름       | 필드                     | 비고                                                         |
+  | -------------- | ------------------------ | ------------------------------------------------------------ |
+  | maintags.txt   | 키워드, 언급되는 정도    | getTag.py로 생성한 tagsforall.txt에서 진료명과 관련된 키워드만 추린 결과 |
+  | tagsforhos.txt | 병원코드, 긍부정, 키워드 | 긍정은 a, 부저은 n이며, 키워드는 자주 언급된 순이다          |
+
+  
+
 ### 진료명과 관련된 전체 키워드 추출
 
 - getTag.py
@@ -104,7 +113,7 @@
       - skipwords 는 tf-idf 등을 고려하기에는 친절 좋음과 같이 문서 전반에 걸쳐 나타나지만 유의미한 단어들도 함께 걸러질 수 있다고 판단해 제외
     - 그 어간의 언급 횟수에 따라 키워드 나열
 
-  - 결과
+  - 결과(tagsforhos.txt)
 
     ![image-20200518230141776](images/hos_tag2.jpg)
 
@@ -117,6 +126,63 @@
     - 수식해주는 단어와 수식받는 단어의 관계성이 명확하지 않다
       - ex)쓰레기 진료 치료이면 진료가 쓰레긴지 치료가쓰레긴지 알수가 없다
       - 해결법 : 현재 없음
+
+
+
+## 병원 사진 데이터
+
+- 파일과 필드들
+
+  | 파일명       | 필드                        | 비고                                                         |
+  | ------------ | --------------------------- | ------------------------------------------------------------ |
+  | photoURL.txt | 병원코드, 사진url, 사진크기 | 사진크기는 확대용(600)과 썸네일용(150), 썸네일 url 은 3개의 null 이 있는데 이는 서버의 문제, 프론트에서 코드작성시 에러핸들링 필요 |
+
+### 병원 사진
+
+- [Place Photos](https://developers.google.com/places/web-service/photos)
+
+  - url: https://maps.googleapis.com/maps/api/place/photo?parameters
+  - parameters
+    - key
+    - photoreference
+    - maxheight / maxwidth: 1 - 1600
+
+- 결과
+
+  ![image-20200519153915203](images/photos.jpg)
+
+- 고난과 역경 :fire:
+
+  - 구글 photo api는 사용자로부터 요청을 받으면 다른 서버에 요청을 보내 사진을 가져오는 방식으로 
+
+  - browser상에서 요청주소를 입력하면 아무 문제없이 열린다.
+
+  - 그러나 로컬에서 사진을 어떤 형식으로든 저장하려할 때 문제가 생겼는데 
+
+  - response의 data가 jfif 데이터(라고하는 string데이터)인데
+
+    - 이를 파일로 저장해 읽을 수 없었다 (아마 읽는 방법이 있겠지만 불가능했다)
+    - string이나 blob파일로 저장해두고 [img태그의 src에 base64형식](https://stackoverflow.com/questions/18416272/convert-image-stream-jfif-jpeg-format-to-datauri-using-javascript)으로 하려 했으나 파일을 읽어올 수 가 없었다.
+    - img태그의 src에 구글 api요청주소를 입력했으나 cors에러가 떴으며, 보안상으로도 취약한 문제가 있었다
+
+  - javascript로 요청을 보낼시 응답에 redirect된 요청과 응답이 있는 것을 확인해 응답의 응답 정보에 접근
+
+    - 구글서버의 사진 url을 얻을 수 있음 :raised_hands:
+    - javascript언어로만 가능했는데, python 코드로 요청할시 prepared Request 객체에 대한 이슈가 아직 해결되어있지 않았기 때문
+
+  - 동물병원 사진 데이터를 가공할 계획이없기 때문에 url의 형태로 DB에 보관할 예정
+
+    
+
+### s3 업로드
+
+- 업로드 위치 : balbadack/hospital/
+
+- 허가받은 사용자만 이미지 업로드 가능, 읽기권한은 퍼블릭 설정(테스트용으로, 보안상 읽기권한도 막을 예정)
+
+- 파일명은 구글의 사진 id와 동일하게 설정
+
+  -> 현재 구글 api를 통해 얻은 사진들은 주소의 형태이기 때문에, 수의사 사용자가 병원사진을 업로드 할 때 s3 에 업로드하기로함
 
 
 
