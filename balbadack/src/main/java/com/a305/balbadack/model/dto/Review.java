@@ -60,6 +60,9 @@ public class Review {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean r_deleted;
 
+    @Column(length = 100, nullable = false)
+    private String r_purpose;
+
     @OneToMany(mappedBy="review")
     private Careinfo careinfo;
 
