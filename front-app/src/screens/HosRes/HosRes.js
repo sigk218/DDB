@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 
 import InfiniteScroll from "react-infinite-scroller";
 import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
+import Paper from '@material-ui/core/Paper';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+
+
 const widthPer = 100;
 
 const hosData = [
@@ -86,9 +91,12 @@ class HosRes extends Component {
 
     render() {
         this.state.cards = hosData;
+        console.log(hosData)
+        console.log("======HosREs=====")
         console.log(this.state.cards)
         return (
             <>
+            
                 <div>
                     
                         {this.state.cards

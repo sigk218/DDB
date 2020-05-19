@@ -36,6 +36,7 @@ class HosInfoCard extends Component {
     let hosData = this.props.hospitalData;
     
     if (hosData) {
+      console.log("========info===")
       return (
         <Card style={styles.container} variant="outlined" onClick={gotoHosDetail}>
           <CardContent>
