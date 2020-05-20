@@ -1,0 +1,22 @@
+$darkgreen: rgb(40, 64, 64);
+.div {
+  &__ratingbox {
+      display:flex;
+      margin: 1px auto;
+      text-align: left;
+      
+  }
+}
+
+.p {
+  &__boxitem {
+    margin: 0 1.5rem;
+    line-height: 24px;
+    width: 6rem;
+  }
+}
+
+.score {
+  // color: rgb(255, 187, 80);
+  color: #FFD700;
+}

@@ -1,0 +1,135 @@
+$darkgreen: rgb(40, 64, 64);
+$beige: rgb(231, 221, 209);
+$size: calc(100vw-100px);
+
+// @mixin round-border() {
+
+// }
+
+// body {
+//   background-color: $darkgreen;
+// }
+
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  // background-color: $darkgreen;
+  // padding: 3px;
+  // border: 1.3px solid $darkgreen
+}
+
+.sticker {
+  width: calc(100% - 54px);
+  text-align: center;
+  margin:auto;
+  margin-top:3px;
+  border-bottom: 1.3px solid $beige;
+  background-color: $darkgreen;
+  border-radius: 5px;
+  color: $beige;
+  padding: 5px;
+}
+
+.basic {
+  width: calc(100% - 54px);
+  margin: auto;
+  border-bottom: 1.3px solid $darkgreen;
+  background-color: $beige;
+  border-radius: 5px;
+  color: $darkgreen;
+  padding: 5px;
+  margin-top:2px;
+  display:flex;
+}
+
+.tagBox {
+  display:flex;
+  flex-wrap: nowrap;
+  width: calc(100% - 44px);
+  height:29.3px;
+  margin: 2px auto 0;
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+}
+
+.tag {
+  border-bottom: 1.3px solid $darkgreen;
+  background-color: $beige;
+  border-radius: 5px;
+  color: $darkgreen;
+  padding: 5px 10px;
+  margin-top:2px;
+  margin-right:2px;
+}
+
+.box {
+  width: calc(100% - 54px);
+  margin: auto;
+  border-bottom: 1.3px solid $darkgreen;
+  background-color: $beige;
+  border-radius: 5px;
+  color: $darkgreen;
+  padding: 5px;
+  margin-top:2px;
+}
+
+.transBox {
+  width: calc(100% - 44px);
+  margin: auto;
+  color: $darkgreen;
+  margin-top:2px;
+}
+
+.meta {
+  font-size:small;
+  justify-content: space-between;
+  p {
+    margin: 0px
+  }
+}
+
+.number {
+  justify-content: space-around;
+}
+
+.photoBox {
+  display:flex;
+  flex-wrap: nowrap;
+  width: calc(100% - 44px);
+  height:calc(18vh + 4px);
+  margin: 2px auto 0;
+  overflow-y: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+
+}
+
+.photo {
+  max-height: 18vh;
+  border-radius: 5px;
+  margin-right:4px;
+  -moz-box-shadow: 1px 1px 1px #333333;
+  -webkit-box-shadow: 1px 1px 1px #333333;
+  box-shadow: 1px 1px 1px #333333;
+}
+
+.iconBox {
+  width:50%;
+  @include flex-center();
+  p {
+    margin: 0px 3px;
+    line-height: 24px;
+  }
+}
+

@@ -28,6 +28,9 @@ class Main extends React.Component {
             <li>
               <Link to="/HosRes">병원 리스트</Link>
             </li>
+            <li>
+              <Link to="/ReviewDetail">리뷰상세페이지</Link>
+            </li>
           </ul>
         </div>
       </div>

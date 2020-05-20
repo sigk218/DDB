@@ -1,7 +1,7 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
 
-import Navigation from "./components/Navigation/Navigation";
+import TempNavigation from "./components/Navigation/TempNavigation";
 
 import Main from "./screens/Main/Main";
 import MyPage from "./screens/MyPage/MyPage";
@@ -9,20 +9,22 @@ import HosDetail from "./screens/HosDetail/HosDetail";
 import HosRes from "./screens/HosRes/HosRes";
 import history from "./history";
 import { Link } from "react-router-dom";
+import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
+
 const App = () => {
   return (
     <div>
       <Router history={history}>
-        <Navigation>
-          
+        <TempNavigation>
           <div>
             <Route path="/" exact component={Main} />
             <Route path="/Main" exact component={Main} />
             <Route path="/MyPage" exact component={MyPage} />
             <Route path="/HosDetail" exact component={HosDetail} />
             <Route path="/HosRes" exact component={HosRes} />
+            <Route path="/ReviewDetail" exact component={ReviewDetail} />
           </div>
-        </Navigation>
+        </TempNavigation>
 
       </Router>
     </div>

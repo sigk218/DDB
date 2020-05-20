@@ -1,0 +1,27 @@
+$beige: rgb(231, 221, 209);
+$darkgreen: rgb(40, 64, 64);
+
+.div {
+  &__pricebox {
+    width:100%;
+    display:flex;
+    justify-content: center;
+    margin: 3px auto;
+    border-bottom: 1.3px solid $darkgreen;
+    background-color: $beige;
+    border-radius: 5px;
+  }
+}
+
+.p {
+  &__name {
+    width:60%;
+    line-height:25px;
+    margin:0;
+  }
+  &__price {
+    width: 20%;
+    line-height:25px;
+    margin:0;
+  }
+}
