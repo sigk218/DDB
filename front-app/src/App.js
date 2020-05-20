@@ -8,6 +8,7 @@ import MyPage from "./screens/MyPage/MyPage";
 import HosDetail from "./screens/HosDetail/HosDetail";
 import HosRes from "./screens/HosRes/HosRes";
 import history from "./history";
+import ResTab from "./components/Navigation/ResTab";
 import { Link } from "react-router-dom";
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/MyPage" exact component={MyPage} />
             <Route path="/HosDetail" exact component={HosDetail} />
             <Route path="/HosRes" exact component={HosRes} />
+            <Route path="/ResTab" exact component={ResTab} />
           </div>
         </Navigation>
 
