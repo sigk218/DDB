@@ -40,18 +40,38 @@ div {
 }
 
 .number {
-  @include flex-around();
+  @include flex-between();
   @include width-size(0px)
 }
 
 .icon-box {
-  width:32%;
+  width:calc(50% - 4px);
+  margin: 2px 0 0;
+  cursor: pointer;
   @include round-border();
   @include flex-center();
   p {
     margin: 0px 3px;
     line-height: 24px;
   }
+}
+
+.relative {
+  position: relative;
+  img {
+    position: absolute;
+    right: 13%;
+    bottom: 0px;
+    height: 60px;
+    width: 60px;
+    z-index: -99999999999;
+  }
+}
+
+.divider {
+  width: 11.5rem;
+  margin: 7px auto;
+  border-top: 1.3px dashed $darkgreen
 }
 
 .price-box {
