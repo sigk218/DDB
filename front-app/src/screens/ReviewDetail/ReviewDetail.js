@@ -2,9 +2,8 @@ import React from "react";
 import HosGrades from '../../components/HosGrades/HosGrades'
 import ReviewPrice from '../../components/ReviewPrice/ReviewPrice'
 import styles from './mystyle.module.scss';
-import StarIcon from '@material-ui/icons/Star'
 import ThumbIcon from '@material-ui/icons/ThumbUpAlt'
-import Pets from '@material-ui/icons/Pets'
+import SportsIcon from '@material-ui/icons/Sports'
 import classNames from 'classnames/bind'
 
 const cx = classNames.bind(styles)
@@ -18,7 +17,7 @@ const reviewData = {
   r_reciept: true,
   r_treatmentdata: '2020-05-10',
   r_date: '2020-05-10',
-  tags: ['중성화수술이다옹', "고양이", "15kg",'정기적', "친절", "풀장", "감사"],
+  tags: ['중성화수술', "고양이", "15kg",'정기적', "친절", "전용풀장", "감사"],
   r_overtreatement: 1,
   r_kindness: 4,
   r_result: 4,
@@ -105,7 +104,11 @@ class ReviewDetail extends React.Component {
     )
     const scorelist =  this.state.grade.map(g => g.score)
     const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
+    const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
+    const grade = this.state.grade.map((g, i) => ({name: scorelabel[i], score: g.score}))
+    const totalgrade = [{name:'평균평점', score:totalscore}]
     const totallike = reviewData.Like.length
+    const dojang = require("../../assets/visitnyang.png")
     const tags = []
     for (const [index, value] of reviewData.tags.entries()) {
       console.log(value)
@@ -122,12 +125,8 @@ class ReviewDetail extends React.Component {
         </div>
         <div className={cx('number')}>
           <div className={cx('icon-box')}>
-            <StarIcon fontSize="small"/>
-            <p>평점 {totalscore}</p>
-          </div>
-          <div className={cx('icon-box')}>
-            <Pets fontSize="small"/>
-            <p>재방문 할거다옹</p>
+            <SportsIcon fontSize="small"/>
+            <p>신고다옹</p>
           </div>
           <div className={cx('icon-box')}>
             <ThumbIcon fontSize="small"/>
@@ -135,8 +134,11 @@ class ReviewDetail extends React.Component {
           </div>
         </div>
         <div className={cx('category')}><p>병원상세평가</p></div>
-        <div className={cx('basic-box')}>
-          <HosGrades grade={this.state.grade}/>
+        <div className={cx('basic-box', 'relative')}>
+          <HosGrades grade={grade}/>
+          <div className={cx('divider')}></div>
+          <HosGrades grade={totalgrade}/>
+          <img src={dojang}/>
         </div>
         <div className={cx('category')}><p>진료 후기 상세</p></div>
         <div className={cx('basic-box')}>
