@@ -30,6 +30,7 @@ class Main extends React.Component {
             </li>
             <li>
               <Link to="/ReviewDetail">리뷰상세페이지</Link>
+              <Link to="/ResTab">탭 입니당</Link>
             </li>
           </ul>
         </div>

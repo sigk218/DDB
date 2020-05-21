@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import InfiniteScroll from "react-infinite-scroller";
 import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
+import ReviewInfoCard from "../../components/ReviewInfoCard/ReviewInfoCard"
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -59,7 +60,7 @@ const hosData = [
 ]
 
 
-class HosRes extends Component {
+class ReviewRes extends Component {
 
 
     componentDidMount() {
@@ -85,13 +86,9 @@ class HosRes extends Component {
         return (
 
             <div>
-
-                <text>tab을 만들자</text>
-                <br/>
-                <br/>
                 {this.state.cards
                     ? this.state.cards.map(card => (
-                        <HosInfoCard
+                        <ReviewInfoCard
                             hospitalData={card}
                             widthLength={widthLength}
                             key={`newCard${card.h_code}`}
@@ -107,4 +104,4 @@ class HosRes extends Component {
 
 
 
-export default HosRes
+export default ReviewRes
