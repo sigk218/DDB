@@ -1,0 +1,73 @@
+@import '../../styles/utils.scss';
+
+div {
+  margin: 2px auto 0px;
+}
+
+.category {
+  @include retro-deco($darkgreen, $beige, 5px, 0)
+}
+
+.basic-box {
+  padding: 5px;
+  @include width-size(5px);
+  @include round-border();
+}
+
+.meta-box {
+  padding: 1px 5px;
+  @include flex-between();
+  @include width-size(5px);
+  @include round-border();
+  p {
+    margin: 0px 4px;
+  }
+}
+
+.tag-box {
+  height:29.3px;
+  @include width-size(0px);
+  @include horizontal-scroll();
+  @include flex-nowrap();
+}
+
+.tag {
+  padding: 1px 5px;
+  margin: 2px 2px 0px 0px;
+  line-height: 25.3px;
+  @include width-content();
+  @include round-border();
+}
+
+.number {
+  @include flex-around();
+  @include width-size(0px)
+}
+
+.icon-box {
+  width:32%;
+  @include round-border();
+  @include flex-center();
+  p {
+    margin: 0px 3px;
+    line-height: 24px;
+  }
+}
+
+.price-box {
+  @include width-size(0px);
+}
+
+.photo-box {
+  height:calc(18vh + 4px);
+  @include width-size(0px);
+  @include flex-nowrap();
+  @include horizontal-scroll();
+}
+
+.photo {
+  max-height: 18vh;
+  margin-right:4px;
+  @include round-border();
+}
+

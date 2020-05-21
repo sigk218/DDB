@@ -1,0 +1,124 @@
+@font-face { 
+  font-family: 'BMEULJIRO'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/BMEULJIRO.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+}
+
+$darkgreen: rgb(40, 64, 64);
+$beige: rgb(231, 221, 209);
+$title: 'BMEULJIRO';
+
+
+@mixin retro-deco($color, $backcolor, $padsize, $degree) {
+  background: $color;
+  height: 27px;
+  margin: 2px auto;
+  padding: 0px $padsize;
+  position: relative;
+  overflow: hidden;
+  @include width-size($padsize);
+
+  &:before, &:after {
+    content: "";
+    display: block;
+    background: $backcolor;
+    position: absolute;
+    width: 15px + $degree;
+    height: 15px + $degree;
+    border-radius: 20px;
+  }
+
+  &:before {
+    top: -9px;
+    left: -9px;
+  }
+
+  &:after {
+    top: -9px;
+    right: -9px;
+  }
+
+  p {
+    @include retro-deco-btm($color, $backcolor, $padsize, $degree);
+  }
+}
+
+@mixin retro-deco-btm($color, $backcolor, $padsize, $degree) {
+  color: $backcolor;
+  margin:0;
+  text-align: center;
+  line-height: 21px;
+  border-top: 3px double $backcolor;
+  border-bottom: 3px double $backcolor;
+
+  &:before, &:after {
+    content: "";
+    display: block;
+    background: $backcolor;
+    position: absolute;
+    width: 15px + $degree;
+    height: 15px + $degree;
+    border-radius: 20px;
+  }
+
+  &:before {
+    bottom: -9px;
+    left: -9px;
+  }
+
+  &:after {
+    bottom: -9px;
+    right: -9px;
+  }
+}
+
+@mixin width-size($padsize) {
+  width: calc(100% - 44px - #{$padsize * 2});
+}
+
+@mixin width-content() {
+  width: auto;
+  white-space: nowrap;
+}
+
+@mixin round-border() {
+  border: 1.3px solid $darkgreen;
+  border-radius: 5px;
+}
+
+@mixin horizontal-scroll() {
+  overflow-x: scroll;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+  ::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
+  }
+}
+
+@mixin flex-nowrap() {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+@mixin flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-around() {
+  display:flex;
+  justify-content: space-around;
+}
+
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin thin-shadow() {
+  -moz-box-shadow: 1px 1px 1px $darkgreen;
+  -webkit-box-shadow: 1px 1px 1px $darkgreen;
+  box-shadow: 1px 1px 1px $darkgreen;
+}

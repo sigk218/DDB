@@ -33,13 +33,17 @@ def findPlaces(loc=None,radius=1500, pagetoken = None):
   return pagetoken
 
 
+# 대략적인 서울 지역
+# start는 서울의 남서쪽 좌표, end는 서울의 북서쪽 좌표
 start = [37.461, 126.817]
 end = [37.666, 127.214]
 
 
 loc = [start[0], start[1]]
 pagetoken = None
-inning = round((end[0] - start[0])//0.003 + 1)
+
+# 1500미터 간격으로 서울 지역의 동물 병원을 밑에서부터 오른쪽 방향으로 탐색하는 완전 탐색 알고리즘으로 요청
+# 검색 결과가 겹치는 부분이 상당히 많았다, 범위와 간격을 3배 정도 더 넓혀도 될 듯하다 
 while True:
   loc[1] += 0.003
   if loc[1] > end[1]:
@@ -53,48 +57,13 @@ while True:
           break
       time.sleep(5)
 
-'''
-textsearch 요청 결과
-     {
-        "business_status" : "OPERATIONAL",
-        "formatted_address" : "대한민국 서울특별시 용산구 이태원동 21-1",
-        "geometry" : {
-           "location" : {
-              "lat" : 37.5310395,
-              "lng" : 126.9958021
-           },
-           "viewport" : {
-              "northeast" : {
-                 "lat" : 37.53238932989272,
-                 "lng" : 126.9971519298927
-              },
-              "southwest" : {
-                 "lat" : 37.52968967010728,
-                 "lng" : 126.9944522701073
-              }
-           }
-        },
-        "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
-        "id" : "795556c9ac907b22d820ffd77cb85480a9124aab",
-        "name" : "청화동물병원",
-        "photos" : [
-           {
-              "height" : 2988,
-              "html_attributions" : [
-                 "\u003ca href=\"https://maps.google.com/maps/contrib/100769476930697368749\"\u003eA Google User\u003c/a\u003e"
-              ],
-              "photo_reference" : "CmRaAAAAmBdhWL7Lqb1SzzfAHqcwylfkJ1slaeA7F1Hdw8v5U8Showmi7nG7QGIAJ0ItbZXj9Dr78Z-uAevgIh8XDUM8KoVs9WGUzDomj-KWxz1ZSkx6D6DJyHnMKqECGmzDV8N0EhDTxI4MM_1S7veNYsme58AqGhSSKbnBDhil_K7wjEYnvFKPzkHbBQ",
-              "width" : 5312
-           }
-        ],
-        "place_id" : "ChIJwWTtPzWifDURyewqMmXDeTI",
-        "plus_code" : {
-           "compound_code" : "GXJW+C8 서울특별시",
-           "global_code" : "8Q98GXJW+C8"
-        },
-        "rating" : 4.1,
-        "reference" : "ChIJwWTtPzWifDURyewqMmXDeTI",
-        "types" : [ "veterinary_care", "point_of_interest", "establishment" ],
-        "user_ratings_total" : 38
-     },
-'''
+# , 구분자가 주소 필드에서 쓰여 열의 개수가 행마다 다른 것을 발견했고 | 구분자로 수정했다
+import csv
+
+with open('vet_raw.txt', 'r', encoding='utf-8') as f1:
+  with open('vet.txt', 'a', encoding='utf-8') as f2:
+    lines = csv.reader(f1)
+    for li in lines:
+      temp = [li[0], li[1], li[2], li[3], li[4], ''.join(li[5:])]
+      temptxt = '|'.join(temp) + '\n'
+      f2.write(temptxt)
