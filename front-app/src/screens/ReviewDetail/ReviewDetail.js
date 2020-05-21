@@ -4,6 +4,7 @@ import ReviewPrice from '../../components/ReviewPrice/ReviewPrice'
 import styles from './mystyle.module.scss';
 import StarIcon from '@material-ui/icons/Star'
 import ThumbIcon from '@material-ui/icons/ThumbUpAlt'
+import Pets from '@material-ui/icons/Pets'
 import classNames from 'classnames/bind'
 
 const cx = classNames.bind(styles)
@@ -12,12 +13,12 @@ const reviewData = {
   r_no: 0,
   u_id: 'aestas',
   r_nickname: '익명의 코끼리',
-  r_photo: 'https://image.dongascience.com/Photo/2016/11/14787852197048.jpg,https://image.edaily.co.kr/images/Photo/files/NP/S/2019/01/PS19010200963.jpg,https://image.dongascience.com/Photo/2016/11/14787852197048.jpg',
-  r_content: '2010년부터 다니던 병원입니다. 고양이가 아파해서 정기적으로 검진받다가 중성화 수술을 하게되었습니다. 감사합니다~',
+  r_photo: 'https://lh3.googleusercontent.com/proxy/QYikpOM5d8B4H0_YTn1sfYzEQcGYjKwUtseoQXBpXqhjh3bsn04ZdeNL533bsCyivn3OzERLxq2zBPl5l9rt_UU_B6PlMBkQHef624cQ8DI0TjJkozUb8Qyhs8kYkTGclUI-uGs83FjcgEo,http://www.busan.com/nas/wcms/wcms_data/photos/2020/02/12/2020021209194665170_l.jpg,https://modo-phinf.pstatic.net/20160629_37/1467141681611RHSrJ_JPEG/mosaazDVas.jpeg?type=w1100',
+  r_content: '2010년부터 다니던 병원입니다. 고양이에게 중성화 수술은 꼭 필요한 것 같아요. 계속 힘들어해서 몇 차례 검진 받고 선생님과 상담후에 중성화 수술을 하게되었습니다. 선생님 정말 친절하시고요 여기 애견용 풀도 있는 것 같아서 상처 부위 치료되면 또 오려고요!',
   r_reciept: true,
   r_treatmentdata: '2020-05-10',
   r_date: '2020-05-10',
-  tags: ['중성화수술', "고양이", "샴", "15kg",'중성화수술', "고양이", "샴", "15kg",],
+  tags: ['중성화수술이다옹', "고양이", "15kg",'정기적', "친절", "풀장", "감사"],
   r_overtreatement: 1,
   r_kindness: 4,
   r_result: 4,
@@ -49,7 +50,20 @@ const reviewData = {
         c_category: '시술'
       },
       r_no: 0
-    }],
+    },
+    {
+      ci_no: 4,
+      h_code: 1,
+      ci_vet: '고양이',
+      ci_price:50000,
+      CareList: {
+        c_code: 2,
+        c_name: '마취약',
+        c_category: '주사'
+      },
+      r_no: 0
+    }
+  ],
   h_code: 1
 }
 
@@ -99,39 +113,43 @@ class ReviewDetail extends React.Component {
     }
     return (
       <div className={cx('container')}>
-        <div className={cx('basic','meta')}>
-          <p>진료날짜:{reviewData.r_treatmentdata}</p>
-          <p>작성날짜:{reviewData.r_date}</p>
+        <div className={cx('meta-box')}>
+          <p>{reviewData.r_treatmentdata} 진료</p>
+          <p>{reviewData.r_date} 작성</p>
         </div>
-        <div className={cx('tagBox')}>
+        <div className={cx('tag-box')}>
           {tags}
         </div>
-        <div className={cx('basic', 'number')}>
-          <div className={cx('iconBox')}>
-            <StarIcon/>
-            <p>{totalscore}</p>
+        <div className={cx('number')}>
+          <div className={cx('icon-box')}>
+            <StarIcon fontSize="small"/>
+            <p>평점 {totalscore}</p>
           </div>
-          <div className={cx('iconBox')}>
-            <ThumbIcon/>
-            <p>{totallike}</p>
+          <div className={cx('icon-box')}>
+            <Pets fontSize="small"/>
+            <p>재방문 할거다옹</p>
+          </div>
+          <div className={cx('icon-box')}>
+            <ThumbIcon fontSize="small"/>
+            <p>좋다옹 {totallike}</p>
           </div>
         </div>
-        <div className={cx('sticker')}>병원 세부 평가</div>
-        <div className={cx('box')}>
+        <div className={cx('category')}><p>병원상세평가</p></div>
+        <div className={cx('basic-box')}>
           <HosGrades grade={this.state.grade}/>
         </div>
-        <div className={cx('sticker')}>진료 후기 상세</div>
-        <div className={cx('basic')}>
+        <div className={cx('category')}><p>진료 후기 상세</p></div>
+        <div className={cx('basic-box')}>
           <p>
             {reviewData.r_content}
           </p>
         </div>
-        <div className={cx('sticker')}>사진 후기</div>
-        <div className={cx('photoBox')}>
+        <div className={cx('category')}><p>사진후기</p></div>
+        <div className={cx('photo-box')}>
           {photos}
         </div>
-        <div className={cx('sticker')}>비용표</div>
-        <div className={cx('transBox')}>
+        <div className={cx('category')}><p>비용표</p></div>
+        <div className={cx('price-box')}>
           <ReviewPrice careinfo={reviewData.careinfo}/>
         </div>
       </div>

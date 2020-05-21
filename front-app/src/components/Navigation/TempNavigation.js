@@ -2,19 +2,23 @@ import React from "react";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import PersonIcon from "@material-ui/icons/Person";
 import styles from './mystyle.module.scss';
+import classNames from 'classnames/bind'
+
+const cx = classNames.bind(styles)
+
 
 export default function Navigation(props) {
 
     return (
         <div>
             <React.Fragment>
-              <div className={styles.div__customNav}>
-                <div className={styles.div__iconBox}>
-                  <ChevronLeftIcon className={styles.icon}/>
+              <div className={cx('custom-nav')}>
+                <div className={cx('nav-icon-box')}>
+                  <ChevronLeftIcon/>
                 </div>
-                <p className={styles.p}>발바닥</p>
-                <div className={styles.div__iconBox}>
-                  <PersonIcon className={styles.icon}/>
+                <p className={cx('nav-title')}>행복 동물 병원 후기</p>
+                <div className={cx('nav-icon-box')}>
+                  <PersonIcon/>
                 </div>
               </div>
             </React.Fragment>

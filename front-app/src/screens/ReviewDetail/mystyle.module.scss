@@ -1,135 +1,73 @@
-$darkgreen: rgb(40, 64, 64);
-$beige: rgb(231, 221, 209);
-$size: calc(100vw-100px);
+@import '../../styles/utils.scss';
 
-// @mixin round-border() {
-
-// }
-
-// body {
-//   background-color: $darkgreen;
-// }
-
-@mixin flex-center() {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+div {
+  margin: 2px auto 0px;
 }
 
-.container {
-  // background-color: $darkgreen;
-  // padding: 3px;
-  // border: 1.3px solid $darkgreen
+.category {
+  @include retro-deco($darkgreen, $beige, 5px, 0)
 }
 
-.sticker {
-  width: calc(100% - 54px);
-  text-align: center;
-  margin:auto;
-  margin-top:3px;
-  border-bottom: 1.3px solid $beige;
-  background-color: $darkgreen;
-  border-radius: 5px;
-  color: $beige;
+.basic-box {
   padding: 5px;
+  @include width-size(5px);
+  @include round-border();
 }
 
-.basic {
-  width: calc(100% - 54px);
-  margin: auto;
-  border-bottom: 1.3px solid $darkgreen;
-  background-color: $beige;
-  border-radius: 5px;
-  color: $darkgreen;
-  padding: 5px;
-  margin-top:2px;
-  display:flex;
-}
-
-.tagBox {
-  display:flex;
-  flex-wrap: nowrap;
-  width: calc(100% - 44px);
-  height:29.3px;
-  margin: 2px auto 0;
-  overflow-x: scroll;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-  ::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
+.meta-box {
+  padding: 1px 5px;
+  @include flex-between();
+  @include width-size(5px);
+  @include round-border();
+  p {
+    margin: 0px 4px;
   }
+}
+
+.tag-box {
+  height:29.3px;
+  @include width-size(0px);
+  @include horizontal-scroll();
+  @include flex-nowrap();
 }
 
 .tag {
-  border-bottom: 1.3px solid $darkgreen;
-  background-color: $beige;
-  border-radius: 5px;
-  color: $darkgreen;
-  padding: 5px 10px;
-  margin-top:2px;
-  margin-right:2px;
-}
-
-.box {
-  width: calc(100% - 54px);
-  margin: auto;
-  border-bottom: 1.3px solid $darkgreen;
-  background-color: $beige;
-  border-radius: 5px;
-  color: $darkgreen;
-  padding: 5px;
-  margin-top:2px;
-}
-
-.transBox {
-  width: calc(100% - 44px);
-  margin: auto;
-  color: $darkgreen;
-  margin-top:2px;
-}
-
-.meta {
-  font-size:small;
-  justify-content: space-between;
-  p {
-    margin: 0px
-  }
+  padding: 1px 5px;
+  margin: 2px 2px 0px 0px;
+  line-height: 25.3px;
+  @include width-content();
+  @include round-border();
 }
 
 .number {
-  justify-content: space-around;
+  @include flex-around();
+  @include width-size(0px)
 }
 
-.photoBox {
-  display:flex;
-  flex-wrap: nowrap;
-  width: calc(100% - 44px);
-  height:calc(18vh + 4px);
-  margin: 2px auto 0;
-  overflow-y: scroll;
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-  scrollbar-width: none;  /* Firefox */
-  ::-webkit-scrollbar {
-    display: none;  /* Safari and Chrome */
-  }
-
-}
-
-.photo {
-  max-height: 18vh;
-  border-radius: 5px;
-  margin-right:4px;
-  -moz-box-shadow: 1px 1px 1px #333333;
-  -webkit-box-shadow: 1px 1px 1px #333333;
-  box-shadow: 1px 1px 1px #333333;
-}
-
-.iconBox {
-  width:50%;
+.icon-box {
+  width:32%;
+  @include round-border();
   @include flex-center();
   p {
     margin: 0px 3px;
     line-height: 24px;
   }
+}
+
+.price-box {
+  @include width-size(0px);
+}
+
+.photo-box {
+  height:calc(18vh + 4px);
+  @include width-size(0px);
+  @include flex-nowrap();
+  @include horizontal-scroll();
+}
+
+.photo {
+  max-height: 18vh;
+  margin-right:4px;
+  @include round-border();
 }
 
