@@ -5,6 +5,14 @@
   font-style: normal; 
 }
 
+@font-face { 
+  font-family: 'NeoDunggeunmo'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+}
+
+
 $darkgreen: rgb(40, 64, 64);
 $beige: rgb(231, 221, 209);
 $title: 'BMEULJIRO';
@@ -121,4 +129,65 @@ $title: 'BMEULJIRO';
   -moz-box-shadow: 1px 1px 1px $darkgreen;
   -webkit-box-shadow: 1px 1px 1px $darkgreen;
   box-shadow: 1px 1px 1px $darkgreen;
+}
+
+@mixin active-background() {
+  background-color: darken($beige, 4%);
+}
+
+
+.category {
+  @include retro-deco($darkgreen, $beige, 5px, 0)
+}
+
+.basic-box {
+  padding: 5px;
+  @include width-size(5px);
+  @include round-border();
+}
+
+.relative {
+  position: relative;
+  img {
+    position: absolute;
+    right: 13%;
+    bottom: 0px;
+    height: 60px;
+    width: 60px;
+    z-index: -99999999999;
+  }
+}
+
+.divider {
+  width: 11.5rem;
+  margin: 7px auto;
+  border-top: 1.3px dashed $darkgreen
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+
+textarea {
+  background-color: transparent;
+  margin: 2px auto 0;
+  resize: vertical;
+  padding: 10px;
+  @include round-border();
+  @include width-size(10px);
+  font-family: 'NeoDunggeunmo';
+  line-height:140%;
+  &:focus {
+    outline: none;
+    @include active-background();
+  }
+  &::selection {
+    background-color: $darkgreen;
+    color: $beige;
+  }
 }

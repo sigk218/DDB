@@ -16,7 +16,8 @@ export default function Navigation(props) {
                 <div className={cx('nav-icon-box')}>
                   <ChevronLeftIcon/>
                 </div>
-                <p className={cx('nav-title')}>행복 동물 병원 후기</p>
+                <p className={cx('nav-title')}>행복 동물 병원 후기작성</p>
+                {/* <p className={cx('nav-title')}>행복 동물 병원 후기열람</p> */}
                 <div className={cx('nav-icon-box')}>
                   <PersonIcon/>
                 </div>

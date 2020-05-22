@@ -1,5 +1,5 @@
 import React from "react";
-import HosGrades from '../../components/HosGrades/HosGrades'
+import GradeBox from '../../components/HosGrades/GradeBox'
 import ReviewPrice from '../../components/ReviewPrice/ReviewPrice'
 import styles from './mystyle.module.scss';
 import ThumbIcon from '@material-ui/icons/ThumbUpAlt'
@@ -134,12 +134,7 @@ class ReviewDetail extends React.Component {
           </div>
         </div>
         <div className={cx('category')}><p>병원상세평가</p></div>
-        <div className={cx('basic-box', 'relative')}>
-          <HosGrades grade={grade}/>
-          <div className={cx('divider')}></div>
-          <HosGrades grade={totalgrade}/>
-          <img src={dojang}/>
-        </div>
+        <GradeBox grade={grade} dojang={dojang} totalgrade={totalgrade}/>
         <div className={cx('category')}><p>진료 후기 상세</p></div>
         <div className={cx('basic-box')}>
           <p>

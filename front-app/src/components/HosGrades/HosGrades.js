@@ -6,29 +6,27 @@ import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
 class HosGrades extends Component {
-  componentDidMount() {
-  
-  }
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
+  // constructor(props) {
+  //   super(props)
+  // }
+
+  handleGradeChange(e) {
+    this.props.onChange(e.target.name, parseInt(e.target.value))
   }
  
   render() {
     const ratings = this.props.grade.map(
-      r => (
+      r =>
         <div className={cx('rating-box')} key={r.name}>
           <p className={cx('box-item')}>{r.name}</p>
           <Rating 
-            name="read-only" 
+            name={r.name} 
             value={r.score} 
-            readOnly
             size="small"
             precision={0.5}
+            onChange={this.handleGradeChange.bind(this)}
           />
         </div>
-      )
     )
     return (
       <div>
