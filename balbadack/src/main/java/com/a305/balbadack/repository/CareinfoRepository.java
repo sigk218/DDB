@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CareinfoRepository extends JpaRepository<Careinfo, Integer> {
     
-    List<Careinfo> findByR_code(int r_code);
+    List<Careinfo> findByReview(int r_code);
 
 }

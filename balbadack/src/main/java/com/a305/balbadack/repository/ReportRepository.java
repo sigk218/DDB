@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ReportRepository extends JpaRepository<Report, Integer> {
 
-    List<Report> findByU_id(String u_id);
+    List<Report> findByUser(String u_id);
 
-    List<Report> findByR_code(int r_code);
+    List<Report> findByReview(int r_code);
 
 }

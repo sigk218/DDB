@@ -24,12 +24,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(name="like")
-public class Like {
+@Entity(name="good")
+public class Good {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
 	@Column(nullable = false, unique = true)
-    private int l_code;
+    private int g_code;
     
     // 리뷰코드
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +38,6 @@ public class Like {
 
     // 아이디
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_like_uid"))
+	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_good_uid"))
 	private User user;
 }

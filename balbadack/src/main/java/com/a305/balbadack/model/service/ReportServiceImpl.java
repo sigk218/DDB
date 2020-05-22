@@ -26,7 +26,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Report> findByU_id(String u_id) {
         try {
-            return reportRepository.findByU_id(u_id);
+            return reportRepository.findByUser(u_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,7 +36,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Report> findByR_code(int r_code) {
         try {
-            return reportRepository.findByR_code(r_code);
+            return reportRepository.findByReview(r_code);
         } catch (Exception e) {
             e.printStackTrace();
         }

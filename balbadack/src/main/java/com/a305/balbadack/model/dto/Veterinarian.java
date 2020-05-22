@@ -21,9 +21,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Entity
 @Getter
 @Setter
@@ -36,6 +38,9 @@ public class Veterinarian {
   @Column(nullable = false, unique = true)
   private int v_code;
 
+  @Column(length = 20)
+  private String v_name;
+
   @Column(length = 500)
   private String v_profile;
   
@@ -47,8 +52,9 @@ public class Veterinarian {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_h_code"))
-  private Hospital Hospital;
+  private Hospital hospital;
 
 	@Column(columnDefinition = "boolean default false")
-	private boolean v_deleted;
+  private boolean v_deleted;
+  
 }

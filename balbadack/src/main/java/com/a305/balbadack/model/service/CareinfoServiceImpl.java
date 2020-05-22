@@ -44,7 +44,7 @@ public class CareinfoServiceImpl implements CareinfoService {
 	@Override
 	public List<Careinfo> findByR_code(int r_code) {
         try{
-            return careinfoRepository.findByR_code(r_code);
+            return careinfoRepository.findByReview(r_code);
         }catch(Exception e){
             e.printStackTrace();
         }
