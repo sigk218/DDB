@@ -1,6 +1,5 @@
 package com.a305.balbadack.model.dto;
 
-import com.a305.balbadack.model.dto.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

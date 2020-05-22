@@ -3,6 +3,7 @@ package com.a305.balbadack.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
@@ -11,11 +12,13 @@ import com.a305.balbadack.model.dto.Like;
 import com.a305.balbadack.model.service.LikeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
+@CrossOrigin(origins="{*}")
 @RestController
+@Api(value="LikeController", description="도움이 됐어요")
 @RequestMapping("/like/*")
 public class LikeController {
 

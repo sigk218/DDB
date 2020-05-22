@@ -1,7 +1,5 @@
 package com.a305.balbadack.model.dto;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,10 +44,6 @@ public class Veterinarian {
 
   @Column(length = 500)
   private String v_special;
-
-  // 외래키 설정
-  @OneToOne(mappedBy="user")
-  private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_h_code"))

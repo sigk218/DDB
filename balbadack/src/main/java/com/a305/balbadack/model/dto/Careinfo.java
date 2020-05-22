@@ -32,7 +32,7 @@ public class Careinfo {
     @JoinColumn(name = "c_code", referencedColumnName = "c_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_carelist_c_code"))
     private Carelist carelist;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "r_code", referencedColumnName = "r_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_review_r_code"))
     private Review review;
 

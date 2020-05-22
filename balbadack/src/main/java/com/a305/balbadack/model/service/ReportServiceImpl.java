@@ -2,10 +2,7 @@ package com.a305.balbadack.model.service;
 
 import java.util.List;
 
-import com.a305.balbadack.model.dto.Careinfo;
-import com.a305.balbadack.model.dto.Carelist;
 import com.a305.balbadack.model.dto.Report;
-import com.a305.balbadack.repository.CareinfoRepository;
 import com.a305.balbadack.repository.ReportRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
