@@ -4,11 +4,11 @@
      {'long_name': 'Sosa-gu', 'short_name': 'Sosa-gu', 'types': ['sublocality_level_1', 'sublocality', 'political']}, 
      {'long_name': 'Okgil-dong', 'short_name': 'Okgil-dong', 'types': ['sublocality_level_2', 'sublocality', 'political']}, 
      {'long_name': 'Bucheon', 'short_name': 'Bucheon', 'types': ['locality', 'political']},
-     {'long_name': 'Gyeonggi-do', 'short_name': 'Gyeonggi-do', 'types': ['administrative_area_level_1', 'political']}, 
+     {'long_name': '경기도', 'short_name': '경기도', 'types': ['administrative_area_level_1', 'political']}, 
      {'long_name': 'South Korea', 'short_name': 'KR', 'types': ['country', 'political']}, {'long_name': '422-080', 'short_name': '422-080', 'types': ['postal_code']}], 
-  'adr_address': '<span class="country-name">South Korea</span>, <span class="postal-code">422-080</span>, <span class="region">Gyeonggi-do</span>, <span class="locality">Bucheon</span>, <span class="extended-address">Sosa-gu</span>, <span class="street-address">Okgil-dong</span>, 옥길동 729-3', 
+  'adr_address': '<span class="country-name">South Korea</span>, <span class="postal-code">422-080</span>, <span class="region">경기도</span>, <span class="locality">Bucheon</span>, <span class="extended-address">Sosa-gu</span>, <span class="street-address">Okgil-dong</span>, 옥길동 729-3', 
 'business_status': 'OPERATIONAL', 
-'formatted_address': 'South Korea, Gyeonggi-do, Bucheon, Sosa-gu, Okgil-dong, 옥길동 729-3', 'formatted_phone_number': '032-343-7582', 
+'formatted_address': 'South Korea, 경기도, Bucheon, Sosa-gu, Okgil-dong, 옥길동 729-3', 'formatted_phone_number': '032-343-7582', 
 'geometry': {'location': {'lat': 37.466951, 'lng': 126.821819},
 'viewport': {'northeast': {'lat': 37.4682999802915, 'lng': 126.8231679802915}, 'southwest': {'lat': 37.46560201970851, 'lng': 126.8204700197085}}}, 
 'icon': 'https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png', 
@@ -46,7 +46,7 @@
         'width': 5472}
 ], 
 'place_id': 'ChIJoQYDN_5iezUR0WpSsfSqbyM', 
-'plus_code': {'compound_code': 'FR8C+QP Bucheon-si, Gyeonggi-do, South Korea', 'global_code': '8Q98FR8C+QP'}, 
+'plus_code': {'compound_code': 'FR8C+QP Bucheon-si, 경기도, South Korea', 'global_code': '8Q98FR8C+QP'}, 
 'rating': 3.6, 
 'reference': 'ChIJoQYDN_5iezUR0WpSsfSqbyM', 
 'reviews': [
