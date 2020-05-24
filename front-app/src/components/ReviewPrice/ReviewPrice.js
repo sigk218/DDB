@@ -5,13 +5,6 @@ import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
 class ReviewPrice extends Component {
-  componentDidMount() {
-  
-  }
-  constructor(props) {
-    super(props);
-  }
- 
   render() {
     const price = this.props.careinfo.map(
       ci => (

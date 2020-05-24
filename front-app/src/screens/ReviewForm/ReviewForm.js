@@ -1,9 +1,9 @@
 import React from "react";
 import DatePicker from '../../components/DatePicker/DatePicker'
 import GradeBox from '../../components/HosGrades/GradeBox'
+import Pets from '@material-ui/icons/Pets'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
-import FilledInput from '@material-ui/core/FilledInput';
 
 const cx = classNames.bind(styles)
 
@@ -68,29 +68,27 @@ const reviewData = {
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date : new Date(),
-      grade: [],
-      totalgrade: []
-    }
-  }
-  componentWillMount() {
-    this.setInitialGrade()
-  }
-  componentDidMount() {
-    console.log(this.state)
-  }
-
-  setInitialGrade() {
     const scorelist =  [0, 0, 0, 0]
     const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
     const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
     const totalgrade = this.calcTotalScore(scorelist)
-    this.setState({
-      grade:grade,
-      totalgrade:totalgrade
-    })
+
+    this.state = {
+      date : new Date(),
+      grade: grade,
+      totalgrade: totalgrade,
+      visitdate: new Date(),
+      editablegrade: true,
+      revisitbtn: false,
+      recieptbtn: false,
+      isphoto:false,
+      photos: [],
+      photoname: [],
+      tempphotos: [],
+      content: "",
+    }
   }
+
 
   calcTotalScore(scorelist) {
     const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
@@ -98,7 +96,7 @@ class ReviewForm extends React.Component {
     return totalgrade
   }
 
-  onChange(field, value) {
+  onGradeChange(field, value) {
     this.setState({
       grade: this.state.grade.map(
         g => {
@@ -107,34 +105,48 @@ class ReviewForm extends React.Component {
           }
           return { ...g }
         }
-      ),
-      totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
+      )
+    }, () => {
+      this.setState({
+        totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
+      })
     })
-    // console.log(this.state)
-    // console.log(this.state.grade)
-    // this.setState({
-    //   totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
-    // })
-
-
-    this.state.grade.map(g => console.log(g.name, g.score))
-    // this.setState({
-    //   totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
-    // })
   }
 
+  togglerevisit() {
+    this.setState({
+      revisitbtn: !this.state.revisitbtn
+    })
+  }
+
+  handleText(e) {
+    this.setState({content: e.target.value})
+  }
+
+  async handleFiles(e) {
+    const files = [...e.target.files]
+    const names = files.map(f => f.name)
+    const checked = names.filter(n => !(this.state.photoname.includes(n))).map((n, i) => files[i]).slice(0, 4)
+    await this.setState({photos:this.state.photos.concat(...checked)})
+    await this.setState({photoname:this.state.photoname.concat(...names)})
+    await this.setState({tempphotos: this.state.photos.map(
+      f => URL.createObjectURL(f)
+    )})
+    if (this.state.photos) {
+      await this.setState({isphoto:true})
+    }
+  }
 
   render() {
     const animal = ['rabbit', 'turtle', 'hamster', 'cat', 'dog', 'bird']
     const animalsrc = animal.map( a => require(`../../assets/${a}.png`))
     const animalimg = animalsrc.map( url => 
-      {return <img key={url} src={url}/>}
+      {return <img key={url} src={url} alt={url}/>}
     )
-    // const scorelist =  [0, 0, 0, 0]
-    // const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
-    // const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
-    // const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
-    // const totalgrade = [{name:'평균평점', score:totalscore}]
+
+    const reviewimg = this.state.tempphotos.map(
+      url => {return <img className={cx('photo')} key={url} src={url} alt='사진후기'/>}
+    )
 
     return (
         <div>
@@ -145,7 +157,9 @@ class ReviewForm extends React.Component {
           </div>
           <div className={cx('row')}>
             <div className={cx('small-col')}>
-              <DatePicker value={new Date()} />
+              <DatePicker 
+                value={this.state.visitdate}
+              />
             </div>
             <div className={cx('spacer')}></div>
             <div className={cx('small-col','animal-box')}>
@@ -158,15 +172,23 @@ class ReviewForm extends React.Component {
           <GradeBox 
             totalgrade={this.state.totalgrade} 
             grade={this.state.grade}
-            onChange={this.onChange.bind(this)}
+            editable={this.state.editablegrade}
+            onChange={this.onGradeChange.bind(this)}
+            dojang={this.state.revisitbtn}
             />
-          <div className={cx('border-button')}>
-            <p>다시 방문할 의사 있다옹</p>
+          <div 
+            className={this.state.revisitbtn? cx('border-button', 'active') : cx('border-button')}
+            onClick={this.togglerevisit.bind(this)}
+            >
+            <p>다시 방문할 의사 {this.state.revisitbtn? '없다옹': '있다옹'}</p>
+            <Pets style={{ fontSize: 15 }}/>
           </div>
           <div className={cx('category')}>
             <p>비용표</p>
           </div>
-          <div className={cx('border-button')}>
+          <div 
+            className={cx('border-button')}
+            >
             <p>영수증으로 입력하기</p>
           </div>
           <div className={cx('category')}>
@@ -176,13 +198,56 @@ class ReviewForm extends React.Component {
             <textarea
               placeholder={'후기를 작성해 주세요.'}
               rows="7"
+              value={this.state.content}
+              onChange={this.handleText.bind(this)}
             />
           </div>
           <div className={cx('category')}>
             <p>사진 후기</p>
           </div>
-          <div className={cx('border-button')}>
-            <p>사진 첨부하기</p>
+          <div 
+            className={
+              this.state.isphoto
+              ? cx('hide')
+              : cx('border-button', 'upload-btn-wrapper')}
+            >
+            <p>사진 첨부하기<span>최대 4장</span></p>
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              multiple
+              onChange={this.handleFiles.bind(this)}
+            />
+          </div>
+          <div
+            className={
+              this.state.isphoto
+              ? cx('photo-box')
+              : cx('hide')
+            }
+          >
+            {reviewimg}
+          </div>
+          <div 
+            className={
+              this.state.isphoto && (this.state.photos.length < 4)
+              ?  cx('border-button', 'upload-btn-wrapper')
+              : cx('hide')}
+            >
+            <p>사진 추가하기<span>최대 4장</span></p>
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              multiple
+              onChange={this.handleFiles.bind(this)}
+            />
+          </div>
+          <div
+            className={cx('border-button')}
+          >
+            <p>선택한 사진 삭제하기</p>
           </div>
         </div>
     );

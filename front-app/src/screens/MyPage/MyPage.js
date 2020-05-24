@@ -1,13 +1,13 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
 class MyPage extends React.Component {
-    componentDidMount() {
+    // componentDidMount() {
 
-    }
-    users() {
+    // }
+    // users() {
 
-    }
+    // }
     render() {
         console.log("bbbbb")
         return (

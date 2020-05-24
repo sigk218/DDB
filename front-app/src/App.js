@@ -9,7 +9,7 @@ import HosDetail from "./screens/HosDetail/HosDetail";
 import HosRes from "./screens/HosRes/HosRes";
 import history from "./history";
 import ResTab from "./components/Navigation/ResTab";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
 

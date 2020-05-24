@@ -6,12 +6,10 @@ import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
 class HosGrades extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
-
   handleGradeChange(e) {
-    this.props.onChange(e.target.name, parseInt(e.target.value))
+    if (this.props.editable === true) {
+      this.props.onChange(e.target.name, parseInt(e.target.value))
+    }
   }
  
   render() {

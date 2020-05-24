@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import './DatePicker.scss';
 import DatePickerLabel from './DatePickerLabel.js'
 import DatePickerSelector from './DatePickerSelector.js'
@@ -7,13 +7,15 @@ import DatePickerSelector from './DatePickerSelector.js'
 class DatePicker extends React.Component {
   state = {
     value: this.props.value,
-    isSelectorActive: false
+    isSelectorActive: false,
   };
 
   onChangeDate = (oldDate, newDate) => {
-    this.setState({
-      value: newDate
-    });
+    if (oldDate !== newDate) {
+      this.setState({
+        value: newDate
+      });
+    }
   };
 
   onChangeShowSelector = (value) => {

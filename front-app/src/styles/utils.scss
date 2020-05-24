@@ -15,6 +15,7 @@
 
 $darkgreen: rgb(40, 64, 64);
 $beige: rgb(231, 221, 209);
+$red: #C00000;
 $title: 'BMEULJIRO';
 
 
@@ -172,6 +173,26 @@ $title: 'BMEULJIRO';
   display: none;
 }
 
+.photo-box {
+  height:calc(18vh + 4px);
+  @include width-size(0px);
+  @include flex-nowrap();
+  @include horizontal-scroll();
+}
+
+.photo {
+  max-height: 18vh;
+  margin-right:4px;
+  @include round-border();
+}
+
+.selected-photo {
+  position:relative;
+  top:1px;
+  border-color: $red;
+}
+
+
 
 textarea {
   background-color: transparent;
@@ -191,3 +212,4 @@ textarea {
     color: $beige;
   }
 }
+

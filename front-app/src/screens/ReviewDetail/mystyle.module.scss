@@ -50,16 +50,3 @@ div {
   @include width-size(0px);
 }
 
-.photo-box {
-  height:calc(18vh + 4px);
-  @include width-size(0px);
-  @include flex-nowrap();
-  @include horizontal-scroll();
-}
-
-.photo {
-  max-height: 18vh;
-  margin-right:4px;
-  @include round-border();
-}
-

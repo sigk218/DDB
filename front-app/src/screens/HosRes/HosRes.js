@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
-import InfiniteScroll from "react-infinite-scroller";
+// import InfiniteScroll from "react-infinite-scroller";
 import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 
 
 const widthLength = 100;

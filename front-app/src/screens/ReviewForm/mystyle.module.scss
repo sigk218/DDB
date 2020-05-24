@@ -43,21 +43,43 @@
   @include round-border();
   border-bottom: 3px double $darkgreen;
   border-right: 3px double $darkgreen;
-  &:hover {
-    @include active-background();
-    position:relative;
-    top:1px;
-  }
-  // &:active {
-  //   position:relative;
-  //   top:1px;
-  // }
+  position:relative;
   p {
     margin:2px;
   }
+  span {
+    font-weight: lighter;
+    text-shadow: none;
+    color: $red;
+    font-size: x-small;
+    position:absolute;
+    left:calc(50% + 45px);
+    bottom: 0;
+  }
+}
+
+.active {
+  @include active-background();
+  position:relative;
+  top:1px;
 }
 
 .box {
   margin: 2px auto 0;
   @include flex-center();
 }
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+
+  input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 32px;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+}
+

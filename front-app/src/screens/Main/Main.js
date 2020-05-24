@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
 import imgA from "../../assets/imgA.png";
@@ -14,7 +14,7 @@ class Main extends React.Component {
     return (
       <div>
         <div align="center">
-          <img src={imgA} width="200" height="200"></img>
+          <img src={imgA} width="200" height="200" alt='dumpimage'></img>
         </div>
         <MainSearchBar />
         <div>

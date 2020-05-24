@@ -11,16 +11,22 @@ class GradeBox extends React.Component {
   }
 
   render() {
+    const dojang = require("../../assets/visitnyang.png")
 
     return (
         <div className={cx('basic-box', 'relative')}>
           <HosGrade 
             grade={this.props.grade}
-            onChange={this.props.onChange.bind(this)}
+            onChange={this.props.onChange}
+            editable={this.props.editable}
             />
           <div className={cx('divider')}></div>
           <HosGrade grade={this.props.totalgrade}/>
-          <img className={this.props.dojang? cx('show') : cx('hide')} src={this.props.dojang}/>
+          <img 
+            className={this.props.dojang? cx('show') : cx('hide')} 
+            src={this.props.dojang? dojang : undefined }
+            alt='dojang'  
+          />
         </div>
     );
   }
