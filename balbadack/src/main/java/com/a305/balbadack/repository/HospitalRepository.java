@@ -13,8 +13,10 @@ import org.springframework.data.repository.query.Param;
 public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   
   @Query(value = "select * from hospital h where h.h_name like concat('%', :h_name, '%')", nativeQuery = true)
-  List<Hospital> findByName(@Param("h_name") String h_name);
+  // @Query("select h from hospital h where h.h_website='http://paper1984.blog.me/'")
+  // @Query(value = "select * from hospital h where h_city = '경기도'", nativeQuery = true)
+  List<Hospital> findByName(@Param("h_name") String h_name); 
 
-  List<Hospital> findByLocation(@Param("h_location") String h_location);
+  // List<Hospital> findByLocation(@Param("h_location") String h_location);
 
 }

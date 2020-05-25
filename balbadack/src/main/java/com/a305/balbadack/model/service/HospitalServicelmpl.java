@@ -49,6 +49,8 @@ public class HospitalServicelmpl implements HospitalService {
       List<Hospital> temp = hospitalRepository.findByName(h_name);
       System.out.println(temp);
       return hospitalRepository.findByName(h_name);
+      // Hospital hospital = hospitalRepository.findByName(h_name);
+      // System.out.println(hospital);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -58,8 +60,8 @@ public class HospitalServicelmpl implements HospitalService {
   @Override
   public List<Hospital> findByLocation(String h_location) {
     try {
-      List<Hospital> temp = hospitalRepository.findByName(h_location);
-      return hospitalRepository.findByName(h_location);
+      // List<Hospital> temp = hospitalRepository.findByName(h_location);
+      // return hospitalRepository.findByName(h_location);
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("위치로 병원 조회 중 오류 발생 함.");

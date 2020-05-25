@@ -22,12 +22,11 @@ import lombok.AllArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Entity
 @Getter
 @Setter
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Table(name = "hospital")
+@Entity(name = "hospital")
 public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
