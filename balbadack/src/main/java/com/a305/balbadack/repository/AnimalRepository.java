@@ -1,6 +1,6 @@
 package com.a305.balbadack.repository;
 
-import com.a305.balbadack.model.dto.User;
+import com.a305.balbadack.model.dto.Animal;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -9,12 +9,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {
-    
-    // public User findBy
+public interface AnimalRepository extends JpaRepository<Animal, Integer>{
 
     @Modifying
-    @Query(value = "update User u set u.deleted = 1 where u.id=:id", nativeQuery = true)
-    void userDeleted(@Param("id") String id);
-
+    @Query(value = "delete from animal a where a.id=:id and a.a_code=:code", nativeQuery = true)
+	void delete(@Param("id") String id, @Param("code") String code);
+    
 }

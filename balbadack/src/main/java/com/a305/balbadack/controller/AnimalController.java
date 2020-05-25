@@ -1,9 +1,9 @@
 package com.a305.balbadack.controller;
 
-import com.a305.balbadack.model.dto.User;
-import com.a305.balbadack.model.service.UserService;
-
 import java.util.*;
+
+import com.a305.balbadack.model.dto.Animal;
+import com.a305.balbadack.model.service.AnimalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,12 +20,12 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins="{*}", maxAge=6000)
 @RestController
-@Api(value="회원관리", description="회원관리")
+@Api(value="동물정보", description="동물정보")
 @EnableAutoConfiguration
-public class UserController {
+public class AnimalController {
     
     @Autowired
-    private UserService userService;
+    AnimalService animalService;
 
     @ExceptionHandler
 	public ResponseEntity<Map<String, Object>> handler(Exception e){
@@ -53,13 +53,13 @@ public class UserController {
 		resultMap.put("message",  data);
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
     }
-    
-    @ApiOperation("회원가입")
-    @PostMapping("/user/signup")
-    public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) {
+
+    @ApiOperation("동물정보 등록")
+    @PostMapping("/animal/")
+    public ResponseEntity<Map<String, Object>> signUp(@RequestBody Animal animal) {
         
         try {
-            userService.create(user);
+            animalService.create(animal);
             return handleSuccess("회원가입을 완료하였습니다.");
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK);
@@ -67,59 +67,31 @@ public class UserController {
 
 	}
 	
-	@ApiOperation("로그인")
-	@PostMapping("/user/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody String id, @RequestBody String password) {
+
+	@ApiOperation("동물정보수정")
+	@PostMapping("/animal/update")
+	public ResponseEntity<Map<String, Object>> update(@RequestBody Animal animal) {
         
         try {
-			boolean flag = userService.login(id, password);
-			if(flag) {
-				return handleSuccess("로그인에 성공하였습니다.");
-			} else {
-				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.OK);
-			}
+            animalService.update(animal);
+            return handleSuccess("동물정보를 수정하였습니다.");
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK);
         }
 
 	}
 
-	@ApiOperation("회원정보수정")
-	@PostMapping("/user/update")
-	public ResponseEntity<Map<String, Object>> update(@RequestBody User user) {
+	@ApiOperation("동물 삭제")
+	@PostMapping("/animal/delete")
+	public ResponseEntity<Map<String, Object>> signout(@RequestBody String id, @RequestBody String key) {
         
         try {
-            userService.update(user);
-            return handleSuccess("회원정보를 수정하였습니다.");
-        } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
-        }
-
-	}
-
-	@ApiOperation("회원 탈퇴")
-	@PostMapping("/user/signout")
-	public ResponseEntity<Map<String, Object>> signout(@RequestBody String id) {
-        
-        try {
-            userService.delete(id);
-            return handleSuccess("회원탈퇴를 완료하였습니다.");
+            animalService.delete(id, key);
+            return handleSuccess("동물정보 삭제를 완료하였습니다.");
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK); //Status 다시 지정
         }
 
-	}
-
-	@ApiOperation("마이페이지 조회")
-	@PostMapping("/user/mypage")
-	public ResponseEntity<Map<String, Object>> mypage(@RequestBody String id) {
-        User user = null;
-        try {
-            user = userService.findById(id);
-            return handleSuccess(user);
-        } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
-        }
 	}
 
 }
