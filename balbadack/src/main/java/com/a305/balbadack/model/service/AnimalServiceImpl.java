@@ -1,5 +1,7 @@
 package com.a305.balbadack.model.service;
 
+import javax.transaction.Transactional;
+
 import com.a305.balbadack.model.dto.Animal;
 import com.a305.balbadack.repository.AnimalRepository;
 import com.a305.balbadack.repository.UserRepository;
@@ -32,6 +34,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     }
 
+    @Transactional
     @Override
     public void delete(String id, String key) throws Exception {
         try {
