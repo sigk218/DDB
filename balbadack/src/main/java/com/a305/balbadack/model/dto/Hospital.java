@@ -79,22 +79,22 @@ public class Hospital{
   @Column(length = 20)
   private String h_monday;
 
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_tuesday;
 
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_wednesday;
   
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_thursday;
 
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_friday;
 
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_saturday;
 
-  @Column(length = 20)
+  @Column(length = 60)
   private String h_sunday;
 
   @Column(columnDefinition = "boolean default false")
