@@ -73,7 +73,10 @@ public class UserServiceImpl implements UserService{
     public User findById(String id) throws Exception {
         User user = null;
         try {
-            user = userRepository.findById(id).get();
+            System.out.println(id);
+            user = userRepository.findByUid(id);
+            if(user == null)
+                System.out.println("IS NULL");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("회원정보 조회 중 오류가 발생했습니다.");

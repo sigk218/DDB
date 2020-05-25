@@ -36,10 +36,11 @@ public class FavoriteHospitalController {
     @ApiOperation("즐겨찾기 회원별 조회하기")
     @PostMapping(value="/findById")
     public List<Good> findGoodByU_id(@RequestBody String u_id) {
-        return favoriteHospitalService.findByU_id(u_id);
+        // return favoriteHospitalService.findByU_id(u_id);
+        return null;
     }
     
-    @ApiOperation("즉겨찾기 삭제하기")
+    @ApiOperation("즐겨찾기 삭제하기")
     @PostMapping(value="/delete")
     public void deleteGood(@RequestBody FavoriteHospital favoriteHospital) {
         favoriteHospitalService.delete(favoriteHospital);   
