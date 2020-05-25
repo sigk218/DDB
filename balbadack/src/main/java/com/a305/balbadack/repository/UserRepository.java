@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     // public User findBy
 
     @Modifying
-    @Query("update User u set u.deleted = 1 where u.id=:id")
+    @Query(value = "update User u set u.deleted = 1 where u.id=:id", nativeQuery = true)
     void userDeleted(@Param("id") String id);
 
 }

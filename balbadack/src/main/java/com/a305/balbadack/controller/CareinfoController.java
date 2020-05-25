@@ -4,14 +4,18 @@ import com.a305.balbadack.model.dto.Careinfo;
 import com.a305.balbadack.model.service.CareinfoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@Controller
+@CrossOrigin(origins="{*}")
+@RestController
+@Api(value="CareinfoController", description="진료정보")
 @RequestMapping("/careinfo/*")
 public class CareinfoController {
     

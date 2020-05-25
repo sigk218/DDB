@@ -10,7 +10,7 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "careinfo")
+@Table(name = "carelist")
 public class Carelist {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
