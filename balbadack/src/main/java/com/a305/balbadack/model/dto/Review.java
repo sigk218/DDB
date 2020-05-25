@@ -1,6 +1,7 @@
 package com.a305.balbadack.model.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -20,7 +21,7 @@ public class Review {
 	@Column(nullable = false, unique = true)
     private int r_code;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
     private User user;
 
@@ -75,17 +76,17 @@ public class Review {
     @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean r_deleted;
     
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
     private Hospital hospital;
     
     @OneToMany(mappedBy="review")
-    private Careinfo careinfo;
+    private List<Careinfo> careinfo;
 
     @OneToMany(mappedBy="review")
-    private Report report;
+    private List<Report> report;
 
     @OneToMany(mappedBy="review")
-    private Like like;
+    private List<Good> good;
     
 }

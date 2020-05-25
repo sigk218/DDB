@@ -2,31 +2,31 @@ package com.a305.balbadack.model.service;
 
 import java.util.List;
 
-import com.a305.balbadack.model.dto.Like;
-import com.a305.balbadack.repository.LikeRepository;
+import com.a305.balbadack.model.dto.Good;
+import com.a305.balbadack.repository.GoodRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LikeServiceImpl implements LikeService {
+public class GoodServiceImpl implements GoodService {
 
     @Autowired
-    LikeRepository likeRepository;
+    GoodRepository goodRepository;
 
     @Override
-    public void insert(Like like) {
+    public void insert(Good good) {
         try {
-            likeRepository.save(like);
+            goodRepository.save(good);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     @Override
-    public List<Like> findByU_id(String u_id) {
+    public List<Good> findByU_id(String u_id) {
         try {
-            return likeRepository.findByU_id(u_id);
+            return goodRepository.findByUser(u_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -34,9 +34,9 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<Like> findByR_code(int r_code) {
+    public List<Good> findByR_code(int r_code) {
         try {
-            return likeRepository.findByR_code(r_code);
+            return goodRepository.findByReview(r_code);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,9 +44,9 @@ public class LikeServiceImpl implements LikeService {
     }
     
     @Override
-    public void delete(Like like) {
+    public void delete(Good good) {
         try {
-            likeRepository.delete(like);
+            goodRepository.delete(good);
         } catch (Exception e) {
             e.printStackTrace();
         }
