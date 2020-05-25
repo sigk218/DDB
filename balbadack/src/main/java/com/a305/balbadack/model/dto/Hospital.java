@@ -100,6 +100,6 @@ public class Hospital{
   @Column(columnDefinition = "boolean default false")
   private boolean h_deleted;
 
-  @Column(length = 100)
+  @Column(length = 200)
   private String h_website;
 }
