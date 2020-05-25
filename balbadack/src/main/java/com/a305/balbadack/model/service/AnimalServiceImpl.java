@@ -7,7 +7,9 @@ import com.a305.balbadack.repository.AnimalRepository;
 import com.a305.balbadack.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class AnimalServiceImpl implements AnimalService {
 
     @Autowired
