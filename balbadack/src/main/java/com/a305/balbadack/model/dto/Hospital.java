@@ -40,8 +40,11 @@ public class Hospital{
   @Column(nullable = false, length = 50)
   private String h_name;
 
-  @Column(nullable = false, length = 50)
-  private String h_location;
+  @Column(nullable = false)
+  private Double h_latitude;
+
+  @Column(nullable = false)
+  private Double h_longitude;
 
   @Column(length = 50)
   private String h_city;
@@ -64,13 +67,13 @@ public class Hospital{
   @Column(length = 20)
   private String h_holidaytreatment;
 
-  @Column(columnDefinition = "boolean default false")
+  @Column(columnDefinition = "Boolean default false")
   private Boolean h_roundtheclock;
 
   @Column(length = 100)
   private String h_tag;
 
-  @Column(columnDefinition = "boolean default false")
+  @Column(columnDefinition = "Boolean default false")
   private Boolean h_certification;
 
   @Column(nullable = true)
@@ -97,7 +100,7 @@ public class Hospital{
   @Column(length = 60)
   private String h_sunday;
 
-  @Column(columnDefinition = "boolean default false")
+  @Column(columnDefinition = "Boolean default false")
   private Boolean h_deleted;
 
   @Column(length = 200)

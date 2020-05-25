@@ -40,7 +40,7 @@ public class HospitalServicelmpl implements HospitalService {
       e.printStackTrace();
     }
   }
-
+  
   @Override
   public List<Hospital> findByName(String h_name){
     try {
@@ -51,6 +51,18 @@ public class HospitalServicelmpl implements HospitalService {
       return hospitalRepository.findByName(h_name);
     } catch (Exception e) {
       e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Hospital> findByLocation(String h_location) {
+    try {
+      List<Hospital> temp = hospitalRepository.findByName(h_location);
+      return hospitalRepository.findByName(h_location);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("위치로 병원 조회 중 오류 발생 함.");
     }
     return null;
   }

@@ -46,10 +46,17 @@ public class HospitalController {
   }
 
   @ApiOperation("병원 이름으로 조회")
-  @PostMapping(value="/{h_name}")
+  @PostMapping(value="/name/{h_name}")
   public List<Hospital> findHospitalByname(@PathVariable String h_name){
     System.out.println(h_name);
     return hospitalService.findByName(h_name);
+  } 
+
+  @ApiOperation("병원 위치로 조회")
+  @PostMapping(value="/location/{h_location}")
+  public List<Hospital> findHospitalByLocation(@PathVariable String h_location){
+    System.out.println(h_location);
+    return hospitalService.findByLocation(h_location);
   } 
 
 }

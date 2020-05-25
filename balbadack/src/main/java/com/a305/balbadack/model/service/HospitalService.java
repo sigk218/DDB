@@ -15,4 +15,8 @@ public interface HospitalService {
   
   // 이름으로 병원 조회하기
   public List<Hospital> findByName(String h_name);
+
+  // 위치로 병원 조회하기 
+  public List<Hospital> findByLocation(String h_location);
+
 }
