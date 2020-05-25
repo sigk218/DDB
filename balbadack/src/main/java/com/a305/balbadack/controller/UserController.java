@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins="{*}", maxAge=6000)
 @RestController
-@Api(value="Balbadack", description="Balbadack")
+@Api(value="회원관리", description="회원관리")
 @EnableAutoConfiguration
 public class UserController {
     
