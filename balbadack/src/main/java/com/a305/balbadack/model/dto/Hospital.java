@@ -32,7 +32,7 @@ public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true, name="h_code")
-  private int h_code;
+  private Integer h_code;
 
   @OneToMany(mappedBy="hospital")
   private List<Veterinarian> veterinarian; 
@@ -65,16 +65,16 @@ public class Hospital{
   private String h_holidaytreatment;
 
   @Column(columnDefinition = "boolean default false")
-  private boolean h_roundtheclock;
+  private Boolean h_roundtheclock;
 
   @Column(length = 100)
   private String h_tag;
 
   @Column(columnDefinition = "boolean default false")
-  private boolean h_certification;
+  private Boolean h_certification;
 
   @Column(nullable = true)
-  private boolean h_open;
+  private Boolean h_open;
 
   @Column(length = 20)
   private String h_monday;
@@ -98,7 +98,7 @@ public class Hospital{
   private String h_sunday;
 
   @Column(columnDefinition = "boolean default false")
-  private boolean h_deleted;
+  private Boolean h_deleted;
 
   @Column(length = 200)
   private String h_website;

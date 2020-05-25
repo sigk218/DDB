@@ -1,8 +1,12 @@
 package com.a305.balbadack.controller;
 
+import java.io.Console;
+import java.util.List;
+
 import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.model.service.HospitalService;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,9 +40,16 @@ public class HospitalController {
   }
 
   @ApiOperation("병원 정보 삭제하기")
-  @DeleteMapping(value="/")
-  public void deleteHospital(@RequestBody Hospital hospital) {
+  @DeleteMapping(value="/delete")
+  public void deleteHospital(@RequestBody Hospital hospital){
     hospitalService.delete(hospital);
   }
-  
+
+  @ApiOperation("병원 이름으로 조회")
+  @PostMapping(value="/{h_name}")
+  public List<Hospital> findHospitalByname(@PathVariable String h_name){
+    System.out.println(h_name);
+    return hospitalService.findByName(h_name);
+  } 
+
 }
