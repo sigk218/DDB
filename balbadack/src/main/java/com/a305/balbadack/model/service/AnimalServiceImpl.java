@@ -24,7 +24,7 @@ public class AnimalServiceImpl implements AnimalService {
             throw new RuntimeException("동물 등록 중 오류가 발생했습니다.");
         }
     }
-
+    
     @Override
     public void update(Animal animal) throws Exception {
         try {

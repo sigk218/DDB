@@ -22,12 +22,11 @@ import lombok.AllArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Entity
 @Getter
 @Setter
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Table(name = "hospital")
+@Entity(name = "hospital")
 public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,8 +39,11 @@ public class Hospital{
   @Column(nullable = false, length = 50, name = "h_name")
   private String hName;
 
-  @Column(nullable = false, length = 50, name = "h_location")
-  private String hLocation;
+  @Column(nullable = false, name = "h_latitude")
+  private Double hLatitude;
+
+  @Column(nullable = false, name = "h_longitude")
+  private Double hLongitude;
 
   @Column(length = 50, name = "h_city")
   private String hCity;
