@@ -44,13 +44,7 @@ public class HospitalServicelmpl implements HospitalService {
   @Override
   public List<Hospital> findByName(String h_name){
     try {
-      System.out.println("서비스에서 출력");
-      System.out.println(h_name);
-      List<Hospital> temp = hospitalRepository.findByName(h_name);
-      System.out.println(temp);
       return hospitalRepository.findByName(h_name);
-      // Hospital hospital = hospitalRepository.findByName(h_name);
-      // System.out.println(hospital);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -58,7 +52,7 @@ public class HospitalServicelmpl implements HospitalService {
   }
 
   @Override
-  public List<Hospital> findByLocation(String h_location) {
+  public List<Hospital> findByLocation(String latitude, String longtitude) {
     try {
       // List<Hospital> temp = hospitalRepository.findByName(h_location);
       // return hospitalRepository.findByName(h_location);

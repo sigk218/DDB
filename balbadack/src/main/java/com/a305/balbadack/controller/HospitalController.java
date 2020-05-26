@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,7 +34,7 @@ public class HospitalController {
     hospitalService.insert(hospital);
   }
 
-  @ApiOperation("병원 정보 등록하기")
+  @ApiOperation("병원 정보 수정하기")
   @PostMapping(value="/update")
   public void updateHospital(@RequestBody Hospital hospital) {
     hospitalService.update(hospital);
@@ -45,18 +46,26 @@ public class HospitalController {
     hospitalService.delete(hospital);
   }
 
-  @ApiOperation("병원 이름으로 조회")
+  @ApiOperation("병원 이름으로 검색하기")
   @PostMapping(value="/name/{h_name}")
   public List<Hospital> findHospitalByname(@PathVariable String h_name){
     System.out.println(h_name);
     return hospitalService.findByName(h_name);
-  } 
+  }
 
-  @ApiOperation("병원 위치로 조회")
-  @PostMapping(value="/location/{h_location}")
-  public List<Hospital> findHospitalByLocation(@PathVariable String h_location){
-    System.out.println(h_location);
-    return hospitalService.findByLocation(h_location);
-  } 
+  // 위도 : latitude, 경도 : longtitude
+  @ApiOperation("현재 내 위치에서 가까운 병원 조회")
+  @PostMapping(value="/location")
+  public List<Hospital> findHospitalByLocation(@RequestParam String latitude, @RequestParam String longtitude){
+    System.out.println(latitude);
+    System.out.println(longtitude);
+    return hospitalService.findByLocation(latitude, longtitude);
+  }
+  
+  // 병원 코드 리스트를 받으면, 병원 객체를 리턴
+
+  // 병원의 평점 계산 
+  
+  // 병원 리스트를 불러와서 영업중 인지 계산 
 
 }
