@@ -13,5 +13,10 @@ public interface HospitalService {
   // 병원 삭제하기
   public void delete(Hospital hospital);
   
+  // 이름으로 병원 조회하기
+  public List<Hospital> findByName(String h_name);
+
+  // 위치로 병원 조회하기 
+  public List<Hospital> findByLocation(String latitude, String longtitude);
 
 }

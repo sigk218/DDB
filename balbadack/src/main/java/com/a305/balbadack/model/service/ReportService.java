@@ -14,4 +14,6 @@ public interface ReportService {
 
     public void delete(Report report);
 
+    public void delete(int re_code);
+
 }

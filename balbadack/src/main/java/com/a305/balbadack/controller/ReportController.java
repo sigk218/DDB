@@ -43,11 +43,19 @@ public class ReportController {
         return ReportService.findByR_code(r_code);
     }
     
+    // @ApiOperation("신고하기 삭제하기")
+    // @PostMapping(value="/delete")
+    // public void deleteReport(@RequestBody Report report) {
+    //     //re_deleted  true로 바꾸기
+    //     ReportService.delete(report);   
+    // }
+
     @ApiOperation("신고하기 삭제하기")
     @PostMapping(value="/delete")
-    public void deleteReport(@RequestBody Report report) {
+    public void deleteReport(@RequestBody int re_code) {
         //re_deleted  true로 바꾸기
-        ReportService.delete(report);   
+        ReportService.delete(re_code);
     }
+
 
 }

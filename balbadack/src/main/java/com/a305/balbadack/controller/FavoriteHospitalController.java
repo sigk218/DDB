@@ -40,7 +40,7 @@ public class FavoriteHospitalController {
         return favoriteHospitalService.findByU_id(u_id);
     }
     
-    @ApiOperation("즉겨찾기 삭제하기")
+    @ApiOperation("즐겨찾기 삭제하기")
     @PostMapping(value="/delete")
     public void deleteGood(@RequestBody FavoriteHospital favoriteHospital) {
         favoriteHospitalService.delete(favoriteHospital);   

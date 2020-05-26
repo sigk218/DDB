@@ -14,8 +14,8 @@ import lombok.*;
 public class Careinfo {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
-	@Column(nullable = false, unique = true)
-    private int ci_code;
+	@Column(nullable = false, unique = true, name = "ci_code")
+    private int ciCode;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
@@ -25,8 +25,8 @@ public class Careinfo {
     @JoinColumn(name = "a_code", referencedColumnName = "a_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_animal_a_code"))
     private Animal animal;
 
-    @Column(nullable = false)
-    private int ci_price;
+    @Column(nullable = false, name = "ci_price")
+    private int ciPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "c_code", referencedColumnName = "c_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_carelist_c_code"))

@@ -31,10 +31,10 @@ public class HospitalPicture {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true, name="p_code")
-  private int p_code;
+  private int pCode;
 
-  @Column(length = 100)
-  private String h_image;
+  @Column(length = 100, name="h_image")
+  private String hImage;
 
 
 // 외래키

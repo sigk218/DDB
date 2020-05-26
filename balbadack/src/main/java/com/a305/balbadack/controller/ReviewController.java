@@ -27,4 +27,10 @@ public class ReviewController {
         reviewService.insert(review);
     }
 
+    @ApiOperation("리뷰 삭제")
+    @PostMapping("/delete") 
+    public void deleteReview(int r_code){
+        reviewService.delete(r_code);
+    }
+
 }

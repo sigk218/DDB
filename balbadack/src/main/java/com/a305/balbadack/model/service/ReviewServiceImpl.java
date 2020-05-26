@@ -21,6 +21,26 @@ public class ReviewServiceImpl implements ReviewService{
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void delete(int r_code) {
+        try{
+            reviewRepository.reviewDelete(r_code);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void update(Review review) {
+        try{
+            reviewRepository.save(review);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
     
 
 }

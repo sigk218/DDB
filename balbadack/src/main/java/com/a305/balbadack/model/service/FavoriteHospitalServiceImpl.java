@@ -16,8 +16,8 @@ public class FavoriteHospitalServiceImpl implements FavoriteHospitalService {
     @Autowired
     FavoriteHospitalRepository favoriteHospitalRepository;
 
-    @Autowired
-    HospitalRepository hospitalRepository;
+    // @Autowired
+    // HospitalRepository hospitalRepository;
 
     @Override
     public void insert(FavoriteHospital favoriteHospital) {

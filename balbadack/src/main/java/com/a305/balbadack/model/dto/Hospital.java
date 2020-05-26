@@ -22,84 +22,86 @@ import lombok.AllArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Entity
 @Getter
 @Setter
 @ToString
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Table(name = "hospital")
+@Entity(name = "hospital")
 public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(nullable = false, unique = true, name="h_code")
-  private int h_code;
+  @Column(nullable = false, unique = true, name = "h_code")
+  private int hCode;
 
   @OneToMany(mappedBy="hospital")
   private List<Veterinarian> veterinarian; 
 
-  @Column(nullable = false, length = 50)
-  private String h_name;
+  @Column(nullable = false, length = 50, name = "h_name")
+  private String hName;
 
-  @Column(nullable = false, length = 50)
-  private String h_location;
+  @Column(nullable = false, name = "h_latitude")
+  private Double hLatitude;
 
-  @Column(length = 50)
-  private String h_city;
+  @Column(nullable = false, name = "h_longitude")
+  private Double hLongitude;
 
-  @Column(length = 10)
-  private String h_gu;
+  @Column(length = 50, name = "h_city")
+  private String hCity;
 
-  @Column(length = 20)
-  private String h_dong;
+  @Column(length = 10, name = "h_gu")
+  private String hGu;
+
+  @Column(length = 20, name = "h_dong")
+  private String hDong;
   
-  @Column(length = 100)
-  private String h_address;
+  @Column(length = 100, name = "h_address")
+  private String hAddress;
 
-  @Column(length = 20)
-  private String h_station;
+  @Column(length = 20, name = "h_station")
+  private String hStation;
 
-  @Column(length = 20)
-  private String h_tel;
+  @Column(length = 20, name = "h_tel")
+  private String hTel;
 
-  @Column(length = 20)
-  private String h_holidaytreatment;
+  @Column(length = 20, name = "h_holidaytreatment")
+  private String hHolidaytreatment;
 
-  @Column(columnDefinition = "boolean default false")
-  private boolean h_roundtheclock;
+  @Column(columnDefinition = "boolean default false", name = "h_roundtheclock")
+  private boolean hRoundtheclock;
 
-  @Column(length = 100)
-  private String h_tag;
+  @Column(length = 100, name = "h_tag")
+  private String hTag;
 
-  @Column(columnDefinition = "boolean default false")
-  private boolean h_certification;
+  @Column(columnDefinition = "boolean default false", name = "h_certification")
+  private boolean hCertification;
 
-  @Column(nullable = true)
-  private boolean h_open;
+  @Column(nullable = true, name = "h_open")
+  private boolean hOpen;
 
-  @Column(length = 20)
-  private String h_monday;
+  @Column(length = 60, name = "h_monday")
+  private String hMonday;
 
-  @Column(length = 60)
-  private String h_tuesday;
+  @Column(length = 60, name = "h_tuesday")
+  private String hTuesday;
 
-  @Column(length = 60)
-  private String h_wednesday;
+  @Column(length = 60, name = "h_wednesday")
+  private String hWednesday;
   
-  @Column(length = 60)
-  private String h_thursday;
+  @Column(length = 60, name = "h_thursday")
+  private String hThursday;
 
-  @Column(length = 60)
-  private String h_friday;
+  @Column(length = 60, name = "h_friday")
+  private String hFriday;
 
-  @Column(length = 60)
-  private String h_saturday;
+  @Column(length = 60, name = "h_saturday")
+  private String hSaturday;
 
-  @Column(length = 60)
-  private String h_sunday;
+  @Column(length = 60, name = "h_sunday")
+  private String hSunday;
 
-  @Column(columnDefinition = "boolean default false")
-  private boolean h_deleted;
+  @Column(columnDefinition = "boolean default false", name = "h_deleted")
+  private boolean hDeleted;
 
-  @Column(length = 200)
-  private String h_website;
+  @Column(length = 200, name = "h_website")
+  private String hWebsite;
 }

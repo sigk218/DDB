@@ -46,7 +46,16 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void delete(Report report) {
         try {
-            // reportRepository.delete(report);
+            reportRepository.delete(report);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void delete(int re_code) {
+        try {
+            reportRepository.reportDelete(re_code);
         } catch (Exception e) {
             e.printStackTrace();
         }
