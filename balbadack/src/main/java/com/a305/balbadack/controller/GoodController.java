@@ -55,7 +55,18 @@ public class GoodController {
     @ApiOperation("도움이 됐어요 리뷰별 조회하기")
     @PostMapping(value="/findByReview")
     public List<Good> findGoodByR_code(@RequestBody int r_code) {
-        return goodService.findByR_code(r_code);
+        List<Good> good = goodService.findByR_code(r_code);
+
+        for(int i = 0, size = good.size(); i<size; i++) {
+            good.get(i).setReview(null);
+            good.get(i).setUser(null);
+            /**
+             * or good의 Review까지 필요할 때
+             * good.get(i).setUser(good.get(i).getUser().setGood(null));
+             */
+        }
+
+        return good;
     }
 
     // @ApiOperation("도움이 됐어요 리뷰별 조회하기")
