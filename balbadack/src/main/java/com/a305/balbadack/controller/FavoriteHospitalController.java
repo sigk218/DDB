@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.a305.balbadack.model.dto.FavoriteHospital;
 import com.a305.balbadack.model.dto.Good;
+import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.model.service.FavoriteHospitalService;
 import com.a305.balbadack.model.service.GoodService;
 
@@ -35,7 +36,7 @@ public class FavoriteHospitalController {
 
     @ApiOperation("즐겨찾기 회원별 조회하기")
     @PostMapping(value="/findById")
-    public List<Good> findGoodByU_id(@RequestBody String u_id) {
+    public List<Hospital> findGoodByU_id(@RequestBody String u_id) {
         return favoriteHospitalService.findByU_id(u_id);
     }
     

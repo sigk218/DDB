@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FavoriteHospitalRepository extends JpaRepository<FavoriteHospital, Integer> {
     
-    @Query("select fh.h_code from favorite_hospital fh where fh.u_id = :uid")
+    @Query(value = "select fh.h_code from favorite_hospital fh where fh.u_id = :uid", nativeQuery = true)
     List<Integer> findByUid(@Param("uid") String id);
 
 }

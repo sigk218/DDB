@@ -48,7 +48,8 @@ public class FavoriteHospitalServiceImpl implements FavoriteHospitalService {
         List<Hospital> hospitals = null;
         try {
             System.out.println();
-            // List<FavoriteHospital> favoriteHospital
+            List<Integer> h_codes = favoriteHospitalRepository.findByUid(u_id);
+            // hospitals = hospitalRepository.findByHcodeList(h_codes);
         } catch (Exception e) {
             e.printStackTrace();
         }
