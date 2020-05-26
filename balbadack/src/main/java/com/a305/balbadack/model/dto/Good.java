@@ -28,8 +28,8 @@ import lombok.ToString;
 public class Good {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
-	@Column(nullable = false, unique = true)
-    private int g_code;
+	@Column(nullable = false, unique = true, name = "g_code")
+    private int gCode;
     
     // 리뷰코드
     @ManyToOne(fetch = FetchType.LAZY)

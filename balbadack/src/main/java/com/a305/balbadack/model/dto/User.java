@@ -25,27 +25,27 @@ import lombok.ToString;
 public class User {
     @Id
 	@GeneratedValue()
-	@Column(length = 50, nullable = false, unique = true)
-    private String u_id;
+	@Column(length = 50, nullable = false, unique = true, name = "u_id")
+    private String uId;
     
-    @Column(length = 100, nullable = false)
-    private String u_pw;
+    @Column(length = 100, nullable = false, name = "u_pw")
+    private String uPw;
 
-    @Column(nullable = false)
-    private int u_code; //회원-1, 수의사-2, 병원관계자-3
+    @Column(nullable = false, name = "u_code")
+    private int uCode; //회원-1, 수의사-2, 병원관계자-3
 
-    @Column(columnDefinition="tinyint(1) default 0", nullable = false)
-    private boolean u_manager;
+    @Column(columnDefinition="tinyint(1) default 0", nullable = false, name = "u_manager")
+    private boolean uManager;
 
-    @Column(length = 20, nullable = false)
-    private String u_nickname;
+    @Column(length = 20, nullable = false, name = "u_nickname")
+    private String uNickname;
 
-    @Column(length = 30)
-    private String h_code;
+    @Column(length = 30, name = "h_code")
+    private String hCode;
 
-    @Column()
-    private boolean u_sms;
+    @Column(name = "u_sms")
+    private boolean uSms;
 
-    @Column(columnDefinition = "tinyint(1) default 0")
-    private Boolean u_deleted;
+    @Column(columnDefinition = "tinyint(1) default 0", name = "u_deleted")
+    private Boolean uDeleted;
 }

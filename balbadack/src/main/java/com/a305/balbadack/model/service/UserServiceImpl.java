@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService{
         if(user == null) { // 회원정보가 없는 경우(아이디 틀림)
             return false;
         } else {
-            if(user.getU_pw().equals(password)) { // 비밀번호가 맞았을 때
+            if(user.getUPw().equals(password)) { // 비밀번호가 맞았을 때
                 return true;
             } else { // 아이디는 맞는데 비밀번호가 틀렸을 때
                 return false;

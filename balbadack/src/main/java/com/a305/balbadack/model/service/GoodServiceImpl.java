@@ -3,6 +3,7 @@ package com.a305.balbadack.model.service;
 import java.util.List;
 
 import com.a305.balbadack.model.dto.Good;
+import com.a305.balbadack.model.dto.Review;
 import com.a305.balbadack.repository.GoodRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,8 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Good> findByU_id(String u_id) {
         try {
-            return goodRepository.findByUser(u_id);
+            System.out.println("Service의 u_id : " + u_id);
+            return goodRepository.findAllByUser_uId(u_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -36,12 +38,22 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Good> findByR_code(int r_code) {
         try {
-            return goodRepository.findByReview(r_code);
+            return goodRepository.findByReview_rCode(r_code);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
+    // @Override
+    // public List<Good> findByR_code(Review review) {
+    //     try {
+    //         return goodRepository.findByReview(review);
+    //     } catch (Exception e) {
+    //         e.printStackTrace();
+    //     }
+    //     return null;
+    // }
     
     @Override
     public void delete(Good good) {
