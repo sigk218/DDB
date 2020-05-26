@@ -40,6 +40,9 @@ public class Animal {
 
     @Column(nullable = false, name = "a_kg")
     private double aKg;
+
+    @Column(length = 10, nullable = false, name = "a_sex")
+    private String aSex;
     
     @Column(columnDefinition = "tinyint(1) default 0", name = "a_deleted")
     private Boolean aDeleted;

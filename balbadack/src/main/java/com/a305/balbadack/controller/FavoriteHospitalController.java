@@ -6,15 +6,19 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-import java.util.List;
+import java.util.*;
 
 import com.a305.balbadack.model.dto.FavoriteHospital;
 import com.a305.balbadack.model.dto.Good;
+import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.model.service.FavoriteHospitalService;
 import com.a305.balbadack.model.service.GoodService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -26,6 +30,27 @@ public class FavoriteHospitalController {
 
     @Autowired
     FavoriteHospitalService favoriteHospitalService;
+
+    @ExceptionHandler
+	public ResponseEntity<Map<String, Object>> handler(Exception e){
+		return handleFail(e.getMessage(), HttpStatus.OK);
+	}
+	
+	private ResponseEntity<Map<String, Object>> handleSuccess(Object data){
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("state", HttpStatus.OK);
+		resultMap.put("message", data);
+		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+    }
+    
+    private ResponseEntity<Map<String, Object>> handleFail(Object data, HttpStatus status) {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("state",  "fail");
+		resultMap.put("message",  data);
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+    }
+
+    
     
     @ApiOperation("즐겨찾기 추가")
     @PostMapping(value="/insert")
@@ -35,9 +60,8 @@ public class FavoriteHospitalController {
 
     @ApiOperation("즐겨찾기 회원별 조회하기")
     @PostMapping(value="/findById")
-    public List<Good> findGoodByU_id(@RequestBody String u_id) {
-        // return favoriteHospitalService.findByU_id(u_id);
-        return null;
+    public List<Hospital> findGoodByU_id(@RequestBody String u_id) {
+        return favoriteHospitalService.findByU_id(u_id);
     }
     
     @ApiOperation("즐겨찾기 삭제하기")
