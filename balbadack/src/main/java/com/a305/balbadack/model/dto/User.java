@@ -44,7 +44,7 @@ public class User {
     private String h_code;
 
     @Column()
-    private boolean u_sms;
+    private Boolean u_sms;
 
     @Column(columnDefinition = "tinyint(1) default 0")
     private Boolean u_deleted;

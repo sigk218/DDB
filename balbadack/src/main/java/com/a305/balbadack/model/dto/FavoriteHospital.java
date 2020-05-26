@@ -34,5 +34,9 @@ public class FavoriteHospital {
     // 아이디
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_favoritehospital_uid"))
-	private User user;
+    private User user;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_favoritehospital_hcode"))
+    private Hospital hospital;
 }

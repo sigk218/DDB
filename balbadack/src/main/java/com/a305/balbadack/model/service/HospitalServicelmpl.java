@@ -1,5 +1,7 @@
 package com.a305.balbadack.model.service;
 
+import java.util.List;
+
 import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.repository.HospitalRepository;
 
@@ -14,29 +16,51 @@ public class HospitalServicelmpl implements HospitalService {
 
   @Override
   public void insert(Hospital hospital) {
-    try{
+    try {
       hospitalRepository.save(hospital);
-    }catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   @Override
   public void update(Hospital hospital) {
-    try{
+    try {
       hospitalRepository.save(hospital);
-    }catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
   @Override
   public void delete(Hospital hospital) {
-    try{
+    try {
       hospitalRepository.delete(hospital);
-    }catch (Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+  
+  @Override
+  public List<Hospital> findByName(String h_name){
+    try {
+      return hospitalRepository.findByName(h_name);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  @Override
+  public List<Hospital> findByLocation(String latitude, String longtitude) {
+    try {
+      // List<Hospital> temp = hospitalRepository.findByName(h_location);
+      // return hospitalRepository.findByName(h_location);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("위치로 병원 조회 중 오류 발생 함.");
+    }
+    return null;
   }
   
 }
