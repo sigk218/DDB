@@ -1,6 +1,6 @@
 package com.a305.balbadack.model.service;
 
-import java.util.List;
+import java.util.*;
 
 import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.repository.HospitalRepository;
@@ -15,52 +15,71 @@ public class HospitalServicelmpl implements HospitalService {
   HospitalRepository hospitalRepository;
 
   @Override
-  public void insert(Hospital hospital) {
+  public void insert(final Hospital hospital) {
     try {
       hospitalRepository.save(hospital);
-    } catch (Exception e) {
+    } catch (final Exception e) {
       e.printStackTrace();
     }
   }
 
   @Override
-  public void update(Hospital hospital) {
+  public void update(final Hospital hospital) {
     try {
       hospitalRepository.save(hospital);
-    } catch (Exception e) {
+    } catch (final Exception e) {
       e.printStackTrace();
     }
   }
 
   @Override
-  public void delete(Hospital hospital) {
+  public void delete(final Hospital hospital) {
     try {
       hospitalRepository.delete(hospital);
-    } catch (Exception e) {
+    } catch (final Exception e) {
       e.printStackTrace();
     }
   }
-  
+  // 이름, 위치, 진료명에 따른 병원 결과
   @Override
-  public List<Hospital> findByName(String h_name){
+  public List<Hospital> findByKeyword(final String keyword) {
     try {
-      return hospitalRepository.findByName(h_name);
-    } catch (Exception e) {
+      // 이름, 위치에 따른 결과 
+      List<Hospital> result = hospitalRepository.findByhKeyword(keyword);
+      // 진료 테이블에서 병원 코드 받아오기 -> 중복 제거 같은 코드가 있으면 빼기
+      List<Integer> hCodeList = hospitalRepository.findByCareKeyword(keyword);
+      // 병원 코드로 병원 조회하기 -> 중복 제거 해야함
+      result.addAll(hospitalRepository.findByhCodeIn(hCodeList));
+      HashSet<Hospital> resultSet = new HashSet<Hospital>(result);
+      List<Hospital> fResult = new ArrayList<Hospital>(resultSet);
+      return fResult;
+    } catch (final Exception e) {
       e.printStackTrace();
     }
     return null;
   }
 
   @Override
-  public List<Hospital> findByLocation(String latitude, String longtitude) {
+  public List<Hospital> findByLocation(final Double latitude, final Double longtitude) {
     try {
-      // List<Hospital> temp = hospitalRepository.findByName(h_location);
-      // return hospitalRepository.findByName(h_location);
-    } catch (Exception e) {
+      return hospitalRepository.findByLocation(latitude, longtitude);
+    } catch (final Exception e) {
       e.printStackTrace();
       System.out.println("위치로 병원 조회 중 오류 발생 함.");
     }
     return null;
   }
-  
+
+  @Override
+  public List<Hospital> findByCode(List<Integer> hCodeList) {
+    try {
+      return hospitalRepository.findByhCodeIn(hCodeList);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("병원 코드로 병원 조회 중 오류 발생 함.");
+    }
+    return null;
+  }
+
+    
 }

@@ -1,6 +1,5 @@
 package com.a305.balbadack.controller;
 
-import java.io.Console;
 import java.util.List;
 
 import com.a305.balbadack.model.dto.Hospital;
@@ -46,26 +45,29 @@ public class HospitalController {
     hospitalService.delete(hospital);
   }
 
-  @ApiOperation("병원 이름으로 검색하기")
-  @PostMapping(value="/name/{h_name}")
-  public List<Hospital> findHospitalByname(@PathVariable String h_name){
-    System.out.println(h_name);
-    return hospitalService.findByName(h_name);
+  // 1. 병원이름으로 검색 2. 지역으로 검색 3. 나머지는 태그 테이블로 
+  @ApiOperation("병원 검색하기")
+  @PostMapping(value="/name/{keyword}")
+  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword){
+    System.out.println(keyword);
+    return hospitalService.findByKeyword(keyword);
   }
 
-  // 위도 : latitude, 경도 : longtitude
-  @ApiOperation("현재 내 위치에서 가까운 병원 조회")
+  // 위도 : latitude, 경도 : longtitude -> 가까운 순서대로 
+  @ApiOperation("현재 내 위치에서 3km 이내의 병원 조회")
   @PostMapping(value="/location")
-  public List<Hospital> findHospitalByLocation(@RequestParam String latitude, @RequestParam String longtitude){
-    System.out.println(latitude);
-    System.out.println(longtitude);
+  public List<Hospital> findHospitalByLocation(@RequestParam Double latitude, @RequestParam Double longtitude){
     return hospitalService.findByLocation(latitude, longtitude);
   }
   
   // 병원 코드 리스트를 받으면, 병원 객체를 리턴
+  @ApiOperation("병원 코드로 병원 정보 조회")
+  @PostMapping(value="/code")
+  public List<Hospital> findHospitalByCode(@RequestBody List<Integer> hCodeList){
+      System.out.println(hCodeList);
+      return hospitalService.findByCode(hCodeList);
+  }
 
-  // 병원의 평점 계산 
+  // 평점 높은 순 + 무조건 거리 순 이여야 겠지? 
   
-  // 병원 리스트를 불러와서 영업중 인지 계산 
-
 }
