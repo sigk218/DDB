@@ -17,7 +17,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   // @Query(value = "select * from hospital h where h_city = '경기도'", nativeQuery = true)
   List<Hospital> findByName(@Param("h_name") String h_name); 
 
-  @Query(value = "select * from hospital h where h.h_name like concat('%', :h_name, '%')", nativeQuery = true)
-  List<Hospital> findByLocation(@Param("latitude") String latitude, @Param("longtitude") String longtitude);
+  // @Query(value = "select * from hospital h where h.h_name like concat('%', :h_name, '%')", nativeQuery = true)
+  // List<Hospital> findByLocation(@Param("latitude") String latitude, @Param("longtitude") String longtitude);
 
 }
