@@ -4,7 +4,8 @@ import GradeBox from '../../components/HosGrades/GradeBox'
 import Pets from '@material-ui/icons/Pets'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
-
+import recieptHelper from '@ming822/ocr-reciept-helper'
+import test from './test.json'
 const cx = classNames.bind(styles)
 
 const reviewData = {
@@ -72,6 +73,10 @@ class ReviewForm extends React.Component {
     const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
     const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
     const totalgrade = this.calcTotalScore(scorelist)
+    const reciept = new recieptHelper(test, '스토리동물병원')
+    console.log('yes')
+    const priceTable = reciept.priceTable
+    console.log(priceTable)
 
     this.state = {
       date : new Date(),
@@ -86,6 +91,7 @@ class ReviewForm extends React.Component {
       photoname: [],
       tempphotos: [],
       content: "",
+      priceTable: priceTable
     }
   }
 
