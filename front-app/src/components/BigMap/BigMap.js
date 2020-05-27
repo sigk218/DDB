@@ -26,14 +26,18 @@ class BigMap extends Component {
             console.log("=======Click event Happened!=======")
         }
     }
+    get_first() {
+        this.state.h_data = this.props.hospitalData;
+        this.state.cur_pick = this.props.hospitalData[0];
+    }
     componentDidMount() {
         const script = document.createElement('script');
         script.async = true;
         script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=e78c23fbd9656d2db2f5df69fb693cfb&autoload=false";
         document.head.appendChild(script);
+
         this.state.h_data = this.props.hospitalData;
         this.state.cur_pick = this.props.hospitalData[0];
-        console.log(this.state.cur_pick)
         var position = [];
 
         script.onload = () => {
@@ -63,19 +67,16 @@ class BigMap extends Component {
         };
 
     }
-    mapping() {
-        
-    }
+
     render() {
-        console.log(this.state.cur_pick)
+        if(this.state.cur_pick.length < 1) {
+            this.get_first();
+        }
         return (
             <>
                 <div className={cx('map')} id="map">
                 </div>
                 
-                <div>
-                    <p>asdfasdfasd</p>
-                </div>
                 <div>
                     <HosInfoCard
                         hospitalData={this.state.cur_pick}

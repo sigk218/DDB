@@ -81,15 +81,12 @@ class HosMapRes extends Component {
         return (
             <div className={cx('container')}>
 
-                <div className={cx('time-box')}>
+                
                     <BigMap 
                         hospitalData={this.state.h_data}
                     />
-                </div>
-                <HosInfoCard
-                    hospitalData={hosData[0]}
-                    widthLength={widthLength}
-                />
+
+                
 
             </div>
         );
