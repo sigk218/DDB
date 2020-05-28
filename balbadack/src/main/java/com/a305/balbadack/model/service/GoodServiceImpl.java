@@ -34,11 +34,12 @@ public class GoodServiceImpl implements GoodService {
         }
         return null;
     }
-
+    
     @Override
     public List<Good> findByR_code(int r_code) {
         try {
-            return goodRepository.findByReview_rCode(r_code);
+            System.out.println("Service의 r_code : " + r_code);
+            return goodRepository.findAllByReview_rCode(r_code);
         } catch (Exception e) {
             e.printStackTrace();
         }

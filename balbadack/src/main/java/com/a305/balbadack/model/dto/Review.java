@@ -77,7 +77,7 @@ public class Review {
     private boolean rDeleted;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
+    @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
     private Hospital hospital;
     
     @OneToMany(mappedBy="review")
