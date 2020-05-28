@@ -30,7 +30,7 @@ public class Animal {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
 	@Column(nullable = false, unique = true, name = "a_code")
-    private int aCode;
+    private Integer aCode;
     
     @Column(length = 30, nullable = false, name = "a_type")
     private String aType;
@@ -39,13 +39,16 @@ public class Animal {
     private String aSpecies;
 
     @Column(nullable = false, name = "a_kg")
-    private double aKg;
+    private Double aKg;
 
     @Column(length = 10, nullable = false, name = "a_sex")
     private String aSex;
     
     @Column(columnDefinition = "tinyint(1) default 0", name = "a_deleted")
     private Boolean aDeleted;
+
+    @Column(length = 50, nullable = false, name="u_id")
+    private String uId;
 
     // 아이디
     @ManyToOne(fetch = FetchType.LAZY)
