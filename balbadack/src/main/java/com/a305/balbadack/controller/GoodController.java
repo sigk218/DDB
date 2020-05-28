@@ -68,12 +68,6 @@ public class GoodController {
 
         return good;
     }
-
-    // @ApiOperation("도움이 됐어요 리뷰별 조회하기")
-    // @PostMapping(value="/findByReview")
-    // public List<Good> findGoodByR_code(@RequestBody Review review) {
-    //     return goodService.findByR_code(review);
-    // }
     
     @ApiOperation("도움이 됐어요 삭제하기")
     @PostMapping(value="/delete")
