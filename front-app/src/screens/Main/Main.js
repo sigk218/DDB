@@ -24,7 +24,7 @@ class Main extends React.Component {
         <MainSearchBar />
         <div>
           <ul>
-            {/* <li>
+            <li>
               <Link to="/MyPage"> 마이페이지</Link>
             </li>
             <li>
@@ -47,7 +47,7 @@ class Main extends React.Component {
             </li>
             <li>
               <Link to="/LogIn">로그인2222</Link>
-            </li> */}
+            </li>
           </ul>
         </div>
       </div>

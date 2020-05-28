@@ -8,8 +8,9 @@ import Button from '@material-ui/core/Button';
 import classNames from 'classnames/bind';
 import BigMap from '../../components/BigMap/BigMap';
 import HosInfoCard from '../../components/HosInfoCard/HosInfoCard'
-import LittleMap from "../../components/LittleMap/LittleMap";
+import { connect } from "react-redux";
 import HosGrades from '../../components/HosGrades/HosGrades';
+import {getHosData} from '../../actions';
 //썸내일은... 리사이징...
 
 const widthLength = 100;
@@ -65,7 +66,10 @@ const hosData = [
 const cx = classNames.bind(styles)
 class HosMapRes extends Component {
     componentDidMount() {
-        
+        this.set_hosdata();
+        this.setState({
+            h_data: this.props.hospital.info
+        })
     }
     constructor(props) {
         super(props);
@@ -74,27 +78,50 @@ class HosMapRes extends Component {
         };
     }
 
-
-    render() {
-        this.state.h_data = hosData;
+    set_hosdata = async () => {
+        console.log("11111111111111111")
+        await this.props.getHosData();
+        this.setState({
+            h_data: this.props.hospital.info
+        })
         console.log(this.state.h_data)
+
         return (
             <div className={cx('container')}>
-
-                
                     <BigMap 
                         hospitalData={this.state.h_data}
                     />
-
-                
-
+            </div>
+        )
+    }
+    render() {
+        this.state.h_data = hosData;
+        if(!this.props.hospital.info)  {
+            this.set_hosdata();
+            console.log("aaaaaaaaaaa")
+        }
+        return (
+            <div >
+                    <BigMap 
+                        hospitalData={this.state.h_data}
+                    />
             </div>
         );
     }
 }
 
 
+const mapStateToProps = state => {
+    return {
+      hospital: state.hos_info,
+    };
+  };
 
-export default HosMapRes;
+  export default connect(mapStateToProps, {
+    getHosData,
+   })(HosMapRes);
+   
+
+   
 
 

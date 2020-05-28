@@ -1,11 +1,12 @@
 import React from "react";
-import HosGrades from '../../components/HosGrades/HosGrades'
-import ReviewPrice from '../../components/ReviewPrice/ReviewPrice'
+import HosGrades from '../../components/HosGrades/HosGrades';
+import ReviewPrice from '../../components/ReviewPrice/ReviewPrice';
 import styles from './mystyle.module.scss';
-import ThumbIcon from '@material-ui/icons/ThumbUpAlt'
-import SportsIcon from '@material-ui/icons/Sports'
-import classNames from 'classnames/bind'
-
+import ThumbIcon from '@material-ui/icons/ThumbUpAlt';
+import SportsIcon from '@material-ui/icons/Sports';
+import classNames from 'classnames/bind';
+import { connect } from "react-redux";
+import {getReviewData} from '../../actions';
 const cx = classNames.bind(styles)
 
 const reviewData = {
@@ -68,6 +69,10 @@ const reviewData = {
 
 class ReviewDetail extends React.Component {
   componentDidMount() {
+    //리뷰데이터 불러오기
+    this.props.getReviewData();
+
+    console.log(this.props.reviewData);
   }
   constructor(props) {
     super(props);
@@ -96,6 +101,10 @@ class ReviewDetail extends React.Component {
 
   }
   render() {
+    //=============리덕스에서 불러온 값================
+    console.log(this.props.review_data.info)
+
+    //===============================================
     const photolist = reviewData.r_photo.split(',')
     const photos = photolist.map(
       p => (
@@ -159,6 +168,15 @@ class ReviewDetail extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    review_data: state.review_info,
+  };
+};
 
+export default connect(mapStateToProps, {
+  getReviewData,
+ })(ReviewDetail);
+ 
 
-export default ReviewDetail;
+ 

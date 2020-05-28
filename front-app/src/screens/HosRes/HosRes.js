@@ -2,8 +2,8 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 
-import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
-
+import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
+import {getHosData} from "../../actions";
 
 const widthLength = 100;
 
