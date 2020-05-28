@@ -31,6 +31,9 @@ public class GoodController {
     @PostMapping(value="/insert")
     public void insertGood(@RequestBody Good good) {
         System.out.println(good.toString());
+        System.out.println("good.getGcode " + good.getGCode());
+        System.out.println("good.get uid " + good.getUser().getUId());
+        System.out.println("good.get rcode " + good.getReview().getRCode());
         goodService.insert(good);
     }
 
