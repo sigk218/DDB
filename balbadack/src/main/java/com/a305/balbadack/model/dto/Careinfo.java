@@ -15,7 +15,7 @@ public class Careinfo {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
 	@Column(nullable = false, unique = true, name = "ci_code")
-    private int ciCode;
+    private Integer ciCode;
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
@@ -26,7 +26,10 @@ public class Careinfo {
     private Animal animal;
 
     @Column(nullable = false, name = "ci_price")
-    private int ciPrice;
+    private Integer ciPrice;
+    
+    @Column(nullable = false, columnDefinition = "boolean default false", name = "ci_open")
+    private Boolean ciOpen;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "c_code", referencedColumnName = "c_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_carelist_c_code"))
@@ -35,5 +38,8 @@ public class Careinfo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "r_code", referencedColumnName = "r_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_review_r_code"))
     private Review review;
+
+    @Column(length = 50, nullable = false, name = "c_name")
+    private String cName;
 
 }
