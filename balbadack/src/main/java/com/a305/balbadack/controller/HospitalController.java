@@ -68,6 +68,13 @@ public class HospitalController {
       return hospitalService.findByCode(hCodeList);
   }
 
-  // 평점 높은 순 + 무조건 거리 순 이여야 겠지? 
+  // 거리가 가까운 것들 중 + 평점이 높은 것 이여야 겠지?
+  // HQL ordered by 두개하면
+  @ApiOperation("거리가 가까운 순서중 평점 높은 순서대로 병원")
+  @PostMapping(value="/starrating")
+  public List<Hospital> findHospitalByStar(@RequestParam Double latitude, @RequestParam Double longtitude){
+      return hospitalService.findByStar(latitude, longtitude);
+  }
+  
   
 }

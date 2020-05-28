@@ -16,9 +16,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   @Query(value = "select * from hospital h where h.h_name like concat('%', :keyword, '%') or h.h_gu like concat('%', :keyword, '%') or h.h_dong like concat('%', :keyword, '%') or h.h_station like concat('%', :keyword, '%')", nativeQuery = true)
   List<Hospital> findByhKeyword(@Param("keyword") String keyword);
   
-  // 진료 정보 테이블에서 키워드로 병원 검색 후, 병원 객체 담아주기
-  @Query(value="select h_code from careinfo as c where c.c_name like concat('%', :keyword, '%')")
-  List<Integer> findByCareKeyword(@Param("keyword") String keyword);
+  // // 진료 정보 테이블에서 키워드로 병원 검색 후, 병원 객체 담아주기
+  // @Query(value="select h_code from careinfo as c where c.c_name like concat('%', :keyword, '%')")
+  // List<Integer> findByCareKeyword(@Param("keyword") String keyword);
 
   // 가까운 위치별로 
   @Query(value = "select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) )))", nativeQuery = true)
@@ -26,5 +26,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
 
   // @Query(value="select * from hospital as h where h.h_code hCodeList in :code")
   List<Hospital> findByhCodeIn(List<Integer> hCodeList);
+
+  // 별점 순 조회
+  @Query(value="select * from hospital as h order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) , h.h_starrating desc",nativeQuery = true)
+  List<Hospital> findByStar(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude);
 
 }

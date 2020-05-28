@@ -21,4 +21,7 @@ public interface HospitalService {
 
   // 병원 코드 목록으로 병원 목록 조회
   public List<Hospital> findByCode(List<Integer> hCodeList);
+
+  // 별점에 따라 병원 목록 조회 
+  public List<Hospital> findByStar(Double latitude, Double longtitude);
 }
