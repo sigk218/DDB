@@ -23,7 +23,7 @@ public class HospitalPictureServiceImpl implements HospitalPictureService {
   }
 
   @Override
-  public List<HospitalPicture> findByHospital(String hPhotoCode) {
+  public List<HospitalPicture> findByhPhotoCode(String hPhotoCode) {
     try {
       return hospitalPictureRepository.findByhPhotoCode(hPhotoCode);
     } catch (Exception e) {

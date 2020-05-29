@@ -13,10 +13,10 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface HospitalPictureRepository extends JpaRepository<HospitalPicture, Integer> {
 
+  // 병원별 사진 찾기
   List<HospitalPicture> findByhPhotoCode(@Param("hPhotoCode") String hPhotoCode);
 
   @Modifying
   @Query(value = "update hospital_picture as hp set hp.hp_deleted = 1 where hp.p_code=:Pcode", nativeQuery = true)
   void delete(@Param("Pcode") int Pcode);
-
 }

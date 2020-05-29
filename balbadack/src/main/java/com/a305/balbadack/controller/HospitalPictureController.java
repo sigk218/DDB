@@ -36,7 +36,7 @@ public class HospitalPictureController {
   @ApiOperation("병원 별 사진 조회하기")
   @PostMapping(value="/findByhospital")
   public List<HospitalPicture> findByHospital(@RequestBody String hPhotoCode) {
-      return hospitalPictureService.findByHospital(hPhotoCode);
+      return hospitalPictureService.findByhPhotoCode(hPhotoCode);
   }
 
   // Delete : 병원 사진 삭제하기
@@ -45,7 +45,7 @@ public class HospitalPictureController {
   public void deleteReport(@RequestBody Integer pCode) {
       //hp_deleted  true로 바꾸기
       hospitalPictureService.delete(pCode);
-
+  }
 
   
 }
