@@ -5,6 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import { Redirect } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import recieptHelper from '@ming822/ocr-reciept-helper'
+import vision from 'react-cloud-vision-api'
 
 const cx = classNames.bind(styles)
 
@@ -25,6 +26,7 @@ class selectOption extends React.Component {
     this.state = {
       isreciept: false,
       reciept: null,
+      recieptBase64: null,
       hosInfo : {
         id: null,
         name: null,
@@ -68,18 +70,58 @@ class selectOption extends React.Component {
   
   async handleReciept(e) {
     const files = [...e.target.files]
-    await this.setState({reciept:files[0]}) 
+    await this.setState({reciept:files[0]})
+    const data = await this.processFile(files[0])
+    await this.setState({recieptBase64: data})
+    await this.ocrApi()
   }
 
   async ocrApi() {
-    const vision = require('@google-cloud/vision');
-    const client = new vision.ImageAnnotatorClient();
-    const [result] = await client.textDetection(this.state.reciept);
-    const reciept = new recieptHelper(result, this.state.hosInfo.name)
-    console.log(reciept)
-    if (reciept.isHos) {
-      await this.setState({isreciept:true})
+    await vision.init({ auth: 'AIzaSyCcrhcPOgPX5GS5RwI6OujdlEKhZbYT7nw' })
+    const req = await new vision.Request({
+      image: new vision.Image({
+        base64: this.state.recieptBase64
+      }),
+      features: [
+        new vision.Feature('TEXT_DETECTION', 4)
+      ]
+    })
+    console.log(req)
+    // const url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCcrhcPOgPX5GS5RwI6OujdlEKhZbYT7nw"
+    // const headers= {
+    //   'Content-Type': 'application/json',
+    //   "Access-Control-Allow-Origin": "*"
+    // }
+    // const body = {
+    //   'requests': [
+    //     {
+    //       "image" : {
+    //         "content":this.state.recieptBase64
+    //       },
+    //       "features": [
+    //         {
+    //           "type": "DOCUMENT_TEXT_DETECTION"
+    //         }
+    //       ]
+    //     }
+    //   ]
+    // }
+    // const result = await axios.post(url, headers, body)
+    // console.log(result)
+    // const reciept = new recieptHelper(result, this.state.hosInfo.name)
+    // if (reciept.isHos) {
+    //   await this.setState({isreciept:true})
+    // }
+  }
+
+  async processFile(file) {
+    const reader = new FileReader()
+    reader.onload = function () {
+      const result = reader.result
+      console.log(result)
+      return result
     }
+    reader.readAsDataURL(file)
   }
 
   render() {
