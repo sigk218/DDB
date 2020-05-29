@@ -12,6 +12,7 @@ import ResTab from "./components/Navigation/ResTab";
 // import { Link } from "react-router-dom";
 import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
+import SelectOption from "./screens/ReviewForm/selectOption";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="/ReviewDetail" exact component={ReviewDetail} />
             <Route path="/ResTab" exact component={ResTab} />
             <Route path="/ReviewForm" exact component={ReviewForm} />
+            <Route path="/SelectOption" exact component={SelectOption} />
           </div>
         </TempNavigation>
 

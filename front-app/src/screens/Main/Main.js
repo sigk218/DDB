@@ -38,6 +38,9 @@ class Main extends React.Component {
             <li>
               <Link to="/ReviewForm">리뷰작성페이지</Link>
             </li>
+            <li>
+              <Link to="/SelectOption">옵션선택페이지</Link>
+            </li>
           </ul>
         </div>
       </div>

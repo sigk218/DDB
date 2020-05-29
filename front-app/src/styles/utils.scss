@@ -96,8 +96,14 @@ $title: 'BMEULJIRO';
   border-radius: 5px;
 }
 
-@mixin horizontal-scroll() {
+@mixin round-double-border() {
+  border: 3px double $darkgreen;
+  border-radius: 5px;
+}
+
+@mixin scroll() {
   overflow-x: scroll;
+  overflow-y: scroll;
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
   ::-webkit-scrollbar {
@@ -124,6 +130,12 @@ $title: 'BMEULJIRO';
 @mixin flex-between() {
   display: flex;
   justify-content: space-between;
+}
+
+@mixin flex-vertical() {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 @mixin thin-shadow() {
@@ -160,9 +172,30 @@ $title: 'BMEULJIRO';
 }
 
 .divider {
-  width: 11.5rem;
+  width: 14em;
   margin: 7px auto;
   border-top: 1.3px dashed $darkgreen
+}
+
+.small-divider {
+  width: 7em;
+  margin: 7px auto;
+  border-top: 1.3px dashed $darkgreen
+}
+
+.spacer {
+  width: 10px;
+  margin: 0
+}
+
+.h-spacer {
+  height: 10px;
+  margin: 0;
+}
+
+.h-small-spacer {
+  height: 5px;
+  margin: 0;
 }
 
 .show {
@@ -177,7 +210,7 @@ $title: 'BMEULJIRO';
   height:calc(18vh + 4px);
   @include width-size(0px);
   @include flex-nowrap();
-  @include horizontal-scroll();
+  @include scroll();
 }
 
 .photo {
@@ -190,6 +223,19 @@ $title: 'BMEULJIRO';
   position:relative;
   top:1px;
   border-color: $red;
+}
+
+.small-text {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.stress-text {
+  font-weight: bolder;
+}
+
+.red-text{
+  color: $red
 }
 
 

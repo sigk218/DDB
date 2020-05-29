@@ -6,9 +6,9 @@
   @include flex-between;
 }
 
-.spacer {
-  width: 10px;
-  margin: 0
+.indented-row {
+  @include width-size(5px);
+  @include flex-between;
 }
 
 .small-category {
@@ -22,7 +22,7 @@
 .animal-box {
   @include round-border();
   @include flex-center();
-  @include horizontal-scroll();
+  @include scroll();
   img {
     width: 40px;
     height: 40px;
@@ -83,3 +83,141 @@
   }
 }
 
+.step-box {
+  padding: 20px 5px 10px;
+  @include round-double-border();
+  @include flex-vertical();
+}
+
+.box-header {
+  position: relative;
+  height: 18px;
+  width: 100%;
+  p {
+    margin: 0;
+    text-align: center;
+    font-weight: bold;
+    line-height: 10px;
+  }
+}
+
+.box-content {
+  margin: 0;
+  @include flex-vertical;
+
+  p {
+    margin: 4px 0;
+    font-size: smaller;
+    text-align: center;
+  }
+
+  .content-header {
+    font-weight:bolder;
+  }  
+}
+
+.num-icon {
+  position: absolute;
+  bottom: 8px;
+  height: 18px;
+  width: 18px;
+}
+
+.one-icon {
+  left: calc(50% - 50px);
+}
+
+.two-icon {
+  left: calc(50% - 58px);
+}
+
+.info-icon {
+  height: 50px;
+  width: 50px;
+  margin: 30px auto 20px;
+}
+
+.big-padding {
+  padding: 20px;
+}
+
+.modal {
+  position: absolute;
+  background-color: $beige;
+  width: 90%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1.3px solid $darkgreen;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  &:focus {
+    outline: none;
+  }
+}
+
+.modal-header {
+  text-align: center;
+}
+
+.search-box {
+  @include flex-between;
+}
+
+.search-btn {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  color: $beige;
+  background-color: $darkgreen;
+  cursor: pointer;
+  @include round-border();
+  @include flex-center();
+}
+
+.modal-body {
+  @include width-size(5px);
+  @include scroll();
+  margin-bottom: 10px;
+}
+
+.search-list-box {
+  @include round-border();
+  width: calc(100% - 20px);
+  padding: 1px 5px;
+  cursor: pointer;
+  p {
+    margin: 3px 0;
+  }
+}
+
+.hos-box {
+  @include round-border();
+  @include width-size(5px);
+  padding: 1px 5px;
+  @include active-background();
+  cursor: pointer;
+  p {
+    margin: 3px 0;
+  }
+}
+
+input[type="text"] {
+  background-color: transparent;
+  width: calc(100% - 25px);
+  margin-right: 5px;
+  @include round-border();
+  font-family: 'NeoDunggeunmo';
+  line-height:140%;
+  padding: 1px 5px;
+  &:focus {
+    outline: none;
+    @include active-background();
+  }
+  &::selection {
+    background-color: $darkgreen;
+    color: $beige;
+  }
+}

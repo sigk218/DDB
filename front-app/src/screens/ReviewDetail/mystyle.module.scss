@@ -17,7 +17,7 @@ div {
 .tag-box {
   height:29.3px;
   @include width-size(0px);
-  @include horizontal-scroll();
+  @include scroll();
   @include flex-nowrap();
 }
 
