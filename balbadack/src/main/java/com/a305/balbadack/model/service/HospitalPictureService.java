@@ -7,5 +7,10 @@ public interface HospitalPictureService {
 
     // 사진 등록
     public void insert(HospitalPicture hospitalPicture);
-  
+
+    // 병원별 사진 조회
+    public List<HospitalPicture> findByHospital(String hPhotoCode);
+
+    // 사진 삭제 
+    public void delete(Integer pCode);
 }

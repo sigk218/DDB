@@ -3,6 +3,8 @@ package com.a305.balbadack.controller;
 import com.a305.balbadack.model.dto.HospitalPicture;
 import com.a305.balbadack.model.service.HospitalPictureService;
 
+import java.util.List;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -25,9 +27,25 @@ public class HospitalPictureController {
 
   // create : 병원 사진 등록하기 
   @ApiOperation("병원 사진 등록하기")
-  @PostMapping(value="/")
+  @PostMapping(value="/insert")
   public void insertReport(@RequestBody HospitalPicture hospitalPicture) {
       hospitalPictureService.insert(hospitalPicture);
   }
+
+  // Read : 병원 별 사진 조회
+  @ApiOperation("병원 별 사진 조회하기")
+  @PostMapping(value="/findByhospital")
+  public List<HospitalPicture> findByHospital(@RequestBody String hPhotoCode) {
+      return hospitalPictureService.findByHospital(hPhotoCode);
+  }
+
+  // Delete : 병원 사진 삭제하기
+  @ApiOperation("병원 사진 삭제하기")
+  @PostMapping(value="/delete")
+  public void deleteReport(@RequestBody Integer pCode) {
+      //hp_deleted  true로 바꾸기
+      hospitalPictureService.delete(pCode);
+
+
   
 }

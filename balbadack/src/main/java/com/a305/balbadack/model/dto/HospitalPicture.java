@@ -39,6 +39,11 @@ public class HospitalPicture {
   // 병원 테이블의 사진 코드
   @Column(length = 100, name="h_photocode")
   private String hPhotoCode;
+  
+  // 삭제 여부 
+  @Column(columnDefinition = "Boolean default false", name = "hp_deleted")
+  private Boolean hpDeleted;
+
 
 // 외래키 안하기로함 
 	// @ManyToOne(fetch = FetchType.LAZY)
