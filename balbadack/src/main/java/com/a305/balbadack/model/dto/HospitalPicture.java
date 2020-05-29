@@ -43,7 +43,7 @@ public class HospitalPicture {
   // 삭제 여부 
   @Column(columnDefinition = "Boolean default false", name = "hp_deleted")
   private Boolean hpDeleted;
-
+  
 
 // 외래키 안하기로함 
 	// @ManyToOne(fetch = FetchType.LAZY)
