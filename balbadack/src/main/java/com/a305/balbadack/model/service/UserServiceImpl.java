@@ -16,9 +16,13 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    // 회원가입
     @Override
     public boolean create(User user) throws Exception {
         try {
+            User check = userRepository.findByUid(user.getUId());
+            if(check != null) return false;
+            
             userRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();

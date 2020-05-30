@@ -59,7 +59,10 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) {
         
         try {
-            userService.create(user);
+			Boolean check = userService.create(user);
+			if(!check) { // 이미 가입된 아이디일 경우
+				return handleSuccess(null);
+			}
             return handleSuccess("회원가입을 완료하였습니다.");
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK);
@@ -76,7 +79,7 @@ public class UserController {
 			if(flag) {
 				return handleSuccess("로그인에 성공하였습니다.");
 			} else {
-				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.OK);
+				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.OK); // 여기 HTTP Code 다르게
 			}
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK);
