@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import vision from 'react-cloud-vision-api'
+import resJson from './test2.json'
 
 const cx = classNames.bind(styles)
 
@@ -71,57 +72,36 @@ class selectOption extends React.Component {
   async handleReciept(e) {
     const files = [...e.target.files]
     await this.setState({reciept:files[0]})
-    const data = await this.processFile(files[0])
-    await this.setState({recieptBase64: data})
-    await this.ocrApi()
+    await this.processFile(files[0])
   }
 
   async ocrApi() {
-    await vision.init({ auth: 'AIzaSyCcrhcPOgPX5GS5RwI6OujdlEKhZbYT7nw' })
-    const req = await new vision.Request({
-      image: new vision.Image({
-        base64: this.state.recieptBase64
-      }),
-      features: [
-        new vision.Feature('TEXT_DETECTION', 4)
-      ]
-    })
-    console.log(req)
-    // const url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCcrhcPOgPX5GS5RwI6OujdlEKhZbYT7nw"
-    // const headers= {
-    //   'Content-Type': 'application/json',
-    //   "Access-Control-Allow-Origin": "*"
-    // }
-    // const body = {
-    //   'requests': [
-    //     {
-    //       "image" : {
-    //         "content":this.state.recieptBase64
-    //       },
-    //       "features": [
-    //         {
-    //           "type": "DOCUMENT_TEXT_DETECTION"
-    //         }
-    //       ]
-    //     }
+    // const key = ''
+    // await vision.init({ auth: key })
+    // const req = await new vision.Request({
+    //   image: new vision.Image({
+    //     base64: this.state.recieptBase64
+    //   }),
+    //   features: [
+    //     new vision.Feature('TEXT_DETECTION', 4)
     //   ]
-    // }
-    // const result = await axios.post(url, headers, body)
-    // console.log(result)
-    // const reciept = new recieptHelper(result, this.state.hosInfo.name)
-    // if (reciept.isHos) {
-    //   await this.setState({isreciept:true})
-    // }
+    // })
+    // const res = await vision.annotate(req)
+    // const resJson = JSON.stringify(res.responses)
+    // const reciept = new recieptHelper(resJson[0], '스토리동물병원')
+    // const priceTable = reciept.priceTable
+    console.log('yes')
+    await this.setState({isreciept:true})
   }
 
   async processFile(file) {
     const reader = new FileReader()
-    reader.onload = function () {
-      const result = reader.result
-      console.log(result)
-      return result
+    const context = this
+    await reader.readAsDataURL(file)
+    reader.onload = await async function () {
+      await context.setState({recieptBase64: reader.result})
+      await context.ocrApi()
     }
-    reader.readAsDataURL(file)
   }
 
   render() {
