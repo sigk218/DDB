@@ -82,9 +82,6 @@ class HosRes extends Component {
 
             <div>
 
-                <text>tab을 만들자</text>
-                <br/>
-                <br/>
                 {this.state.cards
                     ? this.state.cards.map(card => (
                         <HosInfoCard
