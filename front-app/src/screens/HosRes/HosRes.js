@@ -8,6 +8,8 @@ import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
 // import Tabs from '@material-ui/core/Tabs';
 // import Tab from '@material-ui/core/Tab';
 
+import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
+import {getHosData} from "../../actions";
 
 const widthLength = 100;
 
