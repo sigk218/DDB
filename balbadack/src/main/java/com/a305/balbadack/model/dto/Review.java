@@ -22,7 +22,7 @@ public class Review {
     private int rCode;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
+    @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
     private User user;
 
     @Column(length = 20, nullable = false, name = "r_nickname")
@@ -80,14 +80,14 @@ public class Review {
     @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
     private Hospital hospital;
     
-    @OneToMany(mappedBy="review")
-    private List<Careinfo> careinfo;
+    // @OneToMany(mappedBy="review")
+    // private List<Careinfo> careinfo;
 
-    @OneToMany(mappedBy="review")
-    private List<Report> report;
+    // @OneToMany(mappedBy="review")
+    // private List<Report> report;
 
-    @OneToMany(mappedBy="review")
-    private List<Good> good;
+    // @OneToMany(mappedBy="review")
+    // private List<Good> good;
 
     @Column(nullable = true, name = "r_starrating")
     private double rStarrating;

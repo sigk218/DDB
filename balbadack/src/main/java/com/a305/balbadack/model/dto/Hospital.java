@@ -25,16 +25,17 @@ import lombok.AllArgsConstructor;
 @Getter
 @Setter
 @ToString
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
-@Entity(name = "hospital")
+// @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+@Entity
+@Table(name = "hospital")
 public class Hospital{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true, name = "h_code")
   private int hCode;
 
-  @OneToMany(mappedBy="hospital")
-  private List<Veterinarian> veterinarian; 
+  // @OneToMany(mappedBy="hospital")
+  // private List<Veterinarian> veterinarian; 
 
   @Column(nullable = false, length = 50, name = "h_name")
   private String hName;
@@ -73,10 +74,10 @@ public class Hospital{
   private String hTag;
 
   @Column(columnDefinition = "boolean default false", name = "h_certification")
-  private boolean hCertification;
+  private Boolean hCertification;
 
   @Column(nullable = true, name = "h_open")
-  private boolean hOpen;
+  private Boolean hOpen;
 
   @Column(length = 60, name = "h_monday")
   private String hMonday;
