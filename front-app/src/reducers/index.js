@@ -5,6 +5,7 @@ import reviewReducers from './reviewReducers';
 import recieptReducers from './recieptReducers'
 import newReviewReducers from './newReviewReducers'
 import statusReducers from './statusReducers'
+import hosGradeReducers from './hosGradeReducers'
 
 export default combineReducers({
     users: userReducers,
@@ -12,5 +13,6 @@ export default combineReducers({
     review_info: reviewReducers,
     reciept_info: recieptReducers,
     new_Review : newReviewReducers,
-    status: statusReducers
+    status: statusReducers,
+    hosGrade: hosGradeReducers
   });

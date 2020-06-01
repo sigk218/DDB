@@ -7,3 +7,5 @@ export const GET_HOS_SEARCH_LIST = 'GET_HOS_SEARCH_LIST';
 export const TOGGLE_SEARCH_MODAL = 'TOGGLE_SEARCH_MODAL';
 export const SELECT_HOS = 'SELECT_HOS';
 export const HAS_RECIEPT = 'HAS_RECIEPT';
+export const GET_TOTAL_GRADE = 'GET_TOTAL_GRADE'
+export const SET_HOS_SCORE = 'SET_HOS_SCORE'

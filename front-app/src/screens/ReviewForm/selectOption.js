@@ -237,8 +237,6 @@ class selectOption extends React.Component {
   }
 }
 
-// export default selectOption;
-
 const mapStateToProps = state => {
   return {
     hosSearchList: state.hos_info.searchList,

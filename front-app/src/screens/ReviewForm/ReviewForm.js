@@ -7,24 +7,18 @@ import classNames from 'classnames/bind'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import test from './test.json'
 import axios from 'axios'
+
 const cx = classNames.bind(styles)
 
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
-    const scorelist =  [0, 0, 0, 0, 0]
-    const scorelabel = ['청결', '친절함', '치료결과', '전문성', '적정한 치료']
-    const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
-    const totalgrade = this.calcTotalScore(scorelist)
     const reciept = new recieptHelper(test, '스토리동물병원')
     const priceTable = reciept.priceTable
 
     this.state = {
       date : new Date(),
-      grade: grade,
-      totalgrade: totalgrade,
       visitdate: new Date(),
-      editablegrade: true,
       revisitbtn: false,
       recieptbtn: false,
       isphoto:false,
@@ -34,30 +28,6 @@ class ReviewForm extends React.Component {
       content: "",
       priceTable: priceTable
     }
-  }
-
-
-  calcTotalScore(scorelist) {
-    const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
-    const totalgrade = [{name:'평균평점', score:totalscore}]
-    return totalgrade
-  }
-
-  onGradeChange(field, value) {
-    this.setState({
-      grade: this.state.grade.map(
-        g => {
-          if(g.name === field) {
-            return {...g, score:value}
-          }
-          return { ...g }
-        }
-      )
-    }, () => {
-      this.setState({
-        totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
-      })
-    })
   }
 
   togglerevisit() {
@@ -170,13 +140,7 @@ class ReviewForm extends React.Component {
           <div className={cx('category')}>
             <p>병원 상세 평가</p>
           </div>
-          <GradeBox 
-            totalgrade={this.state.totalgrade} 
-            grade={this.state.grade}
-            editable={this.state.editablegrade}
-            onChange={this.onGradeChange.bind(this)}
-            dojang={this.state.revisitbtn}
-            />
+          <GradeBox/>
           <div 
             className={this.state.revisitbtn? cx('border-button', 'active') : cx('border-button')}
             onClick={this.togglerevisit.bind(this)}
@@ -256,6 +220,4 @@ class ReviewForm extends React.Component {
   }
 }
 
-
-
-export default ReviewForm;
+export default ReviewForm

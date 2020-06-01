@@ -3,26 +3,32 @@ import Rating from '@material-ui/lab/Rating';
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 
+import { connect } from 'react-redux'
+import { 
+  setHosScore,
+  getTotalGrade
+} from '../../actions'
+
+
 const cx = classNames.bind(styles)
 
 class HosGrades extends Component {
-  handleGradeChange(e) {
-    if (this.props.editable === true) {
-      this.props.onChange(e.target.name, parseInt(e.target.value))
-    }
-  }
  
   render() {
     const ratings = this.props.grade.map(
-      r =>
-        <div className={cx('rating-box')} key={r.name}>
+      (r, i) =>
+        <div className={cx('rating-box')} key={i}>
           <p className={cx('box-item')}>{r.name}</p>
           <Rating 
             name={r.name} 
-            value={r.score} 
+            value={parseInt(r.score)} 
             size="small"
             precision={0.5}
-            onChange={this.handleGradeChange.bind(this)}
+            onChange={ e => {
+              if (this.props.editable === true) {
+                this.props.setHosScore(e.target.name, parseInt(e.target.value), i)
+              }
+            }}
           />
         </div>
     )
@@ -35,5 +41,18 @@ class HosGrades extends Component {
 }
 
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setHosScore: (name, score, i) => {
+      dispatch(setHosScore(name, score, i))
+      dispatch(getTotalGrade())
+    },
+    getTotalGrade: () => dispatch(getTotalGrade())
+  };
+};
 
-export default HosGrades;
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(HosGrades)

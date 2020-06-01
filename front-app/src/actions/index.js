@@ -7,7 +7,9 @@ import {
     GET_HOS_SEARCH_LIST,
     TOGGLE_SEARCH_MODAL,
     SELECT_HOS,
-    HAS_RECIEPT
+    HAS_RECIEPT,
+    GET_TOTAL_GRADE,
+    SET_HOS_SCORE
   } from "./types";
 
 
@@ -193,5 +195,18 @@ const hos_list = [
     return {
       type: HAS_RECIEPT,
       hasReciept
+    }
+  }
+
+  export const getTotalGrade = () => {
+    return {
+      type: GET_TOTAL_GRADE
+    }
+  }
+
+  export const setHosScore = (name, score, i) => {
+    return {
+      type: SET_HOS_SCORE,
+      name, score, i
     }
   }
