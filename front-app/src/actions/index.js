@@ -2,7 +2,12 @@ import {
     GET_USER_INFO,
     GET_HOS_DATA,
     GET_REVIEW_DATA,
-    UPLOAD_RECIEPT_INFO
+    UPLOAD_RECIEPT_INFO,
+    SET_HOS_INFO,
+    GET_HOS_SEARCH_LIST,
+    TOGGLE_SEARCH_MODAL,
+    SELECT_HOS,
+    HAS_RECIEPT
   } from "./types";
 
 
@@ -114,12 +119,15 @@ const reviewData = {
   h_code: 1
 }
 
-const reciept = {
-  bufferData: null,
-  dateIs: null,
-  hasHos: null,
-  items: []
-}
+
+const hos_list = [
+  {id: 1, name:"행복동물병원", address:"서울시 관악구 행복동 행복로 1길"}, 
+  {id: 2, name:"행봄동물병원", address:"서울시 관악구 행봄동 행봄로 2길"},
+  {id: 3, name:"행봉동물병원", address:"서울시 관악구 행봉동 행봉로 3길"},
+  {id: 4, name:"행행동물병원", address:"서울시 관악구 행복동 행복로 4길"}, 
+  {id: 5, name:"봉봉동물병원", address:"서울시 관악구 행봄동 행봄로 5길"},
+  {id: 6, name:"봉행동물병원", address:"서울시 관악구 행봉동 행봉로 6길"},
+]
 
 
 //====================================================================
@@ -148,5 +156,42 @@ const reciept = {
     return {
       type: UPLOAD_RECIEPT_INFO,
       bff, dateIs, hasHos, items
+    }
+  }
+
+  export const getHosSearchList = () => {
+    console.log('get hos search list')
+    const res = hos_list
+    return {
+      type: GET_HOS_SEARCH_LIST,
+      res
+    }
+  }
+
+  export const setHosInfo = (id, name, address) => {
+    console.log('set hos info')
+    return {
+      type: SET_HOS_INFO,
+      id, name, address
+    }
+  }
+
+  export const toggleSearchModal = () => {
+    return {
+      type: TOGGLE_SEARCH_MODAL
+    }
+  }
+
+  export const selectHos = (hosSelected) => {
+    return {
+      type: SELECT_HOS,
+      hosSelected
+    }
+  }
+
+  export const hasReciept = (hasReciept) => {
+    return {
+      type: HAS_RECIEPT,
+      hasReciept
     }
   }

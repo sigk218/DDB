@@ -2,46 +2,32 @@ import React from "react";
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import Modal from '@material-ui/core/Modal';
-import { Redirect } from 'react-router-dom'
 import SearchIcon from '@material-ui/icons/Search'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import vision from 'react-cloud-vision-api'
-import resJson from './test2.json'
+// import resJson from './test2.json'
 
 import { connect } from 'react-redux'
-import { uploadReciept } from '../../actions'
+import { 
+  uploadReciept, 
+  setHosInfo, 
+  getHosSearchList,
+  toggleSearchModal,
+  selectHos,
+  hasReciept
+} from '../../actions'
 import history from "../../history";
 
 
 
 const cx = classNames.bind(styles)
 
-const list = [
-  {id: 1, name:"행복동물병원", address:"서울시 관악구 행복동 행복로 1길"}, 
-  {id: 2, name:"행봄동물병원", address:"서울시 관악구 행봄동 행봄로 2길"},
-  {id: 3, name:"행봉동물병원", address:"서울시 관악구 행봉동 행봉로 3길"},
-  {id: 4, name:"행행동물병원", address:"서울시 관악구 행복동 행복로 4길"}, 
-  {id: 5, name:"봉봉동물병원", address:"서울시 관악구 행봄동 행봄로 5길"},
-  {id: 6, name:"봉행동물병원", address:"서울시 관악구 행봉동 행봉로 6길"},
-]
-
-
 class selectOption extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isreciept: false,
       reciept: null,
-      recieptInfo: this.props.state,
-      recieptBase64: null,
-      hosInfo : {
-        id: null,
-        name: null,
-        address: null
-      },
-      open: false,
-      searchWord: '',
-      list: null
+      searchWord: ''
     }
   }
 
@@ -52,24 +38,18 @@ class selectOption extends React.Component {
   }
   
   async showList() {
-    //axios 요청
-    if (list.length > 0) {
-      await this.setState({list: list})
-    }
+    await this.props.getHosSearchList()
   }
 
   async handleHos(l) {
-    await this.setState({hosInfo:{
-      id: l.id,
-      name: l.name,
-      address: l.address
-    }})
-    await this.setState({open: false})
+    await this.props.selectHos(true)
+    await this.props.setHosInfo(l.id, l.name, l.address)
+    await this.props.toggleSearchModal(true)
     await this.setState({searchWord: ''})
   }
 
   async handleHosFirst(e) {
-    if (this.state.hosInfo.id === null) {
+    if (!this.props.status.hosSelected) {
       alert('동물 병원을 먼저 검색해주세요')
       e.preventDefault()
     }
@@ -81,25 +61,29 @@ class selectOption extends React.Component {
     await this.processFile(files[0])
   }
 
-  async ocrApi() {
-    // const key = ''
-    // await vision.init({ auth: key })
-    // const req = await new vision.Request({
-    //   image: new vision.Image({
-    //     base64: this.state.recieptBase64
-    //   }),
-    //   features: [
-    //     new vision.Feature('TEXT_DETECTION', 4)
-    //   ]
-    // })
-    // const res = await vision.annotate(req)
-    // const resJson = JSON.stringify(res.responses)
-    // const reciept = new recieptHelper(resJson[0], '스토리동물병원')
+  async ocrApi(file, recieptBase64) {
+    const key = ''
+    await vision.init({ auth: key })
+    const req = await new vision.Request({
+      image: new vision.Image({
+        base64: recieptBase64
+      }),
+      features: [
+        new vision.Feature('TEXT_DETECTION', 4)
+      ]
+    })
+    const res = await vision.annotate(req)
+    const resJson = res.responses[0]
     const reciept = new recieptHelper(resJson[0], '스토리동물병원')
-    const priceTable = reciept.priceTable
-    await uploadReciept(reciept.dateInfo.length > 0, reciept.isPlaceName, priceTable)
-    await this.setState({isreciept:true})
-
+    const isDate = reciept.dateInfo.length > 0
+    const hasPlace = reciept.isPlaceName
+    if (isDate & hasPlace) {
+      await this.props.uploadReciept(file, isDate, hasPlace, reciept.priceTable)
+      await this.props.hasReciept(true)
+      history.push("/ReviewForm");
+    } else {
+      alert('영수증의 날짜 정보나 병원 이름이 보이지 않습니다 8-8')
+    }
   }
 
   async processFile(file) {
@@ -107,17 +91,16 @@ class selectOption extends React.Component {
     const context = this
     await reader.readAsDataURL(file)
     reader.onload = await async function () {
-      await context.setState({recieptBase64: reader.result})
-      await context.ocrApi()
-      history.push("/ReviewForm");
+      await context.ocrApi(file, reader.result)
     }
   }
 
   render() {
-    const hosSearch = this.state.hosInfo.name !== null ? '동물병원 재검색하기' : '동물병원 검색하기'
-    const searchResult = this.state.list? 
-      this.state.list.map(l =>
-        <div 
+    const hosSearch = this.props.status.hosSelected ? '동물병원 재검색하기' : '동물병원 검색하기'
+    
+    const searchResult = this.props.hosSearchList? 
+      this.props.hosSearchList.map(l =>
+        <div
           className={cx('search-list-box')}
           onClick={() => this.handleHos(l)}
           key={l.id}
@@ -127,6 +110,7 @@ class selectOption extends React.Component {
         </div>
       ) 
       : null
+
     const body = (
       <div className={cx('modal')}>
         <h3 className={cx('modal-header')}>동물병원 검색하기</h3>
@@ -152,12 +136,7 @@ class selectOption extends React.Component {
         <div className={cx('h-spacer')}></div>
       </div>
     );
-    // 바꾸기
-    // if (this.state.isreciept && this.state.hosInfo.name) {
-    //   return (
-    //     <Redirect to="/ReviewForm" />
-    //   )
-    // }
+
     return (
         <div>
           <div className={cx('h-spacer')}></div>
@@ -226,12 +205,12 @@ class selectOption extends React.Component {
               다른 사용자로부터 신고요청이 들어올 경우 <span className={cx('red-text')}>서비스 이용이 중지</span>될 수 있습니다.
             </p>
           </div>
-          <div className={cx('border-button')} onClick={() => this.setState({open:!this.state.open})}>
+          <div className={cx('border-button')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
             {hosSearch}
           </div>
-          <div className={this.state.hosInfo.name ? cx('hos-box') : cx('hide')}>
-            <p>{this.state.hosInfo.name}</p>
-            <p className={cx('small-text')}>{this.state.hosInfo.address}</p>
+          <div className={this.props.status.hosSelected ? cx('hos-box') : cx('hide')}>
+            <p>{this.props.hosInfo.name}</p>
+            <p className={cx('small-text')}>{this.props.hosInfo.address}</p>
           </div>
           <div className={cx('h-small-spacer')}></div>
 
@@ -248,8 +227,8 @@ class selectOption extends React.Component {
             />
           </div>
           <Modal
-            open={this.state.open}
-            onClose={() => this.setState({open:!this.state.open})}
+            open={this.props.status.isSearching}
+            onClose={() => this.props.toggleSearchModal(this.props.status.isSearching)}
           >
             {body}
           </Modal>
@@ -262,18 +241,25 @@ class selectOption extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    recieptInfo: state.reciept_info,
+    hosSearchList: state.hos_info.searchList,
+    status: state.status,
+    hosInfo: state.new_Review.hosInfo
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return { 
-    uploadReciept: (dateIs, hasHos, items) => dispatch(uploadReciept(
-      ownProps.reciept,
+    uploadReciept: (file, dateIs, hasHos, items) => dispatch(uploadReciept(
+      file,
       dateIs,
       hasHos,
       items
-      ))
+    )),
+    setHosInfo: (id, name, address) => dispatch(setHosInfo(id, name, address)),
+    getHosSearchList: () => dispatch(getHosSearchList()),
+    toggleSearchModal: () => dispatch(toggleSearchModal()),
+    selectHos: (selected) => dispatch(selectHos(selected)),
+    hasReciept: (has) => dispatch(hasReciept(has))
   }
 }
 

@@ -6,18 +6,18 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import test from './test.json'
+import axios from 'axios'
 const cx = classNames.bind(styles)
 
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
-    const scorelist =  [0, 0, 0, 0]
-    const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
+    const scorelist =  [0, 0, 0, 0, 0]
+    const scorelabel = ['청결', '친절함', '치료결과', '전문성', '적정한 치료']
     const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
     const totalgrade = this.calcTotalScore(scorelist)
     const reciept = new recieptHelper(test, '스토리동물병원')
     const priceTable = reciept.priceTable
-    console.log(priceTable)
 
     this.state = {
       date : new Date(),
@@ -84,6 +84,60 @@ class ReviewForm extends React.Component {
     }
   }
 
+  async submitForm() {
+    const review = {
+      hospital : {
+        hcode : 10
+      },
+      rcontent: this.state.content,
+      rdeleted: false,
+      rclean: this.state.grade[0].score,
+      rkindness: this.state.grade[1].score,
+      rresult: this.state.grade[2].score,
+      rprofessionality: this.state.grade[3].score,
+      rovertreatment: this.state.grade[4].score,
+      rstarrating: this.state.totalgrade[0].score,
+      rrevisit: this.state.revisitbtn,
+      rphoto1: '1',
+      rphoto2: '2',
+      rphoto3: '3',
+      rpurpose: '발열',
+      rreceipt: true,
+      rreport: 0,
+      rdate: new Date(),
+      rtreatmentdate: new Date(),
+      user: {
+        uid: "sim"
+      }
+    }
+
+    const careinfos = [
+      {
+        animal: {
+          acode: 3
+        }
+        ,
+        carelist: {
+          ccode: 1
+        },
+        ciOpen: true,
+        ciPrice: 1000,
+        cname: "혈액검사",
+        hospital: {
+          hcode: 10
+        }
+        // "review": {
+        //   "rcode": 0
+        // }
+      }
+    ]
+    const config = {headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json'
+    }}
+    await axios.post('http://192.168.1.193:7888/review/insert',review, config)
+  }
+
   render() {
     const animal = ['rabbit', 'turtle', 'hamster', 'cat', 'dog', 'bird']
     const animalsrc = animal.map( a => require(`../../assets/${a}.png`))
@@ -135,8 +189,9 @@ class ReviewForm extends React.Component {
           </div>
           <div 
             className={cx('border-button')}
+            onClick={this.submitForm.bind(this)}
             >
-            <p>영수증으로 입력하기</p>
+            <p>제출하기</p>
           </div>
           <div className={cx('category')}>
             <p>진료 후기 상세</p>
