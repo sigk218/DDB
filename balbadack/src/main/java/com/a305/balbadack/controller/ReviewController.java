@@ -1,7 +1,10 @@
 package com.a305.balbadack.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import com.a305.balbadack.model.dto.Careinfo;
 import com.a305.balbadack.model.dto.Review;
 import com.a305.balbadack.model.service.CareinfoService;
 import com.a305.balbadack.model.service.ReviewService;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins="{*}")
+@CrossOrigin(origins={"*"})
 @RestController
 @Api(value="ReviewController", description="리뷰")
 @RequestMapping("/review/*")
@@ -26,17 +29,19 @@ public class ReviewController {
 
     @ApiOperation("리뷰 등록")
     @PostMapping("/insert") 
-    public void insertReview(@RequestBody Review review){
-        
+    public void insertReview(@RequestBody Review review, @RequestBody List<Careinfo> careinfos){
+        System.out.println(review);
+        review.setRDate(new Date());
         reviewService.insert(review);
 
         int getrCode = reviewService.findRecentReviewsRCode();
         review.setRCode(getrCode);
 
-        // for (int i = 0; i < review.getCareinfo().size(); i++) {
-        //     review.getCareinfo().get(i).setReview(review);
-        //     careinfoService.insert(review.getCareinfo().get(i));
-        // }
+        for (int i = 0; i < careinfos.size(); i++) {
+            Careinfo careinfo = careinfos.get(i);
+            careinfo.setReview(review);
+            careinfoService.insert(careinfo);
+        }
 
     }
 
@@ -95,17 +100,15 @@ public class ReviewController {
 
     @ApiOperation("리뷰 수정")
     @PutMapping("/update") 
-    public void updateReview(@RequestBody Review review){
+    public void updateReview(@RequestBody Review review, @RequestBody List<Careinfo> careinfos){
         
         reviewService.insert(review);
 
-        int getrCode = reviewService.findRecentReviewsRCode();
-        review.setRCode(getrCode);
-
-        // for (int i = 0; i < review.getCareinfo().size(); i++) {
-        //     review.getCareinfo().get(i).setReview(review);
-        //     careinfoService.insert(review.getCareinfo().get(i));
-        // }
+        for (int i = 0; i < careinfos.size(); i++) {
+            Careinfo careinfo = careinfos.get(i);
+            // careinfo.setReview(review);
+            careinfoService.insert(careinfo);
+        }
 
     }
 

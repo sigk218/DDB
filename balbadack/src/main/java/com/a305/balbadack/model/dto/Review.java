@@ -25,9 +25,6 @@ public class Review {
     @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
     private User user;
 
-    @Column(length = 20, nullable = false, name = "r_nickname")
-    private String rNickname;
-
     @Column(length = 500, nullable = true, name = "r_photo1")
     private String rPhoto1;
 
