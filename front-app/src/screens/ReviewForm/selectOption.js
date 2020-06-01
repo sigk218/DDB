@@ -8,6 +8,12 @@ import recieptHelper from '@ming822/ocr-reciept-helper'
 import vision from 'react-cloud-vision-api'
 import resJson from './test2.json'
 
+import { connect } from 'react-redux'
+import { uploadReciept } from '../../actions'
+import history from "../../history";
+
+
+
 const cx = classNames.bind(styles)
 
 const list = [
@@ -23,10 +29,10 @@ const list = [
 class selectOption extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isreciept: false,
       reciept: null,
+      recieptInfo: this.props.state,
       recieptBase64: null,
       hosInfo : {
         id: null,
@@ -89,9 +95,11 @@ class selectOption extends React.Component {
     // const res = await vision.annotate(req)
     // const resJson = JSON.stringify(res.responses)
     // const reciept = new recieptHelper(resJson[0], '스토리동물병원')
-    // const priceTable = reciept.priceTable
-    console.log('yes')
+    const reciept = new recieptHelper(resJson[0], '스토리동물병원')
+    const priceTable = reciept.priceTable
+    await uploadReciept(reciept.dateInfo.length > 0, reciept.isPlaceName, priceTable)
     await this.setState({isreciept:true})
+
   }
 
   async processFile(file) {
@@ -101,6 +109,7 @@ class selectOption extends React.Component {
     reader.onload = await async function () {
       await context.setState({recieptBase64: reader.result})
       await context.ocrApi()
+      history.push("/ReviewForm");
     }
   }
 
@@ -143,12 +152,12 @@ class selectOption extends React.Component {
         <div className={cx('h-spacer')}></div>
       </div>
     );
-    
-    if (this.state.isreciept && this.state.hosInfo.name) {
-      return (
-        <Redirect to="/ReviewForm" />
-      )
-    }
+    // 바꾸기
+    // if (this.state.isreciept && this.state.hosInfo.name) {
+    //   return (
+    //     <Redirect to="/ReviewForm" />
+    //   )
+    // }
     return (
         <div>
           <div className={cx('h-spacer')}></div>
@@ -249,6 +258,29 @@ class selectOption extends React.Component {
   }
 }
 
+// export default selectOption;
+
+const mapStateToProps = state => {
+  return {
+    recieptInfo: state.reciept_info,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return { 
+    uploadReciept: (dateIs, hasHos, items) => dispatch(uploadReciept(
+      ownProps.reciept,
+      dateIs,
+      hasHos,
+      items
+      ))
+  }
+}
 
 
-export default selectOption;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(selectOption)
+
+ 

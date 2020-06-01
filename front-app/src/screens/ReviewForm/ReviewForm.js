@@ -16,7 +16,6 @@ class ReviewForm extends React.Component {
     const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
     const totalgrade = this.calcTotalScore(scorelist)
     const reciept = new recieptHelper(test, '스토리동물병원')
-    console.log('yes')
     const priceTable = reciept.priceTable
     console.log(priceTable)
 
