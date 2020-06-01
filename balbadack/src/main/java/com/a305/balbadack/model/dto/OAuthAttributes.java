@@ -37,7 +37,6 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .email((String) attributes.get("email"))
                 .name((String) attributes.get("name"))
-                .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -47,7 +46,7 @@ public class OAuthAttributes {
         return User.builder()
                 .uName(this.name)
                 .uId(this.email)
-                .uRole(Role.GUEST)
+                // .uRole(Role.GUEST)
                 .build();
     }
 }

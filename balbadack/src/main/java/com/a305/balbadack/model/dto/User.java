@@ -7,6 +7,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.springframework.security.core.userdetails.UserDetails;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +27,11 @@ import lombok.ToString;
 @ToString
 @Entity(name="user")
 public class User {
+
+    /**
+     * User
+     */
+
     @Id
 	@GeneratedValue()
 	@Column(length = 50, nullable = false, unique = true, name = "u_id")
@@ -31,9 +40,12 @@ public class User {
     @Column(length = 100, nullable = false, name = "u_pw")
     private String uPw;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, name = "u_role")
-    private Role uRole; //회원-1, 수의사-2, 병원관계자-3
+    @Column(nullable = false, name="u_code")
+    private Integer uCode;
+
+    // @Enumerated(EnumType.STRING)
+    // @Column(nullable = false, name = "u_role")
+    // private Role uRole; //회원-1, 수의사-2, 병원관계자-3
 
     @Column(columnDefinition="tinyint(1) default 0", nullable = false, name = "u_manager")
     private boolean uManager;
@@ -50,7 +62,7 @@ public class User {
     @Column(columnDefinition = "tinyint(1) default 0", name = "u_deleted")
     private Boolean uDeleted;
 
-    public String getRoleKey() {
-        return this.uRole.getKey();
-    }
+    // public String getRoleKey() {
+    //     return this.uRole.getKey();
+    // }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -72,7 +73,7 @@ public class UserController {
 	
 	@ApiOperation("로그인")
 	@PostMapping("/user/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody String id, @RequestBody String password) {
+	public ResponseEntity<Map<String, Object>> login(@RequestParam String id, @RequestParam String password) {
         
         try {
 			boolean flag = userService.login(id, password);
