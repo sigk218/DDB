@@ -11,6 +11,9 @@ import MyPage from "./screens/MyPage/MyPage";
 import HosDetail from "./screens/HosDetail/HosDetail";
 import HosRes from "./screens/HosRes/HosRes";
 import ResTab from "./components/Navigation/ResTab";
+// import { Link } from "react-router-dom";
+import ReviewForm from "./screens/ReviewForm/ReviewForm";
+import SelectOption from "./screens/ReviewForm/selectOption";
 import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import HosMapRes from './screens/HosMapRes/HosMapRes';
 import ReviewRes from './screens/ReviewRes/ReviewRes';
@@ -29,6 +32,8 @@ const App = () => {
             <Route path="/HosRes" exact component={HosRes} />
             <Route path="/ReviewDetail" exact component={ReviewDetail} />
             <Route path="/ResTab" exact component={ResTab} />
+            <Route path="/ReviewForm" exact component={ReviewForm} />
+            <Route path="/SelectOption" exact component={SelectOption} />
             <Route path="/HosMapRes" exact component={HosMapRes} />
             <Route path="/ReviewRes" exact component={ReviewRes} />
           </div>

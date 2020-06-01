@@ -2,6 +2,7 @@ import {
     GET_USER_INFO,
     GET_HOS_DATA,
     GET_REVIEW_DATA,
+    UPLOAD_RECIEPT_INFO
   } from "./types";
 
 
@@ -113,6 +114,13 @@ const reviewData = {
   h_code: 1
 }
 
+const reciept = {
+  bufferData: null,
+  dateIs: null,
+  hasHos: null,
+  items: []
+}
+
 
 //====================================================================
 
@@ -135,4 +143,10 @@ const reviewData = {
     dispatch({ type: GET_REVIEW_DATA, payload: response });
   }
 
-
+  export const uploadReciept = (bff, dateIs, hasHos, items) => {
+    console.log("upload reciept")
+    return {
+      type: UPLOAD_RECIEPT_INFO,
+      bff, dateIs, hasHos, items
+    }
+  }

@@ -1,5 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
 import imgA from "../../assets/imgA.png";
@@ -19,7 +19,7 @@ class Main extends React.Component {
     return (
       <div>
         <div align="center">
-          <img src={imgA} width="200" height="200"></img>
+          <img src={imgA} width="200" height="200" alt='dumpimage'></img>
         </div>
         <MainSearchBar />
         <div>
@@ -38,6 +38,12 @@ class Main extends React.Component {
             </li>
             <li>
               <Link to="/ResTab">탭 입니당</Link>
+            </li>
+            <li>
+              <Link to="/ReviewForm">리뷰작성페이지</Link>
+            </li>
+            <li>
+              <Link to="/SelectOption">옵션선택페이지</Link>
             </li>
             <li>
               <Link to="/HosMapRes">맵 입니당</Link>

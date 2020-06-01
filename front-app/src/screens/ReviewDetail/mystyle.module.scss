@@ -4,16 +4,6 @@ div {
   margin: 2px auto 0px;
 }
 
-.category {
-  @include retro-deco($darkgreen, $beige, 5px, 0)
-}
-
-.basic-box {
-  padding: 5px;
-  @include width-size(5px);
-  @include round-border();
-}
-
 .meta-box {
   padding: 1px 5px;
   @include flex-between();
@@ -27,7 +17,7 @@ div {
 .tag-box {
   height:29.3px;
   @include width-size(0px);
-  @include horizontal-scroll();
+  @include scroll();
   @include flex-nowrap();
 }
 
@@ -56,38 +46,7 @@ div {
   }
 }
 
-.relative {
-  position: relative;
-  img {
-    position: absolute;
-    right: 13%;
-    bottom: 0px;
-    height: 60px;
-    width: 60px;
-    z-index: -99999999999;
-  }
-}
-
-.divider {
-  width: 11.5rem;
-  margin: 7px auto;
-  border-top: 1.3px dashed $darkgreen
-}
-
 .price-box {
   @include width-size(0px);
-}
-
-.photo-box {
-  height:calc(18vh + 4px);
-  @include width-size(0px);
-  @include flex-nowrap();
-  @include horizontal-scroll();
-}
-
-.photo {
-  max-height: 18vh;
-  margin-right:4px;
-  @include round-border();
 }
 

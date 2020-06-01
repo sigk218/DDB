@@ -1,6 +1,6 @@
 import React from "react";
-import HosGrades from '../../components/HosGrades/HosGrades';
-import ReviewPrice from '../../components/ReviewPrice/ReviewPrice';
+import GradeBox from '../../components/HosGrades/GradeBox'
+import ReviewPrice from '../../components/ReviewPrice/ReviewPrice'
 import styles from './mystyle.module.scss';
 import ThumbIcon from '@material-ui/icons/ThumbUpAlt';
 import SportsIcon from '@material-ui/icons/Sports';
@@ -16,6 +16,7 @@ const reviewData = {
   r_photo: 'https://lh3.googleusercontent.com/proxy/QYikpOM5d8B4H0_YTn1sfYzEQcGYjKwUtseoQXBpXqhjh3bsn04ZdeNL533bsCyivn3OzERLxq2zBPl5l9rt_UU_B6PlMBkQHef624cQ8DI0TjJkozUb8Qyhs8kYkTGclUI-uGs83FjcgEo,http://www.busan.com/nas/wcms/wcms_data/photos/2020/02/12/2020021209194665170_l.jpg,https://modo-phinf.pstatic.net/20160629_37/1467141681611RHSrJ_JPEG/mosaazDVas.jpeg?type=w1100',
   r_content: '2010년부터 다니던 병원입니다. 고양이에게 중성화 수술은 꼭 필요한 것 같아요. 계속 힘들어해서 몇 차례 검진 받고 선생님과 상담후에 중성화 수술을 하게되었습니다. 선생님 정말 친절하시고요 여기 애견용 풀도 있는 것 같아서 상처 부위 치료되면 또 오려고요!',
   r_reciept: true,
+  r_revisit: true,
   r_treatmentdata: '2020-05-10',
   r_date: '2020-05-10',
   tags: ['중성화수술', "고양이", "15kg",'정기적', "친절", "전용풀장", "감사"],
@@ -76,30 +77,23 @@ class ReviewDetail extends React.Component {
   }
   constructor(props) {
     super(props);
+    const scorelist =  [reviewData.r_overtreatement, reviewData.r_kindness, reviewData.r_result, reviewData.r_clean]
+    const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
+    const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
+    const totalgrade = this.calcTotalScore(scorelist)
     this.state = {
-      grade: [
-        {
-          name: '적절한 치료',
-          score:reviewData.r_overtreatement
-        },
-        {
-          name: '친절함',
-          score:reviewData.r_kindness
-        },
-        {
-          name: '치료결과',
-          score:reviewData.r_result
-        },
-        {
-          name: '청결',
-          score:reviewData.r_clean
-        }
-      ]
+      grade: grade,
+      totalgrade: totalgrade,
+      editablegrade: false,
     };
   }
-  users() {
 
+  calcTotalScore(scorelist) {
+    const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
+    const totalgrade = [{name:'평균평점', score:totalscore}]
+    return totalgrade
   }
+
   render() {
     //=============리덕스에서 불러온 값================
     console.log(this.props.review_data.info)
@@ -108,21 +102,18 @@ class ReviewDetail extends React.Component {
     const photolist = reviewData.r_photo.split(',')
     const photos = photolist.map(
       p => (
-        <img className={cx('photo')} src={p} key={p}/>
+        <img className={cx('photo')} src={p} key={p} alt={p}/>
       )
     )
-    const scorelist =  this.state.grade.map(g => g.score)
-    const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
-    const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
-    const grade = this.state.grade.map((g, i) => ({name: scorelabel[i], score: g.score}))
-    const totalgrade = [{name:'평균평점', score:totalscore}]
+
     const totallike = reviewData.Like.length
-    const dojang = require("../../assets/visitnyang.png")
     const tags = []
+
     for (const [index, value] of reviewData.tags.entries()) {
       console.log(value)
       tags.push(<div className={cx('tag')} key={index}>#{value}</div>)
     }
+
     return (
       <div className={cx('container')}>
         <div className={cx('meta-box')}>
@@ -143,12 +134,12 @@ class ReviewDetail extends React.Component {
           </div>
         </div>
         <div className={cx('category')}><p>병원상세평가</p></div>
-        <div className={cx('basic-box', 'relative')}>
-          <HosGrades grade={grade}/>
-          <div className={cx('divider')}></div>
-          <HosGrades grade={totalgrade}/>
-          <img src={dojang}/>
-        </div>
+        <GradeBox 
+          grade={this.state.grade} 
+          dojang={reviewData.r_revisit} 
+          totalgrade={this.state.totalgrade}
+          editable={this.editablegrade}
+          />
         <div className={cx('category')}><p>진료 후기 상세</p></div>
         <div className={cx('basic-box')}>
           <p>
