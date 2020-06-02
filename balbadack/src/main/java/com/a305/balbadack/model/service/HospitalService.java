@@ -14,14 +14,17 @@ public interface HospitalService {
   public void delete(Hospital hospital);
   
   // 병원 검색하기
-  public List<Hospital> findByKeyword(String keyword);
+  public List<Hospital> findByKeyword(String keyword, Integer page);
 
   // 위치로 병원 조회하기 
-  public List<Hospital> findByLocation(Double latitude, Double longtitude);
+  public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);
 
   // 병원 코드 목록으로 병원 목록 조회
   public List<Hospital> findByCode(List<Integer> hCodeList);
 
   // 별점에 따라 병원 목록 조회 
-  public List<Hospital> findByStar(Double latitude, Double longtitude);
+  public List<Hospital> findByStar(Double latitude, Double longtitude, Integer page);
+
+  // 마지막 페이지인지 확인(별점에 따라 병원 목록 조회)
+  public Hospital isLastpage(Double latitude, Double longtitude, Integer page);
 }

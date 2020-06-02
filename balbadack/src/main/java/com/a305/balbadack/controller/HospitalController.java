@@ -28,7 +28,7 @@ public class HospitalController {
   HospitalService hospitalService;
 
   @ApiOperation("병원 정보 등록하기")
-  @PostMapping(value="/")
+  @PostMapping(value="/insert")
   public void insertHospital(@RequestBody Hospital hospital) {
     hospitalService.insert(hospital);
   }
@@ -47,17 +47,18 @@ public class HospitalController {
 
   // 1. 병원이름으로 검색 2. 지역으로 검색 3. 나머지는 태그 테이블로 
   @ApiOperation("병원 검색하기")
-  @PostMapping(value="/name/{keyword}")
-  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword){
+  @PostMapping(value="/name/{keyword}/{page}")
+  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword,@PathVariable Integer page){
     System.out.println(keyword);
-    return hospitalService.findByKeyword(keyword);
+    System.out.println(page);
+    return hospitalService.findByKeyword(keyword, page);
   }
 
   // 위도 : latitude, 경도 : longtitude -> 가까운 순서대로 
   @ApiOperation("현재 내 위치에서 3km 이내의 병원 조회")
-  @PostMapping(value="/location")
-  public List<Hospital> findHospitalByLocation(@RequestParam Double latitude, @RequestParam Double longtitude){
-    return hospitalService.findByLocation(latitude, longtitude);
+  @PostMapping(value="/location/{page}")
+  public List<Hospital> findHospitalByLocation( @RequestParam Double latitude, @RequestParam Double longtitude,@PathVariable Integer page){
+    return hospitalService.findByLocation(latitude, longtitude, page);
   }
   
   // 병원 코드 리스트를 받으면, 병원 객체를 리턴
@@ -71,10 +72,9 @@ public class HospitalController {
   // 거리가 가까운 것들 중 + 평점이 높은 것 이여야 겠지?
   // HQL ordered by 두개하면
   @ApiOperation("거리가 가까운 순서중 평점 높은 순서대로 병원")
-  @PostMapping(value="/starrating")
-  public List<Hospital> findHospitalByStar(@RequestParam Double latitude, @RequestParam Double longtitude){
-      return hospitalService.findByStar(latitude, longtitude);
+  @PostMapping(value="/starrating/{page}")
+  public List<Hospital> findHospitalByStar(@RequestParam Double latitude, @RequestParam Double longtitude,@PathVariable Integer page){
+      return hospitalService.findByStar(latitude, longtitude, page);
   }
-  
   
 }
