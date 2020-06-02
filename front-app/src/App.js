@@ -14,8 +14,8 @@ import ResTab from "./components/Navigation/ResTab";
 import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import HosMapRes from './screens/HosMapRes/HosMapRes';
 import ReviewRes from './screens/ReviewRes/ReviewRes';
-
-
+import SignIn from './screens/SignIn/SignIn';
+import smsVer from './screens/smsVer/smsVer';
 const App = () => {
   return (
     <div>
@@ -31,6 +31,8 @@ const App = () => {
             <Route path="/ResTab" exact component={ResTab} />
             <Route path="/HosMapRes" exact component={HosMapRes} />
             <Route path="/ReviewRes" exact component={ReviewRes} />
+            <Route path="/SignIn" exact component={SignIn} />
+            <Route path="/smsVer" exact component={smsVer} />
           </div>
         </TempNavigation>
 

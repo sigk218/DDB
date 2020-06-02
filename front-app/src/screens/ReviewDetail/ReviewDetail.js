@@ -7,6 +7,7 @@ import SportsIcon from '@material-ui/icons/Sports';
 import classNames from 'classnames/bind';
 import { connect } from "react-redux";
 import {getReviewData} from '../../actions';
+
 const cx = classNames.bind(styles)
 
 const reviewData = {
@@ -96,6 +97,7 @@ class ReviewDetail extends React.Component {
         }
       ]
     };
+
   }
   users() {
 
@@ -103,7 +105,7 @@ class ReviewDetail extends React.Component {
   render() {
     //=============리덕스에서 불러온 값================
     console.log(this.props.review_data.info)
-
+    console.log(this.props)
     //===============================================
     const photolist = reviewData.r_photo.split(',')
     const photos = photolist.map(

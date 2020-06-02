@@ -46,9 +46,13 @@ class Main extends React.Component {
               <Link to="/LogIn">로그인2222</Link>
             </li>
             <li>
-              <Link to="/LogIn">로그인2222</Link>
+              <Link to="/SignIn">로그인2222</Link>
+            </li>
+            <li>
+              <Link to="/smsVer">문자인증</Link>
             </li>
           </ul>
+
         </div>
       </div>
     );
