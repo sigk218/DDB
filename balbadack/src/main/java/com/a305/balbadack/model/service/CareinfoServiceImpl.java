@@ -21,6 +21,17 @@ public class CareinfoServiceImpl implements CareinfoService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @Override
+	public void insert(List<Careinfo> careinfo) {
+		try {
+            for (int i = 0; i < careinfo.size(); i++) {
+                careinfoRepository.save(careinfo.get(i));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 	}
 
 	@Override

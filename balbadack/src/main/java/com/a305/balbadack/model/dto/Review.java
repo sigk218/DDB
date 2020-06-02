@@ -1,7 +1,6 @@
 package com.a305.balbadack.model.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -22,11 +21,8 @@ public class Review {
     private int rCode;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
+    @JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_user_u_id"))
     private User user;
-
-    @Column(length = 20, nullable = false, name = "r_nickname")
-    private String rNickname;
 
     @Column(length = 500, nullable = true, name = "r_photo1")
     private String rPhoto1;
@@ -50,22 +46,22 @@ public class Review {
     private Date rDate;
     
     @Column(nullable = false, name = "r_overtreatment")
-    private int rOvertreatment;
+    private double rOvertreatment;
     
     @Column(nullable = false, name = "r_kindness")
-    private int rKindness;
+    private double rKindness;
     
     @Column(nullable = false, name = "r_result")
-    private int rResult;
+    private double rResult;
 
     @Column(nullable = false, name = "r_professionality")
-    private int rProfessionality;
+    private double rProfessionality;
     
     @Column(nullable = false, name = "r_clean")
-    private int rClean;
+    private double rClean;
 
-    @Column(nullable = false, name = "r_revisit")
-    private int rRevisit;
+    @Column(nullable = false, columnDefinition = "boolean default false", name = "r_revisit")
+    private boolean rRevisit;
     
     @Column(length = 100, nullable = false, name = "r_purpose")
     private String rPurpose;
@@ -77,16 +73,19 @@ public class Review {
     private boolean rDeleted;
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
+    @JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_hospital_h_code"))
     private Hospital hospital;
     
-    @OneToMany(mappedBy="review")
-    private List<Careinfo> careinfo;
+    // @OneToMany(mappedBy="review")
+    // private List<Careinfo> careinfo;
 
-    @OneToMany(mappedBy="review")
-    private List<Report> report;
+    // @OneToMany(mappedBy="review")
+    // private List<Report> report;
 
-    @OneToMany(mappedBy="review")
-    private List<Good> good;
+    // @OneToMany(mappedBy="review")
+    // private List<Good> good;
+
+    @Column(nullable = true, name = "r_starrating")
+    private double rStarrating;
     
 }

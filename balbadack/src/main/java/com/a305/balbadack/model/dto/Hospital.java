@@ -1,16 +1,10 @@
 package com.a305.balbadack.model.dto;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +18,7 @@ import lombok.AllArgsConstructor;
 @Getter
 @Setter
 @ToString
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
+// @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class)
 @Entity(name = "hospital")
 public class Hospital{
   @Id
@@ -32,8 +26,8 @@ public class Hospital{
   @Column(nullable = false, unique = true, name = "h_code")
   private Integer hCode;
 
-  @OneToMany(mappedBy="hospital")
-  private List<Veterinarian> veterinarian; 
+  // @OneToMany(mappedBy="hospital")
+  // private List<Veterinarian> veterinarian; 
 
   @Column(nullable = false, length = 50, name = "h_name")
   private String hName;
