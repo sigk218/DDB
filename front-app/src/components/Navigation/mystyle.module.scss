@@ -4,7 +4,11 @@
   width:100%;
   height: 40px;
   @include flex-between;
-  display: relative
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: $beige;
+  top: 0;
+  z-index: 999999999999999999;
 }
 
 .nav-icon-box {
@@ -12,20 +16,9 @@
   @include flex-center;
 }
 
-
 .nav-title {
   margin:0;
   line-height: 40px;
   font-family: $title;
   font-size: large;
-}
-
-.submit-btn {
-  @include round-border();
-  @include flex-center;
-  height: 50%;
-  padding: 3px;
-  display: absolute;
-  left: 0;
-  bottom: 0;
 }

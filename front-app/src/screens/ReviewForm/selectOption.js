@@ -82,7 +82,7 @@ class selectOption extends React.Component {
       await this.props.hasReciept(true)
       history.push("/ReviewForm");
     } else {
-      alert('영수증의 날짜 정보나 병원 이름이 보이지 않습니다 8-8')
+      alert('영수증에 날짜 정보나 병원 이름이 보이지 않다냥 8-8')
     }
   }
 
