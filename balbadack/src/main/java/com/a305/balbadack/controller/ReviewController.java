@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.a305.balbadack.model.dto.Careinfo;
 import com.a305.balbadack.model.dto.Review;
+import com.a305.balbadack.model.dto.ReviewCareinfo;
 import com.a305.balbadack.model.service.CareinfoService;
 import com.a305.balbadack.model.service.ReviewService;
 
@@ -29,7 +30,12 @@ public class ReviewController {
 
     @ApiOperation("리뷰 등록")
     @PostMapping("/insert") 
-    public void insertReview(@RequestBody Review review, @RequestBody List<Careinfo> careinfos){
+    public void insertReview(@RequestBody ReviewCareinfo reviewCareinfo){
+
+        Review review = reviewCareinfo.getReview();
+        List<Careinfo> careinfos = reviewCareinfo.getCareinfo();
+        
+        // 리뷰 테이블에 리뷰 등록
         System.out.println(review);
         review.setRDate(new Date());
         reviewService.insert(review);
@@ -37,11 +43,19 @@ public class ReviewController {
         int getrCode = reviewService.findRecentReviewsRCode();
         review.setRCode(getrCode);
 
+        // careinfo 테이블에 진료 정보 등록
         for (int i = 0; i < careinfos.size(); i++) {
             Careinfo careinfo = careinfos.get(i);
             careinfo.setReview(review);
             careinfoService.insert(careinfo);
+
+            // 동시에 hospital carelist에 등록
+            // String carelist = careinfo.getCiName(); // 이게 hospita carelist에 있는지 확인
+
         }
+
+        
+        
 
     }
 

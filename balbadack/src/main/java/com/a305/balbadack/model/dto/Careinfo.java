@@ -32,14 +32,10 @@ public class Careinfo {
     private Boolean ciOpen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "c_code", referencedColumnName = "c_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_carelist_c_code"))
-    private Carelist carelist;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "r_code", referencedColumnName = "r_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_review_r_code"))
     private Review review;
 
-    @Column(length = 50, nullable = false, name = "c_name")
-    private String cName;
+    @Column(length = 50, nullable = false, name = "ci_name")
+    private String ciName;
 
 }
