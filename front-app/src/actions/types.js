@@ -9,3 +9,6 @@ export const SELECT_HOS = 'SELECT_HOS';
 export const HAS_RECIEPT = 'HAS_RECIEPT';
 export const GET_TOTAL_GRADE = 'GET_TOTAL_GRADE'
 export const SET_HOS_SCORE = 'SET_HOS_SCORE'
+export const GET_REVIEW_LIST = 'GET_REVIEW_LIST'
+export const GET_MY_REVIEW_LIST = 'GET_MY_REVIEW_LIST'
+export const DO_DOJANG = 'DO_DOJANG'

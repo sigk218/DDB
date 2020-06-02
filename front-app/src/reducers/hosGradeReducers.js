@@ -1,6 +1,7 @@
 import { 
   GET_TOTAL_GRADE,
-  SET_HOS_SCORE
+  SET_HOS_SCORE,
+  DO_DOJANG
 } from './../actions/types'
 
 const scorelist = [0, 0, 0, 0, 0]
@@ -33,6 +34,11 @@ const hosGrade = (state = initializer, action) => {
         grade: state.grade.map(g => (
           g.name === action.name ? {name: g.name, score: action.score} : g
         ))
+      })
+    case DO_DOJANG:
+      return Object.assign({}, state, {
+        ...state,
+        dojang: action.dojang
       })
     default:
       return state

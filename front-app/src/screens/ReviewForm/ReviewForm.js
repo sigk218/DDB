@@ -55,19 +55,44 @@ class ReviewForm extends React.Component {
   }
 
   async submitForm() {
+    // const review = {
+    //   hospital : {
+    //     hcode : 10
+    //   },
+    //   rcontent: this.state.content,
+    //   rdeleted: false,
+    //   rclean: this.state.grade[0].score,
+    //   rkindness: this.state.grade[1].score,
+    //   rresult: this.state.grade[2].score,
+    //   rprofessionality: this.state.grade[3].score,
+    //   rovertreatment: this.state.grade[4].score,
+    //   rstarrating: this.state.totalgrade[0].score,
+    //   rrevisit: this.state.revisitbtn,
+    //   rphoto1: '1',
+    //   rphoto2: '2',
+    //   rphoto3: '3',
+    //   rpurpose: '발열',
+    //   rreceipt: true,
+    //   rreport: 0,
+    //   rdate: new Date(),
+    //   rtreatmentdate: new Date(),
+    //   user: {
+    //     uid: "sim"
+    //   }
+    // }
     const review = {
       hospital : {
         hcode : 10
       },
-      rcontent: this.state.content,
+      rcontent: 'asdasda',
       rdeleted: false,
-      rclean: this.state.grade[0].score,
-      rkindness: this.state.grade[1].score,
-      rresult: this.state.grade[2].score,
-      rprofessionality: this.state.grade[3].score,
-      rovertreatment: this.state.grade[4].score,
-      rstarrating: this.state.totalgrade[0].score,
-      rrevisit: this.state.revisitbtn,
+      rclean: 1,
+      rkindness: 2,
+      rresult: 3,
+      rprofessionality: 4,
+      rovertreatment: 5,
+      rstarrating: 3,
+      rrevisit: true,
       rphoto1: '1',
       rphoto2: '2',
       rphoto3: '3',
@@ -81,31 +106,29 @@ class ReviewForm extends React.Component {
       }
     }
 
-    const careinfos = [
+    const careinfo = [
       {
         animal: {
           acode: 3
-        }
-        ,
-        carelist: {
-          ccode: 1
         },
         ciOpen: true,
-        ciPrice: 1000,
-        cname: "혈액검사",
+        ciPrice: 5000,
+        ciName: "혈액검사",
         hospital: {
           hcode: 10
         }
-        // "review": {
-        //   "rcode": 0
-        // }
       }
     ]
+    const body = {
+      careinfo : careinfo,
+      review: review
+    }
     const config = {headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json'
     }}
-    await axios.post('http://192.168.1.193:7888/review/insert',review, config)
+    console.log(body)
+    await axios.post('http://192.168.1.193:7888/review/insert', body, config)
   }
 
   render() {
@@ -163,7 +186,7 @@ class ReviewForm extends React.Component {
           <div className={cx('box')}>
             <textarea
               placeholder={'후기를 작성해 주세요.'}
-              rows="7"
+              rows="3"
               value={this.state.content}
               onChange={this.handleText.bind(this)}
             />
@@ -201,7 +224,7 @@ class ReviewForm extends React.Component {
               ?  cx('border-button', 'upload-btn-wrapper')
               : cx('hide')}
             >
-            <p>사진 추가하기<span>최대 4장</span></p>
+            <p>사진 추가하기<span>최대 3장</span></p>
             <input
               type="file"
               name="file"
@@ -210,11 +233,11 @@ class ReviewForm extends React.Component {
               onChange={this.handleFiles.bind(this)}
             />
           </div>
-          <div
+          {/* <div
             className={cx('border-button')}
           >
             <p>선택한 사진 삭제하기</p>
-          </div>
+          </div> */}
         </div>
     );
   }

@@ -8,7 +8,9 @@ const initializer = {
     isAuthorized: true,
     isSearching: false,
     hosSelected: false,
-    hasReciept: false
+    hosName: '',
+    hasReciept: false,
+    reviewFromMain: true
 }
 
 export default (state = initializer, action) => {
@@ -16,7 +18,7 @@ export default (state = initializer, action) => {
         case TOGGLE_SEARCH_MODAL:
             return{...state, isSearching : !state.isSearching}
         case SELECT_HOS:
-            return{...state, hosSelected : action.hosSelected}
+            return{...state, hosSelected : action.hosSelected, hosName : action.hosName}
         case HAS_RECIEPT:
             return{...state, isSearching : state.hasReciept}
         default:

@@ -9,8 +9,12 @@ import {
     SELECT_HOS,
     HAS_RECIEPT,
     GET_TOTAL_GRADE,
-    SET_HOS_SCORE
+    SET_HOS_SCORE,
+    GET_REVIEW_LIST,
+    GET_MY_REVIEW_LIST,
+    DO_DOJANG
   } from "./types";
+import axios from 'axios'
 
 
   //=============DATA=========
@@ -148,9 +152,58 @@ const hos_list = [
 
   export const getReviewData = () => async dispatch => {
     const response = reviewData;
+    // const body = {
+    //   careinfo : careinfo,
+    //   review: review
+    // }
+    // const config = {headers: {
+    //   'Access-Control-Allow-Origin': '*',
+    //   'Content-Type': 'application/json'
+    // }}
+    // console.log(body)
+    // await axios.post('http://192.168.1.193:7888/review/insert', body, config)
     console.log("======리덕스======")
     console.log(response)
     dispatch({ type: GET_REVIEW_DATA, payload: response });
+  }
+
+  const config = {headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }}
+  
+
+  export const getReviewList = (hcode) => {
+    console.log('getReviewList')
+    const query = hcode
+    const url = 'http://192.168.1.193:7888/review/findByHospital'
+    return dispatch => {
+      return axios.post(url+'?h_code='+query, config)
+      .then(res => dispatch(recieveReviewList(res.data)))
+    }
+  }
+
+  export const recieveReviewList = (list) => {
+    return {
+      type: GET_REVIEW_LIST,
+      list
+    }
+  }
+
+  export const getMyReviewList = (uid) => {
+    console.log('getMyReviewList')
+    const url = 'http://192.168.1.193:7888/review/findByUser'
+    return dispatch => {
+      return axios.post(url+'?u_id='+uid, config)
+      .then(res => dispatch(recieveMyReviewList(res.data)))
+    }
+  }
+
+  export const recieveMyReviewList = (list) => {
+    return {
+      type: GET_MY_REVIEW_LIST,
+      list
+    }
   }
 
   export const uploadReciept = (bff, dateIs, hasHos, items) => {
@@ -184,10 +237,10 @@ const hos_list = [
     }
   }
 
-  export const selectHos = (hosSelected) => {
+  export const selectHos = (hosSelected, hosName) => {
     return {
       type: SELECT_HOS,
-      hosSelected
+      hosSelected, hosName
     }
   }
 
@@ -208,5 +261,12 @@ const hos_list = [
     return {
       type: SET_HOS_SCORE,
       name, score, i
+    }
+  }
+
+  export const doDojang = (dojang) => {
+    return {
+      type: DO_DOJANG,
+      dojang
     }
   }

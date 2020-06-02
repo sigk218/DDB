@@ -5,7 +5,7 @@ import Modal from '@material-ui/core/Modal';
 import SearchIcon from '@material-ui/icons/Search'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import vision from 'react-cloud-vision-api'
-// import resJson from './test2.json'
+import resJson from './test2.json'
 
 import { connect } from 'react-redux'
 import { 
@@ -42,7 +42,7 @@ class selectOption extends React.Component {
   }
 
   async handleHos(l) {
-    await this.props.selectHos(true)
+    await this.props.selectHos(true, l.name)
     await this.props.setHosInfo(l.id, l.name, l.address)
     await this.props.toggleSearchModal(true)
     await this.setState({searchWord: ''})
@@ -62,18 +62,18 @@ class selectOption extends React.Component {
   }
 
   async ocrApi(file, recieptBase64) {
-    const key = ''
-    await vision.init({ auth: key })
-    const req = await new vision.Request({
-      image: new vision.Image({
-        base64: recieptBase64
-      }),
-      features: [
-        new vision.Feature('TEXT_DETECTION', 4)
-      ]
-    })
-    const res = await vision.annotate(req)
-    const resJson = res.responses[0]
+    // const key = ''
+    // await vision.init({ auth: key })
+    // const req = await new vision.Request({
+    //   image: new vision.Image({
+    //     base64: recieptBase64
+    //   }),
+    //   features: [
+    //     new vision.Feature('TEXT_DETECTION', 4)
+    //   ]
+    // })
+    // const res = await vision.annotate(req)
+    // const resJson = res.responses[0]
     const reciept = new recieptHelper(resJson[0], '스토리동물병원')
     const isDate = reciept.dateInfo.length > 0
     const hasPlace = reciept.isPlaceName
@@ -256,7 +256,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setHosInfo: (id, name, address) => dispatch(setHosInfo(id, name, address)),
     getHosSearchList: () => dispatch(getHosSearchList()),
     toggleSearchModal: () => dispatch(toggleSearchModal()),
-    selectHos: (selected) => dispatch(selectHos(selected)),
+    selectHos: (selected, hosName) => dispatch(selectHos(selected, hosName)),
     hasReciept: (has) => dispatch(hasReciept(has))
   }
 }
