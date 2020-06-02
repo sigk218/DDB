@@ -14,7 +14,7 @@ public interface HospitalService {
   public void delete(Hospital hospital);
   
   // 병원 검색하기
-  public List<Hospital> findByKeyword(String keyword, Integer page);
+  public List<Hospital> findByKeyword(String keyword);
 
   // 위치로 병원 조회하기 
   public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);
@@ -25,6 +25,9 @@ public interface HospitalService {
   // 별점에 따라 병원 목록 조회 
   public List<Hospital> findByStar(Double latitude, Double longtitude, Integer page);
 
-  // 마지막 페이지인지 확인(별점에 따라 병원 목록 조회)
-  public Hospital isLastpage(Double latitude, Double longtitude, Integer page);
+  //별점에 따른 검색 결과 마지막 페이지인지 확인
+  public Hospital isLastPage(Double latitude, Double longtitude, Integer page);
+
+  // 3km 이내의 검색 결과 마지막 인지 확인
+  public Hospital isLastPageNear(Double latitude, Double longtitude, Integer page);
 }

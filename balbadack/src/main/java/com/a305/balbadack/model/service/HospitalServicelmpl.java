@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HospitalServicelmpl implements HospitalService {
 
-  static int limit = 3;
+  static int limit = 5;
   
   @Autowired
   HospitalRepository hospitalRepository;
@@ -49,7 +49,7 @@ public class HospitalServicelmpl implements HospitalService {
   }
   // 이름, 위치, 진료명에 따른 병원 결과
   @Override
-  public List<Hospital> findByKeyword(String keyword, Integer page) {
+  public List<Hospital> findByKeyword(String keyword) {
     try {
       // 결과 값이 있을 때 ? 
       // 이름, 위치에 따른 결과 
@@ -71,7 +71,7 @@ public class HospitalServicelmpl implements HospitalService {
   @Override
   public List<Hospital> findByLocation(final Double latitude, final Double longtitude, Integer page) {
     try {
-      return hospitalRepository.findByLocation(latitude, longtitude, page);
+      return hospitalRepository.findByLocation(latitude, longtitude, page, limit);
     } catch (final Exception e) {
       e.printStackTrace();
       System.out.println("내 위치로 병원 조회 중 오류 발생 함.");
@@ -93,7 +93,7 @@ public class HospitalServicelmpl implements HospitalService {
   @Override
   public List<Hospital> findByStar(final Double latitude, final Double longtitude, Integer page) {
     try {
-      return hospitalRepository.findByStar(latitude, longtitude, page);
+      return hospitalRepository.findByStar(latitude, longtitude, page, limit);
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("별점 순으로 병원 조회 중 오류 발생 함.");
@@ -102,12 +102,23 @@ public class HospitalServicelmpl implements HospitalService {
   }
 
   @Override
-  public Hospital isLastpage(Double latitude, Double longtitude, Integer page){
+  public Hospital isLastPage(Double latitude, Double longtitude, Integer page){
     try {
       return hospitalRepository.isLastPage(latitude, longtitude, page);
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("마지막 페이지 조회 중 오류 발생 함.");
+      System.out.println("위치, 별점 기반 검색 마지막 페이지 조회 중 오류 발생 함.");
+    }
+    return null;
+  }
+
+  @Override
+  public Hospital isLastPageNear(Double latitude, Double longtitude, Integer page){
+    try{
+      return hospitalRepository.isLastPageNear(latitude, longtitude, page);
+    }catch(Exception e){
+      e.printStackTrace();
+      System.out.println("거리순, 별점 순, 마지막 페이지 조회 중 오류 발생");
     }
     return null;
   }

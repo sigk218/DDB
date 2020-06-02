@@ -16,7 +16,7 @@ public interface CareinfoRepository extends JpaRepository<Careinfo, Integer> {
     List<Careinfo> findByReview(int r_code);
 
     // 병원 검색 하기 
-    @Query(value="select h_code from careinfo as c where c.c_name like concat('%', :keyword, '%')",nativeQuery = true)
+    @Query(value="select h_code from careinfo as c where c.ci_name like concat('%', :keyword, '%')",nativeQuery = true)
     List<Integer> findByName(@Param("keyword") String keyword);
 
 }

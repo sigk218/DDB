@@ -1,6 +1,8 @@
 package com.a305.balbadack.controller;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 import com.a305.balbadack.model.dto.Hospital;
 import com.a305.balbadack.model.service.HospitalService;
@@ -23,6 +25,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(value="HospitalController", description="병원정보")
 @RequestMapping("/hospital/*")
 public class HospitalController {
+  static int limit = 5;
 
   @Autowired
   HospitalService hospitalService;
@@ -47,18 +50,32 @@ public class HospitalController {
 
   // 1. 병원이름으로 검색 2. 지역으로 검색 3. 나머지는 태그 테이블로 
   @ApiOperation("병원 검색하기")
-  @PostMapping(value="/name/{keyword}/{page}")
-  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword,@PathVariable Integer page){
+  @PostMapping(value="/name/{keyword}")
+  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword){
     System.out.println(keyword);
-    System.out.println(page);
-    return hospitalService.findByKeyword(keyword, page);
+    return hospitalService.findByKeyword(keyword);
   }
 
   // 위도 : latitude, 경도 : longtitude -> 가까운 순서대로 
   @ApiOperation("현재 내 위치에서 3km 이내의 병원 조회")
   @PostMapping(value="/location/{page}")
-  public List<Hospital> findHospitalByLocation( @RequestParam Double latitude, @RequestParam Double longtitude,@PathVariable Integer page){
-    return hospitalService.findByLocation(latitude, longtitude, page);
+  public Map<String, Object> findHospitalByLocation( @RequestParam Double latitude, @RequestParam Double longtitude, @PathVariable Integer page){
+    page = Integer.max(0, page*limit);
+    Map<String, Object> resultmap = new HashMap<String, Object>();
+    Hospital isLast = hospitalService.isLastPageNear(latitude, longtitude, page+limit);
+    
+    if (isLast == null){
+      resultmap.put("next", false);
+    }else{
+      resultmap.put("next", true);
+    }
+    List<Hospital> hospitalList = hospitalService.findByLocation(latitude, longtitude, page);
+    if (hospitalList.size()==0){
+      resultmap.put("hospital", null);
+    }else{
+      resultmap.put("hospital", hospitalList);
+    }
+    return resultmap;
   }
   
   // 병원 코드 리스트를 받으면, 병원 객체를 리턴
@@ -70,11 +87,25 @@ public class HospitalController {
   }
 
   // 거리가 가까운 것들 중 + 평점이 높은 것 이여야 겠지?
-  // HQL ordered by 두개하면
+  // HQL ordered by 두개하면 앞에꺼 부터 정렬됨.
   @ApiOperation("거리가 가까운 순서중 평점 높은 순서대로 병원")
   @PostMapping(value="/starrating/{page}")
-  public List<Hospital> findHospitalByStar(@RequestParam Double latitude, @RequestParam Double longtitude,@PathVariable Integer page){
-      return hospitalService.findByStar(latitude, longtitude, page);
+  public Map<String, Object> findHospitalByStar(@RequestParam Double latitude, @RequestParam Double longtitude,@PathVariable Integer page){  
+    page = Integer.max(0, page*limit);
+    Map<String, Object> resultmap = new HashMap<String, Object>();
+    Hospital isLast = hospitalService.isLastPage(latitude, longtitude, page+limit);
+
+    if (isLast == null){
+      resultmap.put("next", false);
+    }else{
+      resultmap.put("next", true);
+    }
+    List<Hospital> hospitalList = hospitalService.findByStar(latitude, longtitude, page);
+    if (hospitalList.size()==0){
+      resultmap.put("hospital", null);
+    }else{
+      resultmap.put("hospital", hospitalList);
+    }
+    return resultmap;
   }
-  
 }
