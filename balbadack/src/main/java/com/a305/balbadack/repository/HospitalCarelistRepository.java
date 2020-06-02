@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HospitalCarelistRepository extends JpaRepository<HospitalCarelist, Integer> {
     
-    // HospitalCarelist findByhcNameAndHospital_hCode(String hc_name, int h_code);
+    HospitalCarelist findByhCodeAndHcName(int h_code, String hc_name);
+    
 }

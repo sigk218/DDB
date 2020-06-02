@@ -1,7 +1,6 @@
 package com.a305.balbadack.model.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 

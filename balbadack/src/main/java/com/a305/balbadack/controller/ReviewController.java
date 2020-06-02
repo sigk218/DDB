@@ -1,13 +1,14 @@
 package com.a305.balbadack.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import com.a305.balbadack.model.dto.Careinfo;
+import com.a305.balbadack.model.dto.HospitalCarelist;
 import com.a305.balbadack.model.dto.Review;
 import com.a305.balbadack.model.dto.ReviewCareinfo;
 import com.a305.balbadack.model.service.CareinfoService;
+import com.a305.balbadack.model.service.HospitalCarelistService;
 import com.a305.balbadack.model.service.ReviewService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,16 @@ public class ReviewController {
     @Autowired
     CareinfoService careinfoService;
 
+    @Autowired
+    HospitalCarelistService hospitalCarelistService;
+
     @ApiOperation("리뷰 등록")
     @PostMapping("/insert") 
     public void insertReview(@RequestBody ReviewCareinfo reviewCareinfo){
 
         Review review = reviewCareinfo.getReview();
         List<Careinfo> careinfos = reviewCareinfo.getCareinfo();
-        
+
         // 리뷰 테이블에 리뷰 등록
         System.out.println(review);
         review.setRDate(new Date());
@@ -50,13 +54,26 @@ public class ReviewController {
             careinfoService.insert(careinfo);
 
             // 동시에 hospital carelist에 등록
-            // String carelist = careinfo.getCiName(); // 이게 hospita carelist에 있는지 확인
+            String carelist = careinfo.getCiName();
+            int price = careinfo.getCiPrice();
+            int hcode = careinfo.getHospital().getHCode();
 
+            // 해당 진료항목이 hospita carelist에 있는지 확인
+            HospitalCarelist hospitalcarelist = hospitalCarelistService.findByhCodeAndHcName(hcode, carelist);
+            if(hospitalcarelist != null){
+                // 가격 업데이트
+                if(price < hospitalcarelist.getHcMin()){
+                    hospitalcarelist.setHcMin(price);
+                    hospitalCarelistService.update(hospitalcarelist);
+                }else if(price > hospitalcarelist.getHcMax()){
+                    hospitalcarelist.setHcMax(price);
+                    hospitalCarelistService.update(hospitalcarelist);
+                }
+            }else{// 없으면 메뉴판에 새로 집어넣기
+                HospitalCarelist newHospitalCarelist = new HospitalCarelist(0, hcode, carelist, price, price);
+                hospitalCarelistService.insert(newHospitalCarelist);
+            }
         }
-
-        
-        
-
     }
 
     @ApiOperation("모든 리뷰 가져오기")
