@@ -27,7 +27,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   List<Hospital> findByhCodeIn(List<Integer> hCodeList);
 
   // 별점 순 조회
-  @Query(value="select * from hospital as h order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) , h.h_starrating desc limit :page, :limit",nativeQuery = true)
+  @Query(value="select * from hospital as h order by h.h_starrating desc, (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit",nativeQuery = true)
   List<Hospital> findByStar(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
 
   @Query(value = "select * from hospital as h order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) , h.h_starrating desc limit :page, 1", nativeQuery=true)

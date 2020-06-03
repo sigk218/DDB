@@ -9,23 +9,17 @@ import com.a305.balbadack.model.service.HospitalService;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "{*}")
+@CrossOrigin(origins={"*"})
 @RestController
 @Api(value="HospitalController", description="병원정보")
 @RequestMapping("/hospital/*")
 public class HospitalController {
-  static int limit = 5;
+  static int limit = 7;
 
   @Autowired
   HospitalService hospitalService;
@@ -49,14 +43,14 @@ public class HospitalController {
   }
 
   // 1. 병원이름으로 검색 2. 지역으로 검색 3. 나머지는 태그 테이블로 
-  @ApiOperation("병원 검색하기")
-  @PostMapping(value="/name/{keyword}")
-  public List<Hospital> findHospitalByKeyword(@PathVariable String keyword){
-    System.out.println(keyword);
-    return hospitalService.findByKeyword(keyword);
-  }
+  // @ApiOperation("병원 검색하기")
+  // @PostMapping(value="/name/{keyword}/{page}")
+  // public Map<String, Obejct> findHospitalByKeyword(@PathVariable String keyword, @PathVariable Integer page){
+  //   return hospitalService.findByKeyword(keyword);
+  // }
 
   // 위도 : latitude, 경도 : longtitude -> 가까운 순서대로 
+  @CrossOrigin(origins={"*"})
   @ApiOperation("현재 내 위치에서 3km 이내의 병원 조회")
   @PostMapping(value="/location/{page}")
   public Map<String, Object> findHospitalByLocation( @RequestParam Double latitude, @RequestParam Double longtitude, @PathVariable Integer page){

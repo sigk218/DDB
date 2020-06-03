@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HospitalServicelmpl implements HospitalService {
 
-  static int limit = 5;
+  static int limit = 7;
   
   @Autowired
   HospitalRepository hospitalRepository;
@@ -48,25 +48,30 @@ public class HospitalServicelmpl implements HospitalService {
     }
   }
   // 이름, 위치, 진료명에 따른 병원 결과
-  @Override
-  public List<Hospital> findByKeyword(String keyword) {
-    try {
-      // 결과 값이 있을 때 ? 
-      // 이름, 위치에 따른 결과 
-      final List<Hospital> result = hospitalRepository.findByhKeyword(keyword);
-      // 진료 테이블에서 병원 코드 받아오기 -> 중복 제거 같은 코드가 있으면 빼기
-      final List<Integer> hCodeList = careinfoRepository.findByName(keyword);
-      System.out.println(hCodeList);
-      // 병원 코드로 병원 조회하기 -> 중복 제거 해야함
-      result.addAll(hospitalRepository.findByhCodeIn(hCodeList));
-      final HashSet<Hospital> resultSet = new HashSet<Hospital>(result);
-      final List<Hospital> fResult = new ArrayList<Hospital>(resultSet);
-      return fResult;
-    } catch (final Exception e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
+  // @Override
+  // public List<Hospital> findByKeyword(String keyword, Integer page) {
+  //   try {
+  //     if (page == 0){
+  //       // 이름, 위치에 따른 결과 
+  //     final List<Hospital> result = hospitalRepository.findByhKeyword(keyword);
+  //     // 진료 테이블에서 병원 코드 받아오기 -> 중복 제거 같은 코드가 있으면 빼기
+  //     final List<Integer> hCodeList = careinfoRepository.findByName(keyword);
+  //     System.out.println(hCodeList);
+  //     // 병원 코드로 병원 조회하기 -> 중복 제거 해야함
+  //     result.addAll(hospitalRepository.findByhCodeIn(hCodeList));
+  //     final HashSet<Hospital> resultSet = new HashSet<Hospital>(result);
+  //     final List<Hospital> fResult = new ArrayList<Hospital>(resultSet);
+  //     }else{
+
+  //     }
+  //     // 여기 결과에서 페이지를 나눠준다 ... !
+  //     // 똑같은 형식으로 보내는데, 길이 계산하기 
+  //     return fResult;
+  //   } catch (final Exception e) {
+  //     e.printStackTrace();
+  //   }
+  //   return null;
+  // }
 
   @Override
   public List<Hospital> findByLocation(final Double latitude, final Double longtitude, Integer page) {

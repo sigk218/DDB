@@ -14,7 +14,7 @@ public interface HospitalService {
   public void delete(Hospital hospital);
   
   // 병원 검색하기
-  public List<Hospital> findByKeyword(String keyword);
+  // public List<Hospital> findByKeyword(String keyword, Integer page);
 
   // 위치로 병원 조회하기 
   public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);
