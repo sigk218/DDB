@@ -33,9 +33,9 @@ public class HospitalPictureServiceImpl implements HospitalPictureService {
   }
 
   @Override
-  public void delete(Integer Pcode) {
+  public void delete(HospitalPicture hospitalPicture) {
       try {
-        hospitalPictureRepository.delete(Pcode);
+        hospitalPictureRepository.delete(hospitalPicture);
       } catch (Exception e) {
           e.printStackTrace();
       }

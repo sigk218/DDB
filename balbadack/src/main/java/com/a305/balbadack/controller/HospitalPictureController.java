@@ -42,9 +42,9 @@ public class HospitalPictureController {
   // Delete : 병원 사진 삭제하기
   @ApiOperation("병원 사진 삭제하기")
   @PostMapping(value="/delete")
-  public void deleteReport(@RequestBody Integer pCode) {
+  public void deleteReport(@RequestBody HospitalPicture hospitalPicture) {
       //hp_deleted  true로 바꾸기
-      hospitalPictureService.delete(pCode);
+      hospitalPictureService.delete(hospitalPicture);
   }
 
   

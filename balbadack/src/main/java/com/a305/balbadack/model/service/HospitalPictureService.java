@@ -12,5 +12,5 @@ public interface HospitalPictureService {
     public List<HospitalPicture> findByhPhotoCode(String hPhotoCode);
 
     // 사진 삭제 
-    public void delete(Integer pCode);
+    public void delete(HospitalPicture hospitalPicture);
 }
