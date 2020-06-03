@@ -7,14 +7,19 @@ import com.a305.balbadack.model.service.AnimalService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +27,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins="{*}", maxAge=6000)
-@RestController
+@RestController()//("/animal/*")
 @Api(value="동물정보", description="동물정보")
 @EnableAutoConfiguration
 public class AnimalController {
@@ -50,10 +55,12 @@ public class AnimalController {
     }
 
     @ApiOperation("동물정보 등록")
-    @PostMapping("/animal/insert")
+	@PostMapping("/insert")
+	// @RequestMapping(value = "/insert", method = {RequestMethod.POST, RequestMethod.GET})
     public ResponseEntity<Map<String, Object>> signUp(@RequestBody Animal animal) {
-        
+        System.out.println("동물 등록 시작...");
         try {
+			System.out.println("동물 등록 시작...");
             animalService.create(animal);
             return handleSuccess("동물 등록을 완료하였습니다.");
         } catch (Exception e) {
@@ -64,7 +71,7 @@ public class AnimalController {
 	
 
 	@ApiOperation("동물정보수정")
-	@PostMapping("/animal/update")
+	@PostMapping("/update")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Animal animal) {
 		
 		/**
@@ -81,7 +88,7 @@ public class AnimalController {
 	}
 
 	@ApiOperation("동물 삭제")
-	@PostMapping("/animal/delete")
+	@PostMapping("/delete")
 	public ResponseEntity<Map<String, Object>> signout(@RequestParam String u_id, @RequestParam String a_code) {
 		
 		/**
@@ -104,6 +111,9 @@ public class AnimalController {
 		/**
 		 * 로그인 체크하세용~
 		 */
+		// String jwt = HttpRequest.get
+
+		// System.out.println("id: " + id);
 
 		 try {
 			List<Animal> myAllCompanions = animalService.findByUid(u_id);
@@ -121,7 +131,7 @@ public class AnimalController {
 	}
 
 	@ApiOperation("마이페이지 - 동물 상세 조회")
-	@PostMapping("/animal/mycompanion/one")
+	@PostMapping("/mycompanion/one")
 	public ResponseEntity<Map<String, Object>> myCompanion(@RequestParam String u_id, @RequestParam Integer a_code) {
 		
 		/**

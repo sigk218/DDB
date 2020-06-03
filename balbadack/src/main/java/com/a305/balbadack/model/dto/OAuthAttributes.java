@@ -1,7 +1,5 @@
 package com.a305.balbadack.model.dto;
 
-import com.a305.balbadack.model.dto.Role;
-import com.a305.balbadack.model.dto.User;
 import lombok.Builder;
 import lombok.Getter;
 

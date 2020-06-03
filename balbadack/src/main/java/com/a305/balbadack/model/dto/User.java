@@ -4,12 +4,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -18,6 +21,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -31,16 +36,16 @@ public class User {
     /**
      * User
      */
-
     @Id
-	@GeneratedValue()
+    // @GeneratedValue(generator = "system-uuid")
+    // @GenericGenerator(name = "system-uuid", strategy = "uuid")
 	@Column(length = 50, nullable = false, unique = true, name = "u_id")
     private String uId;
     
-    @Column(length = 100, nullable = false, name = "u_pw")
+    @Column(length = 200, nullable = false, name = "u_pw")
     private String uPw;
 
-    @Column(nullable = false, name="u_code")
+    @Column(nullable = false, name="u_code", columnDefinition = "default 1")
     private Integer uCode;
 
     // @Enumerated(EnumType.STRING)
@@ -62,7 +67,4 @@ public class User {
     @Column(columnDefinition = "tinyint(1) default 0", name = "u_deleted")
     private Boolean uDeleted;
 
-    // public String getRoleKey() {
-    //     return this.uRole.getKey();
-    // }
 }

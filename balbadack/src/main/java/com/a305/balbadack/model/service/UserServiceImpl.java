@@ -20,7 +20,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean create(User user) throws Exception {
         try {
-            User check = userRepository.findByUid(user.getUId());
+            System.out.println("USER: " + user.toString());
+            
+            User check = userRepository.findByUserId(user.getUId());
+            System.out.println("CHECK: " + check);
             if(check != null) return false;
             
             userRepository.save(user);
@@ -78,7 +81,7 @@ public class UserServiceImpl implements UserService{
         User user = null;
         try {
             System.out.println(id);
-            user = userRepository.findByUid(id);
+            user = userRepository.findByUserId(id);
             if(user == null)
                 System.out.println("IS NULL");
         } catch (Exception e) {
