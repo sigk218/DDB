@@ -211,22 +211,22 @@ class selectOption extends React.Component {
           <div className={cx('category')}>
             <p>리뷰 전 인증 하기</p>
           </div>
-          <table className={cx('step-table')}>
-            <tr>
-              <th className={cx('fake-td')}></th>
-              <th>본인인증</th>
-              <th>병원검색</th>
-              <th>영수증인증</th>
-              <th className={cx('fake-td')}></th>
-            </tr>
-            <tr>
-              <td className={cx('fake-td')}></td>
-              <td><Pets/></td>
-              <td><Pets/></td>
-              <td></td>
-              <td className={cx('fake-td')}></td>
-            </tr>
-          </table>
+          <div className={cx('ticket-box')}>
+            <div className={cx('ticket-decor')}>
+              <table>
+                <tr>
+                  <th>본인인증</th>
+                  <th>병원검색</th>
+                  <th>영수증인증</th>
+                </tr>
+                <tr>
+                  <td><Pets/></td>
+                  <td><Pets/></td>
+                  <td></td>
+                </tr>
+              </table>
+            </div>
+          </div>
 
           <div className={cx('border-button')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
             {hosSearch}

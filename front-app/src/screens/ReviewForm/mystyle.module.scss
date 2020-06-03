@@ -263,14 +263,27 @@ p {
   margin: 10px auto;
 }
 
-.step-table {
+.ticket-box {
   margin:10px auto;
-  // border-bottom:5px double $darkgreen;
-  // border-top: 5px double $darkgreen;
-  border-collapse: collapse;
-  // th {
-  //   border:1px solid $darkgreen;
-  // }
+  background-color: $darkgreen;
+  padding: 5px;
+  @include width-size(5px);
+  @include flex-center;
+  @include flex-vertical;
+  border-top: 1.5px solid $darkgreen;
+  border-left: 3px dotted $beige;
+  border-right: 3px dotted $beige;
+  border-bottom: 1.5px solid $darkgreen;
+
+  .ticket-decor {
+    border: 1px solid $beige;
+    width: 90%;
+  }
+
+  table {
+    background-color: $beige;
+    border-collapse: collapse;
+  }
   th, td {
     border:2px solid $darkgreen;
     padding: 7px 15px;
@@ -282,14 +295,14 @@ p {
   td {
     border-bottom:5px double $darkgreen;
   }
-  th:nth-child(1), td:nth-child(1) {
-    border: 0px;
-    // border-bottom: 2px solid $darkgreen;
-    border-left: 1px dashed $darkgreen;
-  }
-  th:nth-child(5), td:nth-child(5) {
-    border: 0px;
-    // border-bottom: 2px solid $darkgreen;
-    border-right: 1px dashed $darkgreen;
-  }
+  // th:nth-child(1), td:nth-child(1) {
+  //   border: 0px;
+  //   // border-bottom: 2px solid $darkgreen;
+  //   border-left: 1px dashed $darkgreen;
+  // }
+  // th:nth-child(5), td:nth-child(5) {
+  //   border: 0px;
+  //   // border-bottom: 2px solid $darkgreen;
+  //   border-right: 1px dashed $darkgreen;
+  // }
 }
