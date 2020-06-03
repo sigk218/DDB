@@ -4,21 +4,12 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import axios from 'axios';
 import { connect } from "react-redux";
-import {login} from '../../actions';
+import { signin } from '../../actions';
 const cx = classNames.bind(styles)
 
-class SignIn extends Component {
+class SignInPage extends Component {
     componentDidMount() {
-        if (!this.props.user_info) {
-            axios.get('address')
-              .then(response => {
-                const url = response.data.data;
-                console.log('url : ' + url)
-                this.setState({
-                  url: url
-                })
-              })
-          }
+        
     }
     constructor(props) {
         super(props);
@@ -43,13 +34,13 @@ class SignIn extends Component {
         }
     }
     handleSummit() {
-        //login
-    }   
+        console.log(this.state)
+        this.props.signin(this.state.username, this.state.password);
+    }
     render() {
         return (
             <div className={cx('container')}>
                 <div className={cx('category')}><p>Sign In</p></div>
-
                 <div className={cx('basic-box')}>
                     <p>아이디</p>
                     <input type="text" className={cx('input-box')} placeholder="Your Id.." onChange={this.updateId}></input>
@@ -66,9 +57,9 @@ class SignIn extends Component {
 
 const mapStatetoProps = state => {
     return {
-      user_info: state.user_info,
+        user_info: state.user_info,
     };
-  };
-  
+};
 
-  export default (connect(mapStatetoProps, { login })(SignIn));
+
+export default (connect(mapStatetoProps, { signin })(SignInPage));

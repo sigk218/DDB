@@ -16,6 +16,7 @@ import HosMapRes from './screens/HosMapRes/HosMapRes';
 import ReviewRes from './screens/ReviewRes/ReviewRes';
 import SignIn from './screens/SignIn/SignIn';
 import smsVer from './screens/smsVer/smsVer';
+import MyPetList from './components/MyPetList/MyPetList';
 const App = () => {
   return (
     <div>
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/ReviewRes" exact component={ReviewRes} />
             <Route path="/SignIn" exact component={SignIn} />
             <Route path="/smsVer" exact component={smsVer} />
+            <Route path="/MyPetList" exact component={MyPetList} />
           </div>
         </TempNavigation>
 

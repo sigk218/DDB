@@ -4,7 +4,18 @@ import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
 import imgA from "../../assets/imgA.png";
 import history from "../../history";
+import styles from './main.module.scss';
+import classNames from 'classnames/bind';
+
+const cx = classNames.bind(styles)
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      word: ''
+    }
+  }
+
   componentDidMount() {
 
   }
@@ -15,13 +26,28 @@ class Main extends React.Component {
     console.log("asdfasdfasdfasdf")
     history.push("/mypage");
   }
+  async handleEnter(e) {
+    if (e.key === 'Enter') {
+      console.log(this.state)
+    }
+  }
+
   render() {
     return (
       <div>
         <div align="center">
           <img src={imgA} width="200" height="200"></img>
         </div>
-        <MainSearchBar />
+        <div className={cx('search-container')}>
+          <input className={cx('search-box')}
+            type="text"
+            placeholder="병원이름, 진료명, 지역, 동물 종류 등을 입력하세요 ㅎㅎ"
+            value={this.state.word}
+            onChange={e => this.setState({ word: e.target.value })}
+            onKeyPress={this.handleEnter.bind(this)}
+          />
+
+        </div>
         <div>
           <ul>
             <li>
@@ -51,8 +77,10 @@ class Main extends React.Component {
             <li>
               <Link to="/smsVer">문자인증</Link>
             </li>
+            <li>
+              <Link to="/MyPetList">펫리스트</Link>
+            </li>
           </ul>
-
         </div>
       </div>
     );

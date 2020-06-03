@@ -4,6 +4,7 @@ div {
   margin: 2px auto 0px;
 }
 .container {
+    padding: 5px;
     display: flex;
     flex-direction: column;
     vertical-align: middle;
@@ -14,6 +15,10 @@ div {
 .category {
   @include retro-deco($darkgreen, $beige, 5px, 0)
 }
+.id-box {
+  height: 10px;
+  padding-bottom: 2px;
+}
 
 .basic-box {
   padding: 5px;
@@ -23,6 +28,8 @@ div {
 
 
 .input-box {
+   align-items: center;
+    width: 95%;
     background-color: transparent;
 }
 
@@ -44,4 +51,3 @@ div {
   }
 
 }
-

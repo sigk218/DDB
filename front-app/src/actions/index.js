@@ -3,8 +3,10 @@ import {
   GET_HOS_DATA,
   GET_REVIEW_DATA,
   SIGNIN,
+  GET_PET_DETAIL,
+  REGISTER,
 } from "./types";
-
+import apis from '../apis/apis';
 
 //=============DATA=========
 
@@ -114,13 +116,49 @@ const reviewData = {
   h_code: 1
 }
 
+const petData = [
+  {
+      a_code: 1,
+      a_type: "골든 리트리버",
+      a_species: "강아지",
+      a_kig: 10,
+      a_year: 5,
+      image: 'https://picsum.photos/id/1018/250/150/',
+  },
+  {
+      a_code: 2,
+      a_type: "노르웨이숲 고양이",
+      a_species: "고양이",
+      a_kig: 9,
+      a_year: 5,
+  },
 
+]
 //====================================================================
 
-export const login = () => async dispatch => {
-  const response = []
+
+export const signin = (user_id, user_pw) => async dispatch => {
+  const response = await apis.post(`/로그인`, {
+    u_id: user_id,
+    u_pw: user_pw
+  });
+  const data = response.data.data;
+  if(data.u_id) {
+
+  }
   await dispatch({ type: SIGNIN, payload: response.data.data });
 };
+export const register = (user_id, user_pw) => async dispatch => {
+  const response = await apis.post(`/로그인`, {
+    u_id: user_id,
+    u_pw: user_pw
+  });
+  const data = response.data.data;
+  if(data.u_id) {
+
+  }
+  await dispatch({ type: REGISTER, payload: response.data.data });
+}
 export const getUserInfo = () => async dispatch => {
   const response = []
   await dispatch({ type: GET_USER_INFO, payload: response.data.data });
@@ -128,7 +166,6 @@ export const getUserInfo = () => async dispatch => {
 
 export const getHosData = () => async dispatch => {
   const response = hosData;
-  console.log("======리덕스======")
   console.log(response)
   dispatch({ type: GET_HOS_DATA, payload: response });
 }
@@ -141,3 +178,8 @@ export const getReviewData = () => async dispatch => {
 }
 
 
+export const getPetDetail = () => async dispatch => {
+  const response = petData;
+  console.log(response)
+  dispatch({ type: GET_PET_DETAIL, payload: response });
+}
