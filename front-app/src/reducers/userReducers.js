@@ -1,6 +1,10 @@
 import { GET_USER_INFO } from '../actions/types'
 
-export default (state = {}, action) => {
+const initializer = {
+    email:'happy@balbadack.com',
+}
+
+export default (state = initializer, action) => {
     switch(action.type){
         case GET_USER_INFO:
             return{...state, 'info' : action.payload}

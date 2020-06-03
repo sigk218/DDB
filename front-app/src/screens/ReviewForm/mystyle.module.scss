@@ -58,6 +58,14 @@
   }
 }
 
+.smaller-btn {
+  width: 50%;
+}
+
+.xsmall-btn {
+  width: 25%;
+}
+
 .active {
   @include active-background();
   position:relative;
@@ -193,16 +201,7 @@
   }
 }
 
-.hos-box {
-  @include round-border();
-  @include width-size(5px);
-  padding: 1px 5px;
-  @include active-background();
-  cursor: pointer;
-  p {
-    margin: 3px 0;
-  }
-}
+
 
 input[type="text"] {
   background-color: transparent;
@@ -286,7 +285,6 @@ p {
   }
 
   .ticket-decor {
-    // border: 1px solid $beige;
     padding: 5px 0;
     @include flex-center;
     margin: 0;
@@ -311,6 +309,7 @@ p {
     border-top : 1px solid $beige;
     border-right : 1px dashed $beige;
     border-bottom:3px double $beige;
+    height: 30px;
     &:nth-child(3) {
       border-right: 0px
     }
@@ -367,3 +366,39 @@ p {
   left: 50%;
   transform: translate(-50%, -50%)
 }
+
+.action-box {
+  margin: 5px auto;
+  background-color: $darkened;
+  @include width-size(0px);
+  @include round-border();
+  border-style: dashed;
+  @include flex-center();
+  @include flex-vertical();
+  height: 110px;
+}
+
+.hos-box {
+  @include round-border();
+  @include width-size(5px);
+  padding: 1px 5px;
+  @include active-background();
+  cursor: pointer;
+  p {
+    margin: 3px 0;
+  }
+}
+
+.auth-box {
+  @include round-border();
+  @include flex-center();
+  width: 50%;
+  padding:5px;
+  margin-bottom: 5px;
+  background-color: $beige;
+  cursor: pointer;
+  p {
+    margin: 3px 0;
+  }
+}
+

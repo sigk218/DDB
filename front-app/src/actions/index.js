@@ -221,7 +221,7 @@ export const recieveMyReviewList = (list) => {
   }
 }
 
-
+// 영수증 정보 store에 저장
 export const uploadReciept = (bff, dateIs, hasHos, items) => {
   console.log("upload reciept")
   return {
@@ -315,7 +315,7 @@ export const completeReview = (res) => {
 }
 
 // --------- Hospital ------------
-// 0 search keyword를 status에 저장
+// 0. search keyword를 status에 저장
 export const setSearchKeyword = (keyword) => {
   console.log('setSearchKeyword')
   return {

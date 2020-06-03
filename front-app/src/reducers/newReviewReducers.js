@@ -11,14 +11,14 @@ const initializer = {
 const newReview = (state = initializer, action) => {
     switch (action.type) {
         case SET_HOS_INFO:
-            return Object.assign({}, state, {
+            return {
                 ...state,
                 hosInfo: {
                     id: action.id,
                     name: action.name,
                     address: action.address
                 }
-            })
+            }
         default:
             return state
     }

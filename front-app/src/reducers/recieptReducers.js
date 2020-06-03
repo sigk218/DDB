@@ -13,12 +13,13 @@ const reciept = (state = initializer, action) => {
     switch (action.type) {
         case UPLOAD_RECIEPT_INFO:
             console.log('upload reciept')
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 bufferData: action.bff,
                 dateIs: action.dateIs,
                 hasHos: action.hasHos,
                 items: action.items
-            })
+            }
         default:
             return state
     }

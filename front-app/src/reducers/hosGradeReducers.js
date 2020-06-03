@@ -21,12 +21,12 @@ const hosGrade = (state = initializer, action) => {
   switch (action.type) {
     case GET_TOTAL_GRADE:
       const totalscore = Math.round(((state.scorelist.reduce((a, b) => a + b, 0) / state.scorelist.length) + Number.EPSILON) * 100) / 100
-      return Object.assign({}, state, {
+      return {
         ...state,
         totalgrade: [{ name:state.totalgrade[0].name, score: totalscore}]
-      })
+      }
     case SET_HOS_SCORE:
-      return Object.assign({}, state, {
+      return {
         ...state,
         scorelist: state.scorelist.map((s, i) => (
           i === action.i ? action.score: s
@@ -34,12 +34,9 @@ const hosGrade = (state = initializer, action) => {
         grade: state.grade.map(g => (
           g.name === action.name ? {name: g.name, score: action.score} : g
         ))
-      })
+      }
     case DO_DOJANG:
-      return Object.assign({}, state, {
-        ...state,
-        dojang: action.dojang
-      })
+      return { ...state, dojang: action.dojang }
     default:
       return state
   }

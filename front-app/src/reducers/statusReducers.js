@@ -38,7 +38,7 @@ export default (state = initializer, action) => {
         case SELECT_HOS:
             return{...state, hosSelected : action.hosSelected, hosName : action.hosName}
         case HAS_RECIEPT:
-            return{...state, isSearching : state.hasReciept}
+            return{...state, hasReciept : state.hasReciept}
         case COMPLETE_REVIEW:
             return{...state, completeReview: action.res}
         case SET_NEAR_HOS_STATUS:
