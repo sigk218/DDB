@@ -132,9 +132,9 @@
 }
 
 .info-icon {
-  height: 50px;
-  width: 50px;
-  margin: 30px auto 20px;
+  height: 40px;
+  width: 40px;
+  margin: 15px auto 10px;
 }
 
 .big-padding {
@@ -251,4 +251,45 @@ input[type="text"] {
   // 왜 전체페이지 탑에 마진이 있는거지..?
   height: calc(100vh - 44px);
   position: relative;
+}
+
+p {
+  margin: 10px 0;
+}
+
+.big-divider {
+  border-bottom: 1.3px dashed $darkgreen;
+  @include width-size(0px);
+  margin: 10px auto;
+}
+
+.step-table {
+  margin:10px auto;
+  // border-bottom:5px double $darkgreen;
+  // border-top: 5px double $darkgreen;
+  border-collapse: collapse;
+  // th {
+  //   border:1px solid $darkgreen;
+  // }
+  th, td {
+    border:2px solid $darkgreen;
+    padding: 7px 15px;
+    text-align: center;
+  }
+  th {
+    border-top: 5px double $darkgreen;
+  }
+  td {
+    border-bottom:5px double $darkgreen;
+  }
+  th:nth-child(1), td:nth-child(1) {
+    border: 0px;
+    // border-bottom: 2px solid $darkgreen;
+    border-left: 1px dashed $darkgreen;
+  }
+  th:nth-child(5), td:nth-child(5) {
+    border: 0px;
+    // border-bottom: 2px solid $darkgreen;
+    border-right: 1px dashed $darkgreen;
+  }
 }

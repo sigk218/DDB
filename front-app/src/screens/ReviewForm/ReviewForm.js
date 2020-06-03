@@ -71,11 +71,11 @@ class ReviewForm extends React.Component {
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: {
-        Bucket: 'bucket'
+        Bucket: process.env.BUCKET,
       },
-      region: 'region',
-      accessKeyId: 'accesskeyid',
-      secretAccessKey: 'secretAccessKey'
+      region: process.env.REGION,
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET
     });
 
     console.log('beforeSubmit')

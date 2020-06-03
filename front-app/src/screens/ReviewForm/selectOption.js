@@ -3,6 +3,8 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import Modal from '@material-ui/core/Modal';
 import SearchIcon from '@material-ui/icons/Search'
+import DoneOutline from '@material-ui/icons/DoneOutline'
+import Pets from '@material-ui/icons/Pets'
 import recieptHelper from '@ming822/ocr-reciept-helper'
 import vision from 'react-cloud-vision-api'
 import resJson from './test2.json'
@@ -62,7 +64,7 @@ class selectOption extends React.Component {
   }
 
   async ocrApi(file, recieptBase64) {
-    // const key = ''
+    // const key = process.env.GOOGLE_KEY
     // await vision.init({ auth: key })
     // const req = await new vision.Request({
     //   image: new vision.Image({
@@ -139,7 +141,6 @@ class selectOption extends React.Component {
 
     return (
         <div>
-          <div className={cx('h-spacer')}></div>
           <div className={cx('category')}>
             <p>리뷰 작성 가이드</p>
           </div>
@@ -205,6 +206,28 @@ class selectOption extends React.Component {
               다른 사용자로부터 신고요청이 들어올 경우 <span className={cx('red-text')}>서비스 이용이 중지</span>될 수 있습니다.
             </p>
           </div>
+          <div className={cx('big-divider')}></div>
+          <div className={cx('h-spacer')}></div>
+          <div className={cx('category')}>
+            <p>리뷰 전 인증 하기</p>
+          </div>
+          <table className={cx('step-table')}>
+            <tr>
+              <th className={cx('fake-td')}></th>
+              <th>본인인증</th>
+              <th>병원검색</th>
+              <th>영수증인증</th>
+              <th className={cx('fake-td')}></th>
+            </tr>
+            <tr>
+              <td className={cx('fake-td')}></td>
+              <td><Pets/></td>
+              <td><Pets/></td>
+              <td></td>
+              <td className={cx('fake-td')}></td>
+            </tr>
+          </table>
+
           <div className={cx('border-button')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
             {hosSearch}
           </div>
