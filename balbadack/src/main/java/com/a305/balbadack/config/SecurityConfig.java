@@ -1,42 +1,72 @@
 package com.a305.balbadack.config;
 
+import com.a305.balbadack.model.dto.CustomUserdetails;
 import com.a305.balbadack.model.dto.JwtProvider;
 import com.a305.balbadack.model.dto.Role;
-import com.a305.balbadack.model.service.JwtAuthenticationFilter;
+import com.a305.balbadack.model.service.CustomUserDetailService;
+import com.a305.balbadack.security.JwtAuthenticationEntryPoint;
+import com.a305.balbadack.security.JwtAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+    securedEnabled = true,
+    jsr250Enabled = true,
+    prePostEnabled = true
+)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private JwtProvider jwtProvider;
+    @Autowired
+    CustomUserDetailService customUserdetailsService;
+
+    @Autowired
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+
+
+    // @Bean
+    // public JwtAuthenticationFilter JwtAuthenticationFilter(){
+    //     return new JwtAuthenticationFilter();
+    // }
 
     // Password Encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        // return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     // authenticationManager를 Bean 등록합니다.
-    @Bean
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
     
 
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(customUserdetailsService)
+                .passwordEncoder(passwordEncoder());
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -47,16 +77,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
+                    .exceptionHandling()
+                        .authenticationEntryPoint(unauthorizedHandler)
+                        .and()
                 .headers().frameOptions().disable()
-                .and()
+                .and() // JWT는 Session 기반이 아닌 토큰인증 방식이므로 Session 사용 안함 설정
                     .sessionManagement()
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                     .authorizeRequests()
                     // .antMatchers("/api/v1/**").hasRole(Role.USER.name())
-                    .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAnyRole("USER", "STAFF", "ADMIN")
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/hospital/**").hasAnyRole("STAFF", "ADMIN")
+                    // .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAnyRole("USER", "STAFF", "ADMIN")
+                    .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAuthority("ROLE_USER")//.hasRole("USER")
+                    .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
+                    .antMatchers("/hospital/**").hasAuthority("ROLE_ADMIN")//hasAnyRole("STAFF", "ADMIN")
                     .antMatchers("/**", "/user/login", "/user/signup").permitAll()
                     .anyRequest().authenticated() // 기타 경로는 인증을 필요로 함
                 .and()
@@ -70,7 +104,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true) // 리다이렉트 후 세션 초기화
                 .and()
-                    .addFilterBefore(new JwtAuthenticationFilter(jwtProvider),
+                    .addFilterBefore(new JwtAuthenticationFilter(), //JwtAuthenticationFilter(jwtProvider)
                         UsernamePasswordAuthenticationFilter.class);
                     // JwtAuthenticationFilter를 UsernamePasswordAuthenticationFilter 전에 넣음.
                 // .and()
