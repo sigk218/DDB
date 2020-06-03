@@ -1,7 +1,8 @@
 import { 
     TOGGLE_SEARCH_MODAL, 
     SELECT_HOS, 
-    HAS_RECIEPT 
+    HAS_RECIEPT, 
+    COMPLETE_REVIEW
 } from '../actions/types'
 
 const initializer = {
@@ -10,7 +11,8 @@ const initializer = {
     hosSelected: false,
     hosName: '',
     hasReciept: false,
-    reviewFromMain: true
+    reviewFromMain: true,
+    completeReview: false
 }
 
 export default (state = initializer, action) => {
@@ -21,6 +23,8 @@ export default (state = initializer, action) => {
             return{...state, hosSelected : action.hosSelected, hosName : action.hosName}
         case HAS_RECIEPT:
             return{...state, isSearching : state.hasReciept}
+        case COMPLETE_REVIEW:
+            return{...state, completeReview: action.res}
         default:
             return state;
     }

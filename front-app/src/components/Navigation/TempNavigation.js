@@ -33,6 +33,7 @@ const Navigation = (props) => {
   } else if (location === '/SelectOption') {
     location = [props.status.hosName, '후기 작성'].join(' ')
   } else if (location === '/ReviewForm') {
+    // selectOption이외에 접근 금지시키는 코드
     // if (props.status.hosName === '') {
     //   window.alert('잘못된 접근입니다.')
     //   history.goBack()

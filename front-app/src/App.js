@@ -18,7 +18,6 @@ import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import HosMapRes from './screens/HosMapRes/HosMapRes';
 import ReviewRes from './screens/ReviewRes/ReviewRes';
 
-
 const App = () => {
   return (
     <div>
