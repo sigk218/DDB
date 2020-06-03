@@ -262,47 +262,108 @@ p {
   @include width-size(0px);
   margin: 10px auto;
 }
-
 .ticket-box {
-  margin:10px auto;
+  @include width-size(0px);
+  @include flex-between;
+  margin: 10px auto;
+}
+.ticket-body {
   background-color: $darkgreen;
   padding: 5px;
-  @include width-size(5px);
-  @include flex-center;
+  width: 85%;
   @include flex-vertical;
-  border-top: 1.5px solid $darkgreen;
-  border-left: 3px dotted $beige;
-  border-right: 3px dotted $beige;
-  border-bottom: 1.5px solid $darkgreen;
+  @include flex-center;
+  border-left: 2px dotted $beige;
+  border-right: 2px dotted $beige;
+  position: relative;
+
+  p {
+    margin: 0;
+    color: $beige;
+    font-size: 7px;
+    height: 7px;
+    line-height: 10px;
+  }
 
   .ticket-decor {
-    border: 1px solid $beige;
-    width: 90%;
+    // border: 1px solid $beige;
+    padding: 5px 0;
+    @include flex-center;
+    margin: 0;
+    position: relative;
   }
 
   table {
-    background-color: $beige;
     border-collapse: collapse;
   }
-  th, td {
-    border:2px solid $darkgreen;
+  th {
+    background-color: $darkgreen;
+    color: $beige;
+    padding: 7px 15px;
+    border-top:3px double $beige;
+    border-right: 1px dashed $beige;
+    &:nth-child(3) {
+      border-right: 0px solid $beige;
+    }
+  }
+  td {
+    background-color: $darkgreen;
+    border-top : 1px solid $beige;
+    border-right : 1px dashed $beige;
+    border-bottom:3px double $beige;
+    &:nth-child(3) {
+      border-right: 0px
+    }
+    color: $red;
     padding: 7px 15px;
     text-align: center;
   }
-  th {
-    border-top: 5px double $darkgreen;
+}
+
+.submit-box {
+  border: 1px solid $beige;
+  background-color: $darkgreen;
+  width: 10%;
+  position: relative;
+  border-right: 2px dotted $beige;
+  .decor-inner {
+    width: 80%;
+    border: 1px solid $beige;
+    height: 95%;
   }
-  td {
-    border-bottom:5px double $darkgreen;
+  p {
+    margin: auto 30%;
+    transform-origin: 78% 100%;
+    transform: rotate(90deg) translate(0%, 0%);
+    color: $beige;
+    width: 70px;
+    text-align: center;
+    right: 0;
+    position: absolute;
+    top: 50%;
   }
-  // th:nth-child(1), td:nth-child(1) {
-  //   border: 0px;
-  //   // border-bottom: 2px solid $darkgreen;
-  //   border-left: 1px dashed $darkgreen;
-  // }
-  // th:nth-child(5), td:nth-child(5) {
-  //   border: 0px;
-  //   // border-bottom: 2px solid $darkgreen;
-  //   border-right: 1px dashed $darkgreen;
-  // }
+}
+
+.decor-top {
+  margin: 0;
+  background: $beige;
+  position: absolute;
+  width: 3.5vw;
+  height: 3.5vw;
+  border-radius: 3.5vw;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.decor-bottom {
+  margin: 0;
+  background: $beige;
+  position: absolute;
+  width: 3.5vw;
+  height: 3.5vw;
+  border-radius: 3.5vw;
+  bottom: -12%;
+  left: 50%;
+  transform: translate(-50%, -50%)
 }
