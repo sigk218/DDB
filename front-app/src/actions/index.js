@@ -327,7 +327,7 @@ export const setSearchKeyword = (keyword) => {
 export const getNearHospitals = (lat, long, page) => {
   console.log('getNearHospitals')
   const url = 'http://192.168.1.242:7888/hospital/location/'
-  const reqUrl = url + +page+ '?latitude=' + lat + '&longtitude=' + long
+  const reqUrl = url +page+ '?latitude=' + lat + '&longtitude=' + long
   return dispatch => {
     return axios.post(reqUrl, config)
       .then(res => {
@@ -357,7 +357,7 @@ export const recieveNearHospitals = (list) => {
 export const getNearHosByStar = (lat, long, page) => {
   console.log('getNearHosByStar')
   const url = 'http://192.168.1.242:7888/hospital/starrating/'
-  const reqUrl = url + '?latitude=' + lat + '&longtitude=' + long + '&page=' + page
+  const reqUrl = url +page+ '?latitude=' + lat + '&longtitude=' + long 
   return dispatch => {
     return axios.post(reqUrl, config)
       .then(res => {
@@ -385,11 +385,12 @@ export const setNearHosByStarStatus = (lat, long, page, next) => {
 
 
 // 3.1 병원 검색하기
-export const getHosSearchList = (keyword) => {
+export const getHosSearchList = (keyword, page) => {
   console.log('get hos search list')
   const url = 'http://192.168.1.242:7888/hospital/name/'
+  const reqUrl = url+page+'?keyword='+keyword
   return dispatch => {
-    return axios.post(url+'?keyword='+keyword, config)
+    return axios.post(reqUrl, config)
       .then(res => {
         dispatch(recieveHosSearchList(res.data))
       })
