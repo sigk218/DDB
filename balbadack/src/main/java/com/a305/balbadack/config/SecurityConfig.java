@@ -88,10 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     // .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     // .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAnyRole("USER", "STAFF", "ADMIN")
-                    .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAuthority("ROLE_USER")//.hasRole("USER")
+                    .antMatchers("/**", "/user/login", "/user/signup").permitAll()
+                    .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAuthority("ROLE_ADMIN")//.hasRole("USER")
                     .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                     .antMatchers("/hospital/**").hasAuthority("ROLE_ADMIN")//hasAnyRole("STAFF", "ADMIN")
-                    .antMatchers("/**", "/user/login", "/user/signup").permitAll()
                     .anyRequest().authenticated() // 기타 경로는 인증을 필요로 함
                 .and()
                     .formLogin()

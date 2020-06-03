@@ -130,7 +130,7 @@ public class UserController {
 	@ApiOperation("로그인")
 	@PostMapping("/user/login")
 	public ResponseEntity<?> login(@RequestParam String id, @RequestParam String password) {
-		System.out.println("0");
+		System.out.println("로그인~~~~");
 		Authentication authentication = authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(id, password)
 		);

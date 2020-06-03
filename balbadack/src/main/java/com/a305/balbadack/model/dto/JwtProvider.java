@@ -119,11 +119,11 @@ public class JwtProvider {
      */
 
     // JWT 토큰에서 인증 정보 조회
-    // public Authentication getAuthentication(String token) {
-    //     return null;
-    //     // UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-    //     // return new UsernamePasswordAuthenticationToken(userDetails,  "", userDetails.getAuthorities());
-    // }
+    public Authentication getAuthentication(String token) {
+        return null;
+        // UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        // return new UsernamePasswordAuthenticationToken(userDetails,  "", userDetails.getAuthorities());
+    }
 
     // 토큰에서 회원정보 추출
     public String getUserPk(String token) {
