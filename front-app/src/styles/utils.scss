@@ -159,6 +159,8 @@ $title: 'BMEULJIRO';
   @include round-border();
 }
 
+
+
 .relative {
   position: relative;
   img {
@@ -220,6 +222,9 @@ $title: 'BMEULJIRO';
 }
 
 .selected-photo {
+  max-height: 17vh;
+  margin-right:4px;
+  @include round-border();
   position:relative;
   top:1px;
   border-color: $red;

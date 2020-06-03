@@ -12,7 +12,6 @@ class Main extends React.Component {
 
   }
   mypage() {
-    console.log("asdfasdfasdfasdf")
     history.push("/mypage");
   }
   render() {

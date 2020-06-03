@@ -6,7 +6,7 @@ import reduxThunk from "redux-thunk";
 import App from './App';
 import './index.css';
 import reducers from './reducers';
-import { uploadReciept } from './actions'
+// import { getReviewList, getMyReviewList } from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -14,13 +14,22 @@ const store = createStore(
   composeEnhancers(applyMiddleware(reduxThunk))
 );
 
-console.log(store.getState())
+// console.log(store.getState())
 
-const unsubscribe = store.subscribe(() => console.log(store.getState()))
+// const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-store.dispatch(uploadReciept('buffer', 'base64'))
 
-unsubscribe()
+// store.dispatch(getReviewList(10))
+// .then(() =>
+//   console.log(store.getState().review_info.list)
+// )
+
+// store.dispatch(getMyReviewList('sim'))
+// .then(() =>
+// console.log(store.getState().review_info.mylist))
+
+
+// unsubscribe()
 
 ReactDOM.render(
 

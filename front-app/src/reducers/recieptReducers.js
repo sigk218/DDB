@@ -1,8 +1,15 @@
 import { UPLOAD_RECIEPT_INFO } from './../actions/types'
 
 
+const initializer = {
+    bufferData: null,
+    dateIs: null,
+    hasHos: null,
+    items: []
+  }
 
-const reciept = (state = {}, action) => {
+
+const reciept = (state = initializer, action) => {
     switch (action.type) {
         case UPLOAD_RECIEPT_INFO:
             console.log('upload reciept')

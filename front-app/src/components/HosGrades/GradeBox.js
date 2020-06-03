@@ -3,29 +3,27 @@ import HosGrade from '../../components/HosGrades/HosGrades'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 
+import { connect } from 'react-redux'
+
 const cx = classNames.bind(styles)
 
 class GradeBox extends React.Component {
 
-  componentDidMount() {
-  }
-
   render() {
-    const dojang = require("../../assets/visitnyang.png")
-
+    const dojangMark = require("../../assets/visitnyang.png")
+    const { grade, editable, totalgrade, dojang } = this.props.hosGrade
     return (
         <div className={cx('basic-box', 'relative')}>
           <HosGrade 
-            grade={this.props.grade}
-            onChange={this.props.onChange}
-            editable={this.props.editable}
+            grade={grade}
+            editable={!editable}
             />
           <div className={cx('divider')}></div>
-          <HosGrade grade={this.props.totalgrade}/>
+          <HosGrade grade={totalgrade}/>
           <img 
-            className={this.props.dojang? cx('show') : cx('hide')} 
-            src={this.props.dojang? dojang : undefined }
-            alt='dojang'  
+            className={dojang? cx('show') : cx('hide')} 
+            src={dojang? dojangMark : undefined }
+            alt='dojang' 
           />
         </div>
     );
@@ -34,4 +32,14 @@ class GradeBox extends React.Component {
 
 
 
-export default GradeBox;
+
+const mapStateToProps = state => {
+  return {
+    hosGrade: state.hosGrade,
+  };
+};
+
+
+export default connect(
+  mapStateToProps
+)(GradeBox)

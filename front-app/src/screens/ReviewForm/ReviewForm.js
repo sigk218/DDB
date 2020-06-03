@@ -4,99 +4,162 @@ import GradeBox from '../../components/HosGrades/GradeBox'
 import Pets from '@material-ui/icons/Pets'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
-import recieptHelper from '@ming822/ocr-reciept-helper'
-import test from './test.json'
+import history from "../../history";
+import AWS from 'aws-sdk'
+import { connect } from 'react-redux'
+import reviewFormer from './reviewFormer'
+import { 
+  doDojang,
+  postReview
+} from '../../actions'
+
 const cx = classNames.bind(styles)
 
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
-    const scorelist =  [0, 0, 0, 0]
-    const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
-    const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
-    const totalgrade = this.calcTotalScore(scorelist)
-    const reciept = new recieptHelper(test, '스토리동물병원')
-    const priceTable = reciept.priceTable
-    console.log(priceTable)
 
     this.state = {
       date : new Date(),
-      grade: grade,
-      totalgrade: totalgrade,
       visitdate: new Date(),
-      editablegrade: true,
-      revisitbtn: false,
-      recieptbtn: false,
       isphoto:false,
+      purpose: '',
       photos: [],
       photoname: [],
       tempphotos: [],
-      content: "",
-      priceTable: priceTable
+      photoURL: [],
+      selectedPhoto: null,
+      content: ""
     }
   }
 
 
-  calcTotalScore(scorelist) {
-    const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
-    const totalgrade = [{name:'평균평점', score:totalscore}]
-    return totalgrade
-  }
-
-  onGradeChange(field, value) {
-    this.setState({
-      grade: this.state.grade.map(
-        g => {
-          if(g.name === field) {
-            return {...g, score:value}
-          }
-          return { ...g }
-        }
-      )
-    }, () => {
-      this.setState({
-        totalgrade: this.calcTotalScore(this.state.grade.map(g => g.score))
-      })
-    })
-  }
-
-  togglerevisit() {
-    this.setState({
-      revisitbtn: !this.state.revisitbtn
-    })
-  }
-
   handleText(e) {
     this.setState({content: e.target.value})
+  }
+
+  async deletePhoto() {
+    const pi = this.state.selectedPhoto
+    await this.setState({
+      selectedPhoto: null,
+      photos: this.state.photos.filter((p,i) => i !== pi),
+      photoname: this.state.photoname.filter((p,i) => i !== pi),
+      tempphotos: this.state.tempphotos.filter((p,i) => i !== pi),
+    })
+    if (this.state.photos.length < 1) {
+      await this.setState({isphoto: false})
+    }
   }
 
   async handleFiles(e) {
     const files = [...e.target.files]
     const names = files.map(f => f.name)
     const checked = names.filter(n => !(this.state.photoname.includes(n))).map((n, i) => files[i]).slice(0, 4)
-    await this.setState({photos:this.state.photos.concat(...checked)})
-    await this.setState({photoname:this.state.photoname.concat(...names)})
-    await this.setState({tempphotos: this.state.photos.map(
-      f => URL.createObjectURL(f)
-    )})
+    await this.setState({
+      photos:this.state.photos.concat(...checked),
+      photoname:this.state.photoname.concat(...names)
+    })
+    await this.setState({
+      tempphotos: this.state.photos.map(f => URL.createObjectURL(f))
+    })
     if (this.state.photos) {
       await this.setState({isphoto:true})
     }
   }
 
+  async submitPhotos() {
+    const s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: {
+        Bucket: process.env.BUCKET,
+      },
+      region: process.env.REGION,
+      accessKeyId: process.env.AWS_KEY,
+      secretAccessKey: process.env.AWS_SECRET
+    });
+
+    console.log('beforeSubmit')
+
+    for await (const photo of this.state.photos) {
+      const timeStamp = Math.floor(new Date().now() / 1000)
+      // uid로 바꾸기
+      const params = {
+        Key: 'sim_'+timeStamp+'.jpg',
+        Body: photo,
+        ACL: "private",
+      };
+      await this.setState({photoURL: this.state.photoURL.concat('sim_'+timeStamp+'.jpg')})
+      console.log('submitting')
+      await s3.upload(params).catch(err => console.log('사진 업로드 중 에러가 발생했다냥', err))
+    }
+
+    // 영수증도 업로드하기
+    const params = {
+      Key: 'sim_reciept_'+'.jpg',
+      Body: this.props.reciept,
+      ACL: "private",
+    };
+
+    await s3.upload(params).catch(err => console.log('영수증 업로드 중 에러가 발생했다냥', err))
+
+    console.log('compoleteSubmit')
+  }
+
+  async submitForm() {
+    const nullScore = this.props.scorelist.some(score => score === 0)
+
+    const r = window.confirm('제출할거냥')
+    if (r === false) {
+      return
+    }
+
+    if (nullScore === true ) {
+      window.alert('병원 상세 평가를 먼저 완료해달라냥')
+    }
+
+    await this.submitPhotos()
+
+    const data = {
+      content: this.state.content,
+      scorelist: this.props.scorelist,
+      totalscore: this.props.totalscore,
+      dojang : this.props.dojang,
+      photos: this.state.photoURL,
+      purpose: this.state.purpose,
+      date: this.state.date
+    }
+    const carelist = [{
+      animal: {acode: 1},
+      ciOpen: true,
+      ciPrice: 1000,
+      ciName: '혈액검사'
+    }]
+    const body = new reviewFormer(10, data, carelist, 'sim').getBody()
+    console.log('body', body)
+    await postReview(body)
+    if (this.props.status.completeReview === true) {
+      window.alert('후기 작성이 완료되었다냥')
+      history.push('/')
+    } else {
+      window.alert('후기 업로드 도중 예상치 못한 에러가 발생했다냥ㅠ')
+    }
+  }
+
+
   render() {
     const animal = ['rabbit', 'turtle', 'hamster', 'cat', 'dog', 'bird']
     const animalsrc = animal.map( a => require(`../../assets/${a}.png`))
-    const animalimg = animalsrc.map( url => 
-      {return <img key={url} src={url} alt={url}/>}
-    )
+    const animalimg = animalsrc.map( url => {return <img key={url} src={url} alt={url} />})
 
     const reviewimg = this.state.tempphotos.map(
-      url => {return <img className={cx('photo')} key={url} src={url} alt='사진후기'/>}
+      (url, i) => {return <img 
+        className={cx(i==this.state.selectedPhoto? 'selected-photo':'photo')} key={url} src={url} alt='사진후기'
+        onClick={() => this.setState({selectedPhoto: i})}
+        />}
     )
 
     return (
-        <div>
+        <div className={cx('temp-body')}>
           <div className={cx('row')}>
             <div className={cx('small-category')}><p>방문 날짜</p></div>
             <div className={cx('spacer')}></div>
@@ -116,35 +179,25 @@ class ReviewForm extends React.Component {
           <div className={cx('category')}>
             <p>병원 상세 평가</p>
           </div>
-          <GradeBox 
-            totalgrade={this.state.totalgrade} 
-            grade={this.state.grade}
-            editable={this.state.editablegrade}
-            onChange={this.onGradeChange.bind(this)}
-            dojang={this.state.revisitbtn}
-            />
+          <GradeBox/>
           <div 
-            className={this.state.revisitbtn? cx('border-button', 'active') : cx('border-button')}
-            onClick={this.togglerevisit.bind(this)}
+            className={this.props.dojang? cx('border-button', 'active') : cx('border-button')}
+            onClick={() => this.props.doDojang(!this.props.dojang)}
             >
-            <p>다시 방문할 의사 {this.state.revisitbtn? '없다옹': '있다옹'}</p>
+            <p>다시 방문할 의사 {this.props.dojang? '없다옹': '있다옹'}</p>
             <Pets style={{ fontSize: 15 }}/>
           </div>
           <div className={cx('category')}>
             <p>비용표</p>
           </div>
-          <div 
-            className={cx('border-button')}
-            >
-            <p>영수증으로 입력하기</p>
-          </div>
+
           <div className={cx('category')}>
             <p>진료 후기 상세</p>
           </div>
           <div className={cx('box')}>
             <textarea
               placeholder={'후기를 작성해 주세요.'}
-              rows="7"
+              rows="3"
               value={this.state.content}
               onChange={this.handleText.bind(this)}
             />
@@ -158,7 +211,7 @@ class ReviewForm extends React.Component {
               ? cx('hide')
               : cx('border-button', 'upload-btn-wrapper')}
             >
-            <p>사진 첨부하기<span>최대 4장</span></p>
+            <p>사진 첨부하기<span>최대 3장</span></p>
             <input
               type="file"
               name="file"
@@ -176,13 +229,19 @@ class ReviewForm extends React.Component {
           >
             {reviewimg}
           </div>
+          <div
+            className={cx(this.state.selectedPhoto === null? 'hide': 'border-button')}
+            onClick={this.deletePhoto.bind(this)}
+          >
+            <p>선택한 사진 삭제하기</p>
+          </div>
           <div 
             className={
-              this.state.isphoto && (this.state.photos.length < 4)
+              this.state.isphoto && (this.state.photos.length < 3)
               ?  cx('border-button', 'upload-btn-wrapper')
               : cx('hide')}
             >
-            <p>사진 추가하기<span>최대 4장</span></p>
+            <p>사진 추가하기<span>최대 3장</span></p>
             <input
               type="file"
               name="file"
@@ -191,16 +250,36 @@ class ReviewForm extends React.Component {
               onChange={this.handleFiles.bind(this)}
             />
           </div>
-          <div
-            className={cx('border-button')}
-          >
-            <p>선택한 사진 삭제하기</p>
+          <div 
+            className={this.props.scorelist.some(score => score === 0) ? cx('submit-btn') : cx('submit-btn', 'clicked')}
+            onClick={this.submitForm.bind(this)}
+            >
+            <p>제출하기</p>
           </div>
         </div>
     );
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    dojang: state.hosGrade.dojang,
+    scorelist: state.hosGrade.scorelist,
+    totalscore: state.hosGrade.totalscore,
+    status: state.status,
+    reciept: state.reciept_info.bufferData
+  };
+};
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return { 
+    doDojang: (revisit) => dispatch(doDojang(revisit)),
+    postReview: (body) => dispatch(postReview(body)),
 
-export default ReviewForm;
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReviewForm)
