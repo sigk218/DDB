@@ -138,7 +138,7 @@ class selectOption extends React.Component {
         <div className={cx('h-spacer')}></div>
       </div>
     );
-
+    const timerightnow = new Date().toISOString().slice(0,10)
     return (
         <div>
           <div className={cx('category')}>
@@ -211,22 +211,39 @@ class selectOption extends React.Component {
           <div className={cx('category')}>
             <p>리뷰 전 인증 하기</p>
           </div>
-          <table className={cx('step-table')}>
-            <tr>
-              <th className={cx('fake-td')}></th>
-              <th>본인인증</th>
-              <th>병원검색</th>
-              <th>영수증인증</th>
-              <th className={cx('fake-td')}></th>
-            </tr>
-            <tr>
-              <td className={cx('fake-td')}></td>
-              <td><Pets/></td>
-              <td><Pets/></td>
-              <td></td>
-              <td className={cx('fake-td')}></td>
-            </tr>
-          </table>
+          <div className={cx('ticket-box')}>
+            <div className={cx('ticket-body')} > 
+              <p>------ 발품팔지 않고 만나는 애니멀 닥터 ------</p>
+              <div className={cx('ticket-decor')}>
+                <table>
+                  <thead>
+                  <tr>
+                    <th>본인인증</th>
+                    <th>병원검색</th>
+                    <th>영수증인증</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr>
+                    <td><Pets/></td>
+                    <td><Pets/></td>
+                    <td></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>------------ 발행일 : { timerightnow } ------------</p>
+            </div>
+            
+            <div className={cx('submit-box')}>
+              <div className={cx('decor-top')}></div>
+              <div className={cx('decor-inner')}>
+                <p>리뷰 쓰기</p>
+              </div>
+              <div className={cx('decor-bottom')}></div>
+            </div>
+            
+          </div>
 
           <div className={cx('border-button')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
             {hosSearch}
