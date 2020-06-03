@@ -33,11 +33,11 @@ public class Good {
     
     // 리뷰코드
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "r_code", referencedColumnName = "r_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_review_rcode"))
+    @JoinColumn(name = "r_code", referencedColumnName = "r_code", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_review_rcode"))
 	private Review review;
 
     // 아이디
     @ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_good_uid"))
+	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = true, updatable = false, foreignKey = @ForeignKey(name = "fk_user_uid"))
 	private User user;
 }

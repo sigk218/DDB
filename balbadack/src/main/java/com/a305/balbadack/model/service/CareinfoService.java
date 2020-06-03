@@ -8,6 +8,7 @@ public interface CareinfoService {
     
     // 진료 정보 등록하기
     public void insert(Careinfo careinfo);
+    public void insert(List<Careinfo> careinfo);
 
     // 진료 정보 수정하기
     public void update(Careinfo careinfo);
