@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class HospitalServicelmpl implements HospitalService {
 
   static int limit = 7;
+  static List<Hospital> fResult;
   
   @Autowired
   HospitalRepository hospitalRepository;
@@ -48,30 +49,62 @@ public class HospitalServicelmpl implements HospitalService {
     }
   }
   // 이름, 위치, 진료명에 따른 병원 결과
-  // @Override
-  // public List<Hospital> findByKeyword(String keyword, Integer page) {
-  //   try {
-  //     if (page == 0){
-  //       // 이름, 위치에 따른 결과 
-  //     final List<Hospital> result = hospitalRepository.findByhKeyword(keyword);
-  //     // 진료 테이블에서 병원 코드 받아오기 -> 중복 제거 같은 코드가 있으면 빼기
-  //     final List<Integer> hCodeList = careinfoRepository.findByName(keyword);
-  //     System.out.println(hCodeList);
-  //     // 병원 코드로 병원 조회하기 -> 중복 제거 해야함
-  //     result.addAll(hospitalRepository.findByhCodeIn(hCodeList));
-  //     final HashSet<Hospital> resultSet = new HashSet<Hospital>(result);
-  //     final List<Hospital> fResult = new ArrayList<Hospital>(resultSet);
-  //     }else{
-
-  //     }
-  //     // 여기 결과에서 페이지를 나눠준다 ... !
-  //     // 똑같은 형식으로 보내는데, 길이 계산하기 
-  //     return fResult;
-  //   } catch (final Exception e) {
-  //     e.printStackTrace();
-  //   }
-  //   return null;
-  // }
+  @Override
+  public Map<String, Object> findByKeyword(String keyword, Integer page) {
+    Map<String, Object> resultmap = new HashMap<String, Object>();
+    int limit = 15;
+    try {
+      if (page == 0) {
+        // 이름, 위치에 따른 결과
+        List<Hospital> result = hospitalRepository.findByhKeyword(keyword);
+        // 진료 테이블에서 병원 코드 받아오기 -> 중복 제거 같은 코드가 있으면 빼기
+        List<Integer> hCodeList = careinfoRepository.findByName(keyword);
+        System.out.println(hCodeList);
+        // 병원 코드로 병원 조회하기 -> 중복 제거 해야함
+        result.addAll(hospitalRepository.findByhCodeIn(hCodeList));
+        HashSet<Hospital> resultSet = new HashSet<Hospital>(result);
+        fResult = new ArrayList<Hospital>(resultSet);
+        limit = Integer.min(limit, fResult.size());
+        // 갯수별로(15개씩)
+        if ((limit < 15)|(fResult.size()==15)){
+          resultmap.put("next", false);
+        }else{
+          resultmap.put("next", true);
+        }
+        
+        List<Hospital> hospitalList = new ArrayList<>();
+        for (int i = 0; i < limit; i++) {
+          System.out.println(limit);
+          System.out.println(i);
+          hospitalList.add(fResult.get(i));
+        }
+        resultmap.put("hospital", hospitalList);
+      }else{ 
+        // 시작점 
+        // page = Integer.min(fResult.size(), page*limit);
+        if ((fResult.size() <= page*limit)){
+          resultmap.put("next", false);
+        }else{
+          resultmap.put("next", true);
+        }
+        page = page * limit;
+        limit = Integer.min(page+limit, fResult.size());
+        List<Hospital> hospitalList = new ArrayList<>();
+        for (int i = page; i < limit; i++) { 
+          System.out.println(i+", "+page+","+limit);
+          // System.out.println(page);
+          // System.out.println(limit);
+          // System.out.println(fResult.size());
+          hospitalList.add(fResult.get(i));
+        }
+        resultmap.put("hospital", hospitalList);
+      }
+      return resultmap;
+    } catch (final Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
 
   @Override
   public List<Hospital> findByLocation(final Double latitude, final Double longtitude, Integer page) {

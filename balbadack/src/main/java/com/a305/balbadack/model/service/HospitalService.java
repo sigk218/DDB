@@ -1,6 +1,8 @@
 package com.a305.balbadack.model.service;
 
 import java.util.List;
+import java.util.Map;
+
 import com.a305.balbadack.model.dto.Hospital;
 
 public interface HospitalService {
@@ -14,7 +16,7 @@ public interface HospitalService {
   public void delete(Hospital hospital);
   
   // 병원 검색하기
-  // public List<Hospital> findByKeyword(String keyword, Integer page);
+  public Map<String, Object> findByKeyword(String keyword, Integer page);
 
   // 위치로 병원 조회하기 
   public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);

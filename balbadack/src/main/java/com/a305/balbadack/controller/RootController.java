@@ -1,19 +1,24 @@
 package com.a305.balbadack.controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 public class RootController implements ErrorController {
-  private static final String PATH = "/error";
+    @GetMapping("/") // @RequestMapping(value ="/helloworld", method = RequestMethod.GET)
+    public String welcome() {
+        return "index";
+    }
 
-    @RequestMapping(value = PATH)
-    public String error() {
-        return "forward:/";
+    /** Controller에서 모든 uri에 대하여 index.html로 향하게 하는 함수 */
+    @GetMapping("/error")
+    public String error(){
+        return "index";
     }
 
     @Override
     public String getErrorPath() {
-        return PATH;
+        return "/error";
     }
 }
 

@@ -43,11 +43,11 @@ public class HospitalController {
   }
 
   // 1. 병원이름으로 검색 2. 지역으로 검색 3. 나머지는 태그 테이블로 
-  // @ApiOperation("병원 검색하기")
-  // @PostMapping(value="/name/{keyword}/{page}")
-  // public Map<String, Obejct> findHospitalByKeyword(@PathVariable String keyword, @PathVariable Integer page){
-  //   return hospitalService.findByKeyword(keyword);
-  // }
+  @ApiOperation("병원 검색하기")
+  @PostMapping(value="/name/{keyword}/{page}")
+  public Map<String, Object> findHospitalByKeyword(@PathVariable String keyword, @PathVariable Integer page){
+    return hospitalService.findByKeyword(keyword, page);
+  }
 
   // 위도 : latitude, 경도 : longtitude -> 가까운 순서대로 
   @CrossOrigin(origins={"*"})
