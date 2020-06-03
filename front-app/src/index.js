@@ -6,7 +6,8 @@ import reduxThunk from "redux-thunk";
 import App from './App';
 import './index.css';
 import reducers from './reducers';
-// import { getReviewList, getMyReviewList } from './actions'
+import { getReviewList, getMyReviewList } from './actions'
+import {getNearHospitals} from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -14,22 +15,26 @@ const store = createStore(
   composeEnhancers(applyMiddleware(reduxThunk))
 );
 
-// console.log(store.getState())
+console.log(store.getState())
 
-// const unsubscribe = store.subscribe(() => console.log(store.getState()))
+const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-
-// store.dispatch(getReviewList(10))
-// .then(() =>
-//   console.log(store.getState().review_info.list)
-// )
+store.dispatch(getReviewList(10))
+.then(() =>
+  console.log(store.getState().review_info.list)
+)
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>
 // console.log(store.getState().review_info.mylist))
 
 
-// unsubscribe()
+store.dispatch(getNearHospitals(37.504909, 127.048463, 0))
+.then(() => console.log('near', store.getState().hos_info.nearHosList, store.getState().status.nearHos))
+
+
+
+unsubscribe()
 
 ReactDOM.render(
 

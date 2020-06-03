@@ -13,7 +13,12 @@ import {
   GET_REVIEW_LIST,
   GET_MY_REVIEW_LIST,
   DO_DOJANG,
-  COMPLETE_REVIEW
+  COMPLETE_REVIEW,
+  GET_NEAR_HOS_LIST,
+  SET_NEAR_HOS_STATUS,
+  GET_NEAR_HOS_BY_STAR,
+  SET_NEAR_HOS_BY_STAR_STATUS,
+  SET_SEARCH_KEYWORD
 } from "./types";
 import axios from 'axios'
 
@@ -171,7 +176,7 @@ export const getReviewData = () => async dispatch => {
 // axios header 설정
 const config = {
   headers: {
-    'Access-Control-Allow-Origin': '*',
+    // 'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json'
   }
 }
@@ -180,7 +185,9 @@ const config = {
 export const getReviewList = (hcode) => {
   console.log('getReviewList')
   const query = hcode
-  const url = 'http://192.168.1.193:7888/review/findByHospital'
+  // 예주쓰
+  // const url = 'http://192.168.1.193:7888/review/findByHospital'
+  const url = 'http://192.168.1.242:7888/review/findByHospital'
   return dispatch => {
     return axios.post(url + '?h_code=' + query, config)
       .then(res => dispatch(recieveReviewList(res.data)))
@@ -189,6 +196,7 @@ export const getReviewList = (hcode) => {
 
 // getReviewList로 받은 리뷰를 store에 저장하기
 export const recieveReviewList = (list) => {
+  console.log('recieveReviewList')
   return {
     type: GET_REVIEW_LIST,
     list
@@ -231,16 +239,7 @@ export const toggleSearchModal = () => {
   }
 }
 
-// 수정 필요 
-// 병원 검색에서 키워드로 리스트 가져오기
-export const getHosSearchList = () => {
-  console.log('get hos search list')
-  const res = hos_list
-  return {
-    type: GET_HOS_SEARCH_LIST,
-    res
-  }
-}
+
 
 // 병원 검색 리스트에서 유저가 선택한 병원 정보 저장하기
 export const setHosInfo = (id, name, address) => {
@@ -314,3 +313,99 @@ export const completeReview = (res) => {
     res
   }
 }
+
+// --------- Hospital ------------
+// 0 search keyword를 status에 저장
+export const setSearchKeyword = (keyword) => {
+  console.log('setSearchKeyword')
+  return {
+    type: SET_SEARCH_KEYWORD,
+    keyword
+  }
+}
+// 1.1 현재 내 위치에서 3km 이내의 병원 조회
+export const getNearHospitals = (lat, long, page) => {
+  console.log('getNearHospitals')
+  const url = 'http://192.168.1.242:7888/hospital/location/'
+  const reqUrl = url + +page+ '?latitude=' + lat + '&longtitude=' + long
+  return dispatch => {
+    return axios.post(reqUrl, config)
+      .then(res => {
+        dispatch(recieveNearHospitals(res.data.hospital))
+        dispatch(setNearHosStatus(lat, long, page, res.data.next))
+      })
+  }
+}
+
+// 1.2 현재 검색 중인 위치와 받았던 페이지와 next여부 저장하기
+export const setNearHosStatus = (lat, long, page, next) => {
+  return {
+    type: SET_NEAR_HOS_STATUS,
+    lat, long, page, next
+  }
+}
+
+// 1.3 getNearHospitals로 받은 병원 리스트를 store에 저장하기
+export const recieveNearHospitals = (list) => {
+  return {
+    type: GET_NEAR_HOS_LIST,
+    list
+  }
+}
+
+// 2.1 거리검색 - 평점순필터
+export const getNearHosByStar = (lat, long, page) => {
+  console.log('getNearHosByStar')
+  const url = 'http://192.168.1.242:7888/hospital/starrating/'
+  const reqUrl = url + '?latitude=' + lat + '&longtitude=' + long + '&page=' + page
+  return dispatch => {
+    return axios.post(reqUrl, config)
+      .then(res => {
+        dispatch(recieveNearHosByStar(res.data.hospital))
+        dispatch(setNearHosByStarStatus(lat, long, page, res.data.next))
+      })
+  }
+}
+
+// 2.2 거리검색 - 평점순필터 store에 저장
+export const recieveNearHosByStar = (list) => {
+  return {
+    type: GET_NEAR_HOS_BY_STAR,
+    list
+  }
+}
+
+export const setNearHosByStarStatus = (lat, long, page, next) => {
+  return {
+    type: SET_NEAR_HOS_BY_STAR_STATUS,
+    lat, long, page, next
+  }
+}
+
+
+
+// 3.1 병원 검색하기
+export const getHosSearchList = (keyword) => {
+  console.log('get hos search list')
+  const url = 'http://192.168.1.242:7888/hospital/name/'
+  return dispatch => {
+    return axios.post(url+'?keyword='+keyword, config)
+      .then(res => {
+        dispatch(recieveHosSearchList(res.data))
+      })
+  }
+}
+
+// 3.2 병원 검색 결과 저장하기
+export const recieveHosSearchList = (list) => {
+  console.log('recieve hos search list')
+  return {
+    type: GET_HOS_SEARCH_LIST,
+    list
+  }
+}
+
+
+
+
+
