@@ -37,7 +37,7 @@ public class User {
     @Column(columnDefinition="tinyint(1) default 0", nullable = false, name = "u_manager")
     private boolean uManager;
 
-    @Column(length = 20, nullable = false, name = "u_nickname")
+    @Column(length = 20, name = "u_nickname")
     private String uNickname;
 
     @Column(length = 30, name = "h_code")
