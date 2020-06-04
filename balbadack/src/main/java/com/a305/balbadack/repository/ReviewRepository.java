@@ -26,6 +26,12 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     // List<Review> findByrDeletedAndrReceiptAndHospital_HCode(boolean r_deleted, boolean r_receipt, int h_code);
 
     List<Review> findAllByrDeletedAndUser_uId(Boolean r_deleted, String u_id);
+
+    @Query(value = "select * from review r where r.r_purpose like %:rpurpose% and r.r_deleted = 0", nativeQuery = true)
+    List<Review> findByrPurposeContainingAndrDeleted(String rpurpose);
+    
+    @Query(value = "select * from review r where r.r_content like %:rcontent% and r.r_deleted = 0", nativeQuery = true)
+    List<Review> findByrContentContainingAndrDeleted(String rcontent);
     
     @Transactional
     @Modifying

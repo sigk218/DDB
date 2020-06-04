@@ -6,7 +6,6 @@ import javax.transaction.Transactional;
 
 import com.a305.balbadack.model.dto.Animal;
 import com.a305.balbadack.repository.AnimalRepository;
-import com.a305.balbadack.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,6 +70,17 @@ public class AnimalServiceImpl implements AnimalService {
             e.printStackTrace();
         }
         return animals;
+    }
+
+    @Override
+    public List<Integer> findByKeyword(String keyword) {
+        try {
+            System.out.println(keyword);
+            return animalRepository.findByaSpeciesOraType(keyword);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
 }
