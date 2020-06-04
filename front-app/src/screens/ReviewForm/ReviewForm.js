@@ -19,7 +19,6 @@ const cx = classNames.bind(styles)
 class ReviewForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       date: new Date(),
       visitdate: new Date(),
@@ -30,7 +29,7 @@ class ReviewForm extends React.Component {
       tempphotos: [],
       photoURL: [],
       selectedPhoto: null,
-      content: ""
+      content: "",
     }
   }
 
@@ -152,6 +151,18 @@ class ReviewForm extends React.Component {
     const animalsrc = animal.map(a => require(`../../assets/${a}.png`))
     const animalimg = animalsrc.map(url => { return <img key={url} src={url} alt={url} /> })
 
+    const tempClinic = [
+      ['혈액검사-CBC', true, false],
+      ['주사비-입원처치', true, false],
+      ['심장사상충약 처방', false, true]
+    ]
+
+    const clinicRow = tempClinic.map(t => {
+      return <tr>
+        {t.map(d => {return <td>{d === true ? <Pets style={{ fontSize:17 }}/> : d}</td>})}
+      </tr>
+    })
+
     const reviewimg = this.state.tempphotos.map(
       (url, i) => {
         return <img
@@ -190,9 +201,11 @@ class ReviewForm extends React.Component {
           <p>다시 방문할 의사 {this.props.dojang ? '없다옹' : '있다옹'}</p>
           <Pets style={{ fontSize: 15 }} />
         </div>
+        
         <div className={cx('h-spacer')}></div>
         <div className={cx('big-divider')}></div>
         <div className={cx('h-spacer')}></div>
+        
         <div className={cx('category')}>
           <p>진료 후기 상세</p>
         </div>
@@ -255,9 +268,11 @@ class ReviewForm extends React.Component {
             onChange={this.handleFiles.bind(this)}
           />
         </div>
+        
         <div className={cx('h-spacer')}></div>
         <div className={cx('big-divider')}></div>
         <div className={cx('h-spacer')}></div>
+
         <div className={cx('category')}><p>진료 대상과 항목</p></div>
         <div className={cx('animal-box')}>
           {animalimg}
@@ -266,29 +281,9 @@ class ReviewForm extends React.Component {
         <div>
           <table className={cx('clinic-table')}>
             <thead>
-              <tr>
-                <th>진료항목</th>
-                <th>대상</th>
-                <th>숨김</th>
-              </tr>
+              <tr><th>진료항목</th><th>대상</th><th>숨김</th></tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>혈액검사-CBC</td>
-                <td><Pets/></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>주사비-입원처치</td>
-                <td><Pets/></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>심장사상충약 처방</td>
-                <td></td>
-                <td><Pets/></td>
-              </tr>
-            </tbody>
+            <tbody>{clinicRow}</tbody>
           </table>
         </div>
         <div className={this.props.scorelist.some(score => score === 0) ? cx('hide') : cx('bottom-space')}></div>
@@ -317,7 +312,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     doDojang: (revisit) => dispatch(doDojang(revisit)),
     postReview: (body) => dispatch(postReview(body)),
-
   }
 }
 

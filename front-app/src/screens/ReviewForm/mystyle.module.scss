@@ -280,10 +280,11 @@ p {
 }
 
 .big-divider {
-  border-bottom: 1.3px dashed $darkgreen;
+  border-bottom: 1.2px dashed $darkgreen;
   @include width-size(0px);
   margin: 10px auto;
 }
+
 .ticket-box {
   @include width-size(0px);
   @include flex-between;
@@ -430,7 +431,7 @@ p {
 }
 
 .clinic-table {
-  margin: 10px auto;
+  margin: 0px auto 10px;
   border-collapse: collapse;
   @include width-size(0px);
   th, td {
@@ -440,10 +441,10 @@ p {
     padding: 2px 0px;
     background-color: $darkgreen;
     color: $beige;
-    border: 3px double $beige;
-    // border-bottom: 3px double $beige;
+    border: 3px double $darkgreen;
   }
   td {
-    // border-bottom: 1px solid $darkened;
+    height: 30.8px;
+    border: 1px dotted $darkgreen;
   }
 }
