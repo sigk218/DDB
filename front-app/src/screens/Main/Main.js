@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
 import imgA from "../../assets/imgA.png";
+import Pets from '@material-ui/icons/Pets'
 import history from "../../history";
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
@@ -55,8 +56,12 @@ class Main extends React.Component {
             </div>
           </div>
         </div>
-        <div className={cx('quick-btn')}>
-          Quick Search
+        <div className={cx('quick-box')}>
+          
+          <div className={cx('quick-btn')}>
+            <Pets/>
+          </div>
+          <p>Quick Search</p>
         </div>
       </div>
     );
