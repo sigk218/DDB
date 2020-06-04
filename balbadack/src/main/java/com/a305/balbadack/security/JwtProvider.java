@@ -1,4 +1,4 @@
-package com.a305.balbadack.model.dto;
+package com.a305.balbadack.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +23,8 @@ import io.jsonwebtoken.SignatureException;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+
+import com.a305.balbadack.model.dto.CustomUserdetails;
 
 // @Configuration
 @Component("JwtProvider")
