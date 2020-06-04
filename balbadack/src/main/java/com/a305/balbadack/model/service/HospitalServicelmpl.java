@@ -48,6 +48,18 @@ public class HospitalServicelmpl implements HospitalService {
       e.printStackTrace();
     }
   }
+
+  @Override
+  public List<Hospital> searchAll(){
+    try {
+      return hospitalRepository.findAll();
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.err.println("전체 병원 목록 조회 중 오류 발생");
+    }
+    return null;
+  }
+
   // 이름, 위치, 진료명에 따른 병원 결과
   @Override
   public Map<String, Object> findByKeyword(String keyword, Integer page) {
@@ -140,6 +152,39 @@ public class HospitalServicelmpl implements HospitalService {
   }
 
   @Override
+  public List<Hospital> findByReview(Double latitude, Double longtitude, Integer page) {
+    try {
+      return hospitalRepository.findByReview(latitude, longtitude, page, limit);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("리뷰별 병원 조회중 오류 발생");
+    }
+    return null;
+  }
+
+  @Override
+  public List<Hospital> findByStarNear(Double latitude, Double longtitude, Integer page){
+    try {
+      return hospitalRepository.findByStarNear(latitude, longtitude, page, limit);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("별점 (3KM) 조회 중 오류 발생");
+    }
+    return null;
+  }
+
+  @Override
+  public List<Hospital> findByReviewNear(Double latitude, Double longtitude, Integer page) {
+    try {
+      return hospitalRepository.findByReviewNear(latitude, longtitude, page, limit);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("리뷰 (3KM) 조회 중 오류 발생");
+    }
+    return null;
+  }
+
+  @Override
   public Hospital isLastPage(Double latitude, Double longtitude, Integer page){
     try {
       return hospitalRepository.isLastPage(latitude, longtitude, page);
@@ -160,6 +205,19 @@ public class HospitalServicelmpl implements HospitalService {
     }
     return null;
   }
+
+  @Override
+  public Hospital isLastPageReview(Double latitude, Double longtitude, Integer page) {
+    try {
+      return hospitalRepository.isLastPageReview(latitude, longtitude, page);
+    } catch (Exception e) {
+      //TODO: handle exception
+      e.printStackTrace();
+      System.out.println("전체 리뷰순 조회 마지막 페이지 조회 중 오류 발생");
+    }
+    return null;
+  }
+
 }
 
     

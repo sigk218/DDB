@@ -1,10 +1,13 @@
 package com.a305.balbadack.model.dto;
 
+import java.util.*;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import javax.persistence.Transient;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -25,6 +29,12 @@ public class Hospital{
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(nullable = false, unique = true, name = "h_code")
   private Integer hCode;
+  
+  // @Transient
+	// private Double dist;
+
+  // @OneToMany(mappedBy="hospital")
+  // private List<Review> review;
 
   // @OneToMany(mappedBy="hospital")
   // private List<Veterinarian> veterinarian; 
@@ -103,5 +113,7 @@ public class Hospital{
 
   @Column(name = "h_photocode")
   private String hPhotocode;
-  
+
+  @Column(name = "h_reviewcount")
+  private Integer hReviewCount;
 }
