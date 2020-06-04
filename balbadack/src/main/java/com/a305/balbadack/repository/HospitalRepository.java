@@ -28,7 +28,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   List<Hospital> findByStar(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
 
   // 별점 순(3KM) 조회
-  @Query(value="select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by h.h_starrating desc limit :page, :limit",nativeQuery = true)
+  @Query(value="select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by h.h_starrating desc, h.h_reviewcount desc, (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit",nativeQuery = true)
   List<Hospital> findByStarNear(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
 
   // 리뷰 순 조회
@@ -36,7 +36,7 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   List<Hospital> findByReview(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
 
   // 리뷰 순(3KM) 조회
-  @Query(value="select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by h.h_reviewcount desc limit :page, :limit",nativeQuery = true)
+  @Query(value="select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by h.h_reviewcount desc, h.h_reviewcount desc, (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit",nativeQuery = true)
   List<Hospital> findByReviewNear(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
   
   // 별점순 조회 마지막 확인
