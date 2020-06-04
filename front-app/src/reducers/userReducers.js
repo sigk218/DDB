@@ -1,27 +1,46 @@
 import {
-    GET_USER_INFO,
     SIGNIN,
-    SINGOUT,
+    LOGOUT,
     REGISTER,
+    SINGOUT,
+    GET_MY_PAGE,
+    SAVE_USER_UPDATE,
+    GET_MY_PETS,
+    GET_PET_DETAIL,
+    GET_MY_LIKE_HOS
 } from '../actions/types'
-import { combineReducers } from "redux";
+// import { combineReducers } from "redux";
 
 const initializer = {
-    email:'happy@balbadack.com',
+    user: {},
+    myPage:{},
+    myPets: [],
+    myPetDetails: [],
+    likedHos: [],
+
 }
 
 export default (state = initializer, action) => {
     switch (action.type) {
-        case GET_USER_INFO:
-            return{...state, 'info' : action.payload}
-        case SIGNIN:
-            return { ...state, user_info: action.payload };
-        case REGISTER:
-            return { ...state, register_info: action.payload };
-        case SINGOUT:
-            state = {};
-            return combineReducers({ state: (state = {}) => state });
+        case SIGNIN || REGISTER || SAVE_USER_UPDATE:
+            return { ...state, user: action.userInfo };
+        case SINGOUT || LOGOUT:
+            return {...state, user: {}}
+        case GET_MY_PAGE:
+            return { ...state, myPage: action.mypage }
+        case GET_MY_PETS:
+            return { ...state, myPets: action.list }
+        case GET_PET_DETAIL:
+            // 디테일 어레이에 없는 정보를 새로 받아왔다는 가정하에 추가 (concat)
+            return {...state, myPetDetails: state.myPetDetails.concat(action.animal)}
+        case GET_MY_LIKE_HOS:
+            return {...state, likedHos:[...action.likeHos]}
         default:
             return state;
     }
 }
+
+
+// case SINGOUT:
+    // state = {};
+    // return combineReducers({ state: (state = {}) => state });
