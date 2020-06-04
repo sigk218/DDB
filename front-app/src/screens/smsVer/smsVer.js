@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import history from '../../history';
+import firebase from '../../apis/firebase';
 
 class smsVer extends Component {
   constructor(props) {
@@ -16,51 +17,31 @@ class smsVer extends Component {
       error: false,
       ver_num: '',
     };
-    this.onSubmit = this.onSubmit.bind(this);
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onNumberInput = this.onNumberInput.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
-
-  onSubmit() {
+  onSubmit = () => {
+    console.log(this.state.message.to)
     this.setState({ submitting: true });
-    if (this.state.random.length < 1) {
-      var a = Math.floor(100000 + Math.random() * 900000);
-      a = String(a);
-      a = a.substring(0, 4);
-      console.log(a);
-      this.state.random = a;
-    }
-    console.log(this.state.random)
-    console.log(this.state.message);
-    this.state.message.body = this.state.random
+    var number = '+82' + this.state.message.to.substr(1, 10);
+    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
     
-    fetch('/api/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state.message)
+    console.log(number)
+    firebase.auth().signInWithPhoneNumber(number, recaptcha).then( function(e) {
+      var code = prompt('Enter the otp', '');
+        if(code === null) return;
+        e.confirm(code).then(function (result) {
+            console.log(result.user);
+            document.querySelector('label').textContent +=  result.user.phoneNumber + "Number verified";
+        }).catch(function (error) {
+            console.error( error);
+        });
+
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          this.setState({
-            error: false,
-            message: {
-              to: '',
-              body: ''
-            }
-          });
-
-        } else {
-          this.setState({
-            error: true,
-          });
-        }
-      });
-  }
-  onVerSummit() {
-
+    .catch(function (error) {
+        console.error( error);
+    });
   }
   onHandleChange(event) {
     const name = event.target.getAttribute('name');
@@ -71,14 +52,8 @@ class smsVer extends Component {
   onNumberInput(event) {
     this.state.var_num = event.target.value
   }
-  onverclick() {
-    console.log(this.state.random)
-    if(this.state.var_num === this.state.random) {
-      console.log("correct")
-    }
-    else {
-      console.log("incorrect")
-    }
+  async onverclick() {
+    
   }
   displayVerify() {
     if (this.state.submitting) {
@@ -101,8 +76,6 @@ class smsVer extends Component {
     else return <div></div>
   }
   render() {
-
-
     return (
       <div>
         <h1>메시지를 전송해보자.</h1>
@@ -116,13 +89,9 @@ class smsVer extends Component {
             onChange={this.onHandleChange}
           />
         </div>
-        <button onClick={() => this.onSubmit()}>
-          <strong>전송 </strong>
-        </button>
-        <div>
-          {this.displayVerify()}
-        </div>
-
+        <div id="recaptcha"></div>
+        <button onClick={this.onSubmit}>Click</button>
+        {this.displayVerify()}
       </div>
 
     );

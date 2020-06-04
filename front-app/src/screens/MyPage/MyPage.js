@@ -16,7 +16,6 @@ const petData = [
         a_species: "dog",
         a_kig: 10,
         a_year: 5,
-        image: 'https://picsum.photos/id/1018/250/150/',
     },
     {
         a_code: 2,

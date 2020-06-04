@@ -7,7 +7,7 @@ import {
   REGISTER,
 } from "./types";
 import apis from '../apis/apis';
-
+import axios from 'axios';
 //=============DATA=========
 
 const hosData = [
@@ -136,27 +136,33 @@ const petData = [
 ]
 //====================================================================
 
+const config = {
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
+}
 
 export const signin = (user_id, user_pw) => async dispatch => {
-  const response = await apis.post(`/로그인`, {
-    u_id: user_id,
-    u_pw: user_pw
-  });
-  const data = response.data.data;
-  if(data.u_id) {
+  console.log("=========singreduce=======")
+  const url = `http://192.168.1.108:7888/user/login?`
+  console.log(user_id)
+  console.log(user_pw)
 
-  }
+  const response = await axios.post(url + 'uId=' + user_id + '&uPw=' + user_pw);
+
+  
+  const data = response.data.data;
+  console.log(response)
   await dispatch({ type: SIGNIN, payload: response.data.data });
 };
 export const register = (user_id, user_pw) => async dispatch => {
-  const response = await apis.post(`/로그인`, {
-    u_id: user_id,
-    u_pw: user_pw
+  const response = await axios.post(`http://192.168.1.108:7888/user/signup`, {
+    uid: user_id,
+    upw: user_pw
   });
   const data = response.data.data;
-  if(data.u_id) {
-
-  }
+  console.log(data)
   await dispatch({ type: REGISTER, payload: response.data.data });
 }
 export const getUserInfo = () => async dispatch => {

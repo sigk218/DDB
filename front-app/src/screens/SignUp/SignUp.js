@@ -4,21 +4,12 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import axios from 'axios';
 import { connect } from "react-redux";
-import { login } from '../../actions';
+import { register } from '../../actions';
 const cx = classNames.bind(styles)
 
 class SignUp extends Component {
     componentDidMount() {
-        if (!this.props.user_info) {
-            axios.get('address')
-                .then(response => {
-                    const url = response.data.data;
-                    console.log('url : ' + url)
-                    this.setState({
-                        url: url
-                    })
-                })
-        }
+       
     }
     constructor(props) {
         super(props);
@@ -48,7 +39,7 @@ class SignUp extends Component {
         }
     }
     handleSummit() {
-        //login
+        this.props.register(this.state.username, this.state.password)
     }
     render() {
         return (
@@ -78,4 +69,4 @@ const mapStatetoProps = state => {
 };
 
 
-export default (connect(mapStatetoProps, { login })(SignUp));
+export default (connect(mapStatetoProps, { register })(SignUp));

@@ -80,6 +80,9 @@ class Main extends React.Component {
             <li>
               <Link to="/MyPetList">펫리스트</Link>
             </li>
+            <li>
+              <Link to="/SignUp">펫리스트</Link>
+            </li>
           </ul>
         </div>
       </div>

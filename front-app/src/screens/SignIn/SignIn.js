@@ -34,7 +34,7 @@ class SignInPage extends Component {
         }
     }
     handleSummit() {
-        console.log(this.state)
+        console.log("-------clicked------")
         this.props.signin(this.state.username, this.state.password);
     }
     render() {
