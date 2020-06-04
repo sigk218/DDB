@@ -1,7 +1,7 @@
 package com.a305.balbadack.config;
 
 import com.a305.balbadack.model.dto.CustomUserdetails;
-import com.a305.balbadack.model.dto.JwtProvider;
+import com.a305.balbadack.security.*;
 import com.a305.balbadack.model.dto.Role;
 import com.a305.balbadack.model.service.CustomUserDetailService;
 import com.a305.balbadack.security.JwtAuthenticationEntryPoint;
@@ -88,10 +88,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .authorizeRequests()
                     // .antMatchers("/api/v1/**").hasRole(Role.USER.name())
                     // .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAnyRole("USER", "STAFF", "ADMIN")
-                    .antMatchers("/**", "/user/login", "/user/signup").permitAll()
-                    .antMatchers("/review/**", "/user/mypage", "/animal/**").hasAuthority("ROLE_ADMIN")//.hasRole("USER")
+                    .antMatchers("/review/**", "/user/mypage", "/animal/**", "/hospital/code").hasAuthority("ROLE_USER")//.hasRole("USER")
                     .antMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
-                    .antMatchers("/hospital/**").hasAuthority("ROLE_ADMIN")//hasAnyRole("STAFF", "ADMIN")
+                    .antMatchers("/hospital/name").hasAuthority("ROLE_USER")//hasAnyRole("STAFF", "ADMIN")
+                    .antMatchers("/**", "/user/login", "/user/signup").permitAll()
                     .anyRequest().authenticated() // 기타 경로는 인증을 필요로 함
                 .and()
                     .formLogin()

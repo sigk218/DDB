@@ -1,8 +1,7 @@
 package com.a305.balbadack.controller;
 
-import com.a305.balbadack.model.dto.JwtProvider;
-import com.a305.balbadack.model.dto.Role;
 import com.a305.balbadack.model.dto.User;
+import com.a305.balbadack.model.service.JwtService;
 import com.a305.balbadack.model.service.UserService;
 import com.a305.balbadack.payload.ApiResponse;
 import com.a305.balbadack.payload.JwtAuthenticationResponse;
@@ -42,10 +41,13 @@ public class UserController {
 	UserRepository userRepository;
 
 	@Autowired
+	JwtService jwtService;
+
+	@Autowired
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	JwtProvider jwtProvider;
+	com.a305.balbadack.security.JwtProvider jwtProvider;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -129,17 +131,17 @@ public class UserController {
 	
 	@ApiOperation("로그인")
 	@PostMapping("/user/login")
-	public ResponseEntity<?> login(@RequestParam String id, @RequestParam String password) {
+	public ResponseEntity<?> login(@RequestParam String uId, @RequestParam String uPw) {
 		System.out.println("로그인~~~~");
 		Authentication authentication = authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(id, password)
+			new UsernamePasswordAuthenticationToken(uId, uPw)
 		);
 		System.out.println("1");
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		System.out.println("2");
 		// String jwt = jwtProvider.createToken(id, roles);
 		String jwt = jwtProvider.generateToken(authentication);
-		System.out.println("JWT: "+ jwt);
+		System.out.println("JWT: "+ jwt); 
 		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 
         // try {
@@ -170,10 +172,10 @@ public class UserController {
 
 	@ApiOperation("회원 탈퇴")
 	@PostMapping("/user/signout")
-	public ResponseEntity<Map<String, Object>> signout(@RequestBody String id) {
+	public ResponseEntity<Map<String, Object>> signout(@RequestBody String uId) {
         
         try {
-            userService.delete(id);
+            userService.delete(uId);
             return handleSuccess("회원탈퇴를 완료하였습니다.");
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.OK); //Status 다시 지정
@@ -183,14 +185,23 @@ public class UserController {
 
 	@ApiOperation("마이페이지 조회")
 	@PostMapping("/user/mypage")
-	public ResponseEntity<Map<String, Object>> mypage(@RequestBody String id) {
-        User user = null;
-        try {
-            user = userService.findById(id);
-            return handleSuccess(user);
-        } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
-        }
+	public ResponseEntity<Map<String, Object>> mypage(@RequestParam String uId) {
+		User user = null;
+		
+		String tokenId = jwtService.getIdFromJwt();
+
+		System.out.println(uId + " vs " + tokenId);
+
+		if(uId.equals(tokenId)) {
+			try {
+				user = userService.findById(uId);
+				return handleSuccess(user);
+			} catch (Exception e) {
+				return handleFail(e.toString(), HttpStatus.OK);
+			}
+		} else {
+			return handleFail("사용자 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
