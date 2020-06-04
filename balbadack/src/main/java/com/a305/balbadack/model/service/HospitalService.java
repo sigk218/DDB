@@ -18,8 +18,14 @@ public interface HospitalService {
   // 병원 검색하기
   public Map<String, Object> findByKeyword(String keyword, Integer page);
 
+  // 병원 검색하기
+  public List<Hospital> findByKeyword(String keyword);
+
   // 위치로 병원 조회하기 
   public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);
+
+  // 위치로 병원 조회하기 
+  public List<Hospital> findAllByLocation(Double latitude, Double longtitude);
 
   // 병원 코드 목록으로 병원 목록 조회
   public List<Hospital> findByCode(List<Integer> hCodeList);

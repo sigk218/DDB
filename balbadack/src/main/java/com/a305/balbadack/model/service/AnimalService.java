@@ -15,5 +15,7 @@ public interface AnimalService {
 	public Animal findByACode(String u_id, Integer a_code) throws Exception;
 
 	public List<Animal> findByUid(String u_id) throws Exception;
+
+	public List<Integer> findByKeyword(String keyword);
     
 }
