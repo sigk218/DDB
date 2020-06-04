@@ -2,7 +2,7 @@
 
 .logo-box {
     color: $darkgreen;
-    margin: 20px auto 30px;
+    margin: 80px auto 30px;
     @include flex-center();
     @include width-size(0px);
 }
@@ -44,13 +44,12 @@
     padding: 7px;
     position: relative;
     // background-color: $darkened;
-    margin: 10px auto 30px;
+    margin: 50px auto 30px;
     @include round-border();
     // border: 1.3px dashed $darkgreen;
 }
 
 .event-body {
-    
     margin-top: 10px;
     @include flex-center();
 }
