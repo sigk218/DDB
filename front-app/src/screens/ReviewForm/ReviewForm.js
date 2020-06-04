@@ -2,13 +2,14 @@ import React from "react";
 import DatePicker from '../../components/DatePicker/DatePicker'
 import GradeBox from '../../components/HosGrades/GradeBox'
 import Pets from '@material-ui/icons/Pets'
+import Add from '@material-ui/icons/Add'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 import history from "../../history";
 import AWS from 'aws-sdk'
 import { connect } from 'react-redux'
 import reviewFormer from './reviewFormer'
-import { 
+import {
   doDojang,
   postReview
 } from '../../actions'
@@ -20,9 +21,9 @@ class ReviewForm extends React.Component {
     super(props);
 
     this.state = {
-      date : new Date(),
+      date: new Date(),
       visitdate: new Date(),
-      isphoto:false,
+      isphoto: false,
       purpose: '',
       photos: [],
       photoname: [],
@@ -35,19 +36,19 @@ class ReviewForm extends React.Component {
 
 
   handleText(e) {
-    this.setState({content: e.target.value})
+    this.setState({ content: e.target.value })
   }
 
   async deletePhoto() {
     const pi = this.state.selectedPhoto
     await this.setState({
       selectedPhoto: null,
-      photos: this.state.photos.filter((p,i) => i !== pi),
-      photoname: this.state.photoname.filter((p,i) => i !== pi),
-      tempphotos: this.state.tempphotos.filter((p,i) => i !== pi),
+      photos: this.state.photos.filter((p, i) => i !== pi),
+      photoname: this.state.photoname.filter((p, i) => i !== pi),
+      tempphotos: this.state.tempphotos.filter((p, i) => i !== pi),
     })
     if (this.state.photos.length < 1) {
-      await this.setState({isphoto: false})
+      await this.setState({ isphoto: false })
     }
   }
 
@@ -56,14 +57,14 @@ class ReviewForm extends React.Component {
     const names = files.map(f => f.name)
     const checked = names.filter(n => !(this.state.photoname.includes(n))).map((n, i) => files[i]).slice(0, 4)
     await this.setState({
-      photos:this.state.photos.concat(...checked),
-      photoname:this.state.photoname.concat(...names)
+      photos: this.state.photos.concat(...checked),
+      photoname: this.state.photoname.concat(...names)
     })
     await this.setState({
       tempphotos: this.state.photos.map(f => URL.createObjectURL(f))
     })
     if (this.state.photos) {
-      await this.setState({isphoto:true})
+      await this.setState({ isphoto: true })
     }
   }
 
@@ -84,18 +85,18 @@ class ReviewForm extends React.Component {
       const timeStamp = Math.floor(new Date().now() / 1000)
       // uid로 바꾸기
       const params = {
-        Key: 'sim_'+timeStamp+'.jpg',
+        Key: 'sim_' + timeStamp + '.jpg',
         Body: photo,
         ACL: "private",
       };
-      await this.setState({photoURL: this.state.photoURL.concat('sim_'+timeStamp+'.jpg')})
+      await this.setState({ photoURL: this.state.photoURL.concat('sim_' + timeStamp + '.jpg') })
       console.log('submitting')
       await s3.upload(params).catch(err => console.log('사진 업로드 중 에러가 발생했다냥', err))
     }
 
     // 영수증도 업로드하기
     const params = {
-      Key: 'sim_reciept_'+'.jpg',
+      Key: 'sim_reciept_' + '.jpg',
       Body: this.props.reciept,
       ACL: "private",
     };
@@ -113,7 +114,7 @@ class ReviewForm extends React.Component {
       return
     }
 
-    if (nullScore === true ) {
+    if (nullScore === true) {
       window.alert('병원 상세 평가를 먼저 완료해달라냥')
     }
 
@@ -123,13 +124,13 @@ class ReviewForm extends React.Component {
       content: this.state.content,
       scorelist: this.props.scorelist,
       totalscore: this.props.totalscore,
-      dojang : this.props.dojang,
+      dojang: this.props.dojang,
       photos: this.state.photoURL,
       purpose: this.state.purpose,
       date: this.state.date
     }
     const carelist = [{
-      animal: {acode: 1},
+      animal: { acode: 1 },
       ciOpen: true,
       ciPrice: 1000,
       ciName: '혈액검사'
@@ -147,25 +148,27 @@ class ReviewForm extends React.Component {
 
 
   render() {
-    const animal = ['rabbit', 'turtle', 'hamster', 'cat', 'dog', 'bird']
-    const animalsrc = animal.map( a => require(`../../assets/${a}.png`))
-    const animalimg = animalsrc.map( url => {return <img key={url} src={url} alt={url} />})
+    const animal = ['rabbit', 'dog']
+    const animalsrc = animal.map(a => require(`../../assets/${a}.png`))
+    const animalimg = animalsrc.map(url => { return <img key={url} src={url} alt={url} /> })
 
     const reviewimg = this.state.tempphotos.map(
-      (url, i) => {return <img 
-        className={cx(i==this.state.selectedPhoto? 'selected-photo':'photo')} key={url} src={url} alt='사진후기'
-        onClick={() => this.setState({selectedPhoto: i})}
-        />}
+      (url, i) => {
+        return <img
+          className={cx(i == this.state.selectedPhoto ? 'selected-photo' : 'photo')} key={url} src={url} alt='사진후기'
+          onClick={() => this.setState({ selectedPhoto: i })}
+        />
+      }
     )
 
     return (
-        <div className={cx('temp-body')}>
-          <div className={cx('row')}>
+      <div className={cx('temp-body')}>
+        {/* <div className={cx('row')}>
             <div className={cx('small-category')}><p>방문 날짜</p></div>
             <div className={cx('spacer')}></div>
             <div className={cx('small-category')}><p>진료 대상</p></div>
-          </div>
-          <div className={cx('row')}>
+          </div> */}
+        {/* <div className={cx('row')}>
             <div className={cx('small-col')}>
               <DatePicker 
                 value={this.state.visitdate}
@@ -175,88 +178,127 @@ class ReviewForm extends React.Component {
             <div className={cx('small-col','animal-box')}>
               {animalimg}
             </div>
-          </div>
-          <div className={cx('category')}>
-            <p>병원 상세 평가</p>
-          </div>
-          <GradeBox/>
-          <div 
-            className={this.props.dojang? cx('border-button', 'active') : cx('border-button')}
-            onClick={() => this.props.doDojang(!this.props.dojang)}
-            >
-            <p>다시 방문할 의사 {this.props.dojang? '없다옹': '있다옹'}</p>
-            <Pets style={{ fontSize: 15 }}/>
-          </div>
-          <div className={cx('category')}>
-            <p>비용표</p>
-          </div>
-
-          <div className={cx('category')}>
-            <p>진료 후기 상세</p>
-          </div>
-          <div className={cx('box')}>
-            <textarea
-              placeholder={'후기를 작성해 주세요.'}
-              rows="3"
-              value={this.state.content}
-              onChange={this.handleText.bind(this)}
-            />
-          </div>
-          <div className={cx('category')}>
-            <p>사진 후기</p>
-          </div>
-          <div 
-            className={
-              this.state.isphoto
+          </div> */}
+        <div className={cx('category')}>
+          <p>병원 상세 평가</p>
+        </div>
+        <GradeBox />
+        <div
+          className={this.props.dojang ? cx('border-button', 'active') : cx('border-button')}
+          onClick={() => this.props.doDojang(!this.props.dojang)}
+        >
+          <p>다시 방문할 의사 {this.props.dojang ? '없다옹' : '있다옹'}</p>
+          <Pets style={{ fontSize: 15 }} />
+        </div>
+        <div className={cx('h-spacer')}></div>
+        <div className={cx('big-divider')}></div>
+        <div className={cx('h-spacer')}></div>
+        <div className={cx('category')}>
+          <p>진료 후기 상세</p>
+        </div>
+        <div className={cx('purpose-box')}>
+          <input 
+            type='text'
+            placeholder={'방문목적을 작성해 주세요.'}
+          />
+        </div>
+        <div className={cx('box')}>
+          <textarea
+            placeholder={'후기를 작성해 주세요.'}
+            rows="3"
+            value={this.state.content}
+            onChange={this.handleText.bind(this)}
+          />
+        </div>
+        <div
+          className={
+            this.state.isphoto
               ? cx('hide')
               : cx('border-button', 'upload-btn-wrapper')}
-            >
-            <p>사진 첨부하기<span>최대 3장</span></p>
-            <input
-              type="file"
-              name="file"
-              accept="image/*"
-              multiple
-              onChange={this.handleFiles.bind(this)}
-            />
-          </div>
-          <div
-            className={
-              this.state.isphoto
+        >
+          <p>사진 첨부하기<span>최대 3장</span></p>
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            multiple
+            onChange={this.handleFiles.bind(this)}
+          />
+        </div>
+        <div
+          className={
+            this.state.isphoto
               ? cx('photo-box')
               : cx('hide')
-            }
-          >
-            {reviewimg}
-          </div>
-          <div
-            className={cx(this.state.selectedPhoto === null? 'hide': 'border-button')}
-            onClick={this.deletePhoto.bind(this)}
-          >
-            <p>선택한 사진 삭제하기</p>
-          </div>
-          <div 
-            className={
-              this.state.isphoto && (this.state.photos.length < 3)
-              ?  cx('border-button', 'upload-btn-wrapper')
-              : cx('hide')}
-            >
-            <p>사진 추가하기<span>최대 3장</span></p>
-            <input
-              type="file"
-              name="file"
-              accept="image/*"
-              multiple
-              onChange={this.handleFiles.bind(this)}
-            />
-          </div>
-          <div 
-            className={this.props.scorelist.some(score => score === 0) ? cx('submit-btn') : cx('submit-btn', 'clicked')}
-            onClick={this.submitForm.bind(this)}
-            >
-            <p>제출하기</p>
-          </div>
+          }
+        >
+          {reviewimg}
         </div>
+        <div
+          className={cx(this.state.selectedPhoto === null ? 'hide' : 'border-button')}
+          onClick={this.deletePhoto.bind(this)}
+        >
+          <p>선택한 사진 삭제하기</p>
+        </div>
+        <div
+          className={
+            this.state.isphoto && (this.state.photos.length < 3)
+              ? cx('border-button', 'upload-btn-wrapper')
+              : cx('hide')}
+        >
+          <p>사진 추가하기<span>최대 3장</span></p>
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            multiple
+            onChange={this.handleFiles.bind(this)}
+          />
+        </div>
+        <div className={cx('h-spacer')}></div>
+        <div className={cx('big-divider')}></div>
+        <div className={cx('h-spacer')}></div>
+        <div className={cx('category')}><p>진료 대상과 항목</p></div>
+        <div className={cx('animal-box')}>
+          {animalimg}
+          <div className={cx('plus-icon')}><Add/></div>
+        </div>
+        <div>
+          <table className={cx('clinic-table')}>
+            <thead>
+              <tr>
+                <th>진료항목</th>
+                <th>대상</th>
+                <th>숨김</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>혈액검사-CBC</td>
+                <td><Pets/></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>주사비-입원처치</td>
+                <td><Pets/></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>심장사상충약 처방</td>
+                <td></td>
+                <td><Pets/></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className={this.props.scorelist.some(score => score === 0) ? cx('hide') : cx('bottom-space')}></div>
+        <div
+          className={this.props.scorelist.some(score => score === 0) ? cx('hide') : cx('submit-btn', 'clicked')}
+          onClick={this.submitForm.bind(this)}
+        >
+          <p>제출하기</p>
+        </div>
+      </div>
     );
   }
 }
@@ -272,7 +314,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  return { 
+  return {
     doDojang: (revisit) => dispatch(doDojang(revisit)),
     postReview: (body) => dispatch(postReview(body)),
 

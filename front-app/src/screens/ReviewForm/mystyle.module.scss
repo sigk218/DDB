@@ -20,9 +20,11 @@
 }
 
 .animal-box {
-  @include round-border();
+  // @include round-border();
   @include flex-center();
   @include scroll();
+  @include width-size(10px);
+  padding: 10px;
   img {
     width: 40px;
     height: 40px;
@@ -30,6 +32,16 @@
     background-color: $darkgreen;
     border-radius:50%;
   }
+}
+
+.plus-icon {
+  width: 40px;
+  height: 40px;
+  background-color: $darkgreen;
+  border-radius: 50%;
+  @include flex-center();
+  color: $beige;
+  margin: 1px;
 }
 
 .border-button {
@@ -67,6 +79,17 @@
 .box {
   margin: 2px auto 0;
   @include flex-center();
+}
+
+.purpose-box {
+  margin: 2px auto 0;
+  @include flex-center();
+  @include width-size(0px);
+  input[type="text"] {
+    width: 100%;
+    margin:0;
+    padding:3px 10px;
+  }
 }
 
 .upload-btn-wrapper {
@@ -291,5 +314,28 @@ p {
     border: 0px;
     // border-bottom: 2px solid $darkgreen;
     border-right: 1px dashed $darkgreen;
+  }
+}
+
+.bottom-space {
+  height: 40px;
+}
+
+.clinic-table {
+  margin: 10px auto;
+  border-collapse: collapse;
+  @include width-size(0px);
+  th, td {
+    text-align: center;
+  }
+  th {
+    padding: 2px 0px;
+    background-color: $darkgreen;
+    color: $beige;
+    border: 3px double $beige;
+    // border-bottom: 3px double $beige;
+  }
+  td {
+    // border-bottom: 1px solid $darkened;
   }
 }
