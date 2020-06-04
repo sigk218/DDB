@@ -130,6 +130,17 @@ public class HospitalServicelmpl implements HospitalService {
   }
 
   @Override
+  public List<Hospital> findAllByLocation(final Double latitude, final Double longtitude) {
+    try {
+      return hospitalRepository.findAllByLocation(latitude, longtitude);
+    } catch (final Exception e) {
+      e.printStackTrace();
+      System.out.println("내 위치로 병원 조회 중 오류 발생 함.");
+    }
+    return null;
+  }
+
+  @Override
   public List<Hospital> findByCode(final List<Integer> hCodeList) {
     try {
       return hospitalRepository.findByhCodeIn(hCodeList);
@@ -218,6 +229,14 @@ public class HospitalServicelmpl implements HospitalService {
     return null;
   }
 
+  public List<Hospital> findByKeyword(String keyword) {
+    try{
+      return hospitalRepository.findByhKeyword(keyword);
+    }catch(Exception e){
+      e.printStackTrace();
+    }
+    return null;
+  }
 }
 
     

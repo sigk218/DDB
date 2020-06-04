@@ -22,5 +22,10 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer>{
     
     @Query(value = "select * from animal a where a.a_code = :acode and a.u_id=:uid", nativeQuery = true)
     Animal findByACode(@Param("uid") String uid, @Param("acode") Integer acode);
+
+    // List<Animal> findByaSpeciesContainingOrATypeContaining(String aSpecies, String aType);
+    // List<Animal> findAllByaSpeciesContainingOratypeContaining(String aSpecies, String aType);
+    @Query(value = "select a.a_code from animal a where a.a_species like %:keyword% or a.a_type like %:keyword%", nativeQuery = true)
+    List<Integer> findByaSpeciesOraType(String keyword);
     
 }

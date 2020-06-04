@@ -22,5 +22,7 @@ public interface AnimalService {
 
 	@Secured("ROLE_USER")
 	public List<Animal> findByUid(String u_id) throws Exception;
+
+	public List<Integer> findByKeyword(String keyword);
     
 }

@@ -20,6 +20,10 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   @Query(value = "select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit", nativeQuery = true)
   List<Hospital> findByLocation(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page,@Param("limit") Integer limit);
 
+  // 가까운 위치별로
+  @Query(value = "select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) )))", nativeQuery = true)
+  List<Hospital> findAllByLocation(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude);
+
   // @Query(value="select * from hospital as h where h.h_code hCodeList in :code")
   List<Hospital> findByhCodeIn(List<Integer> hCodeList);
 
@@ -39,6 +43,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   @Query(value="select * from hospital as h where (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) < 3 order by h.h_reviewcount desc, h.h_reviewcount desc, (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit",nativeQuery = true)
   List<Hospital> findByReviewNear(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);
   
+
+  List<Hospital> findByhNameContaining(String keyword);
+
   // 별점순 조회 마지막 확인
   @Query(value = "select * from hospital as h order by (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) , h.h_starrating desc limit :page, 1", nativeQuery=true)
   Hospital isLastPage(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page);
