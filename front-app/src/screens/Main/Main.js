@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
 import imgA from "../../assets/imgA.png";
 import history from "../../history";
+import styles from './mystyle.module.scss';
+import classNames from 'classnames/bind'
+const cx = classNames.bind(styles)
 class Main extends React.Component {
   componentDidMount() {
 
@@ -15,45 +18,45 @@ class Main extends React.Component {
     history.push("/mypage");
   }
   render() {
+    const getKeywords = ['심장사상충', '중성화수술', '6월예방접종', '스케일링', '건강검진', '광견병접종', '햄스터깁스']
+    const keword = getKeywords.map(word => {
+    return <div key={word}>#{word}</div>
+    })
     return (
       <div>
-        <div align="center">
-          <img src={imgA} width="200" height="200" alt='dumpimage'></img>
+        <div className={cx('logo-box')} align="center">
+          <div className={cx('phrase')}>
+            <p><span>발</span>품팔지않고</p>
+            <p>바로 <span>만</span>나는</p>
+            <p>애니멀 <span>닥</span>터</p>
+          </div>
+          <img 
+            className={cx('logo')} 
+            src={require('../../assets/veterinary.png')}
+            alt='logo'/>
         </div>
         <MainSearchBar />
-        <div>
-          <ul>
-            <li>
-              <Link to="/MyPage"> 마이페이지</Link>
-            </li>
-            <li>
-              <Link to="/HosDetail">병원상세페이지</Link>
-            </li>
-            <li>
-              <Link to="/HosRes">병원 리스트</Link>
-            </li>
-            <li>
-              <Link to="/ReviewDetail">리뷰상세페이지</Link>
-            </li>
-            <li>
-              <Link to="/ResTab">탭 입니당</Link>
-            </li>
-            <li>
-              <Link to="/ReviewForm">리뷰작성페이지</Link>
-            </li>
-            <li>
-              <Link to="/SelectOption">옵션선택페이지</Link>
-            </li>
-            <li>
-              <Link to="/HosMapRes">맵 입니당</Link>
-            </li>
-            <li>
-              <Link to="/LogIn">로그인2222</Link>
-            </li>
-            <li>
-              <Link to="/LogIn">로그인2222</Link>
-            </li>
-          </ul>
+        <div className={cx('keyword-box')}>
+          {keword}
+        </div>
+
+        <div className={cx('event-box')}>
+          <div className={cx('category', 'event-header')}>
+            <p>발바닥 런칭 기념 이벤트</p>
+          </div>
+          <div className={cx('event-body')}>
+            <img
+              className={cx('coffee-icon')}
+              src={require('../../assets/coffee.png')}
+              alt='coffee-icon'/>
+            <div className={cx('event-phrase')}>
+              <p>리뷰를 작성하면 추첨을 통해 스타벅스 쿠폰을 드립니다</p>
+              <p className={cx('event-title')}>리뷰 쓰러가자냥</p>
+            </div>
+          </div>
+        </div>
+        <div className={cx('quick-btn')}>
+          Quick Search
         </div>
       </div>
     );

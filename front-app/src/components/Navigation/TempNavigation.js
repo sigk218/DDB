@@ -47,6 +47,9 @@ const Navigation = (props) => {
     leftBtn = <ChevronLeftIcon onClick={() => checkCancel()} />  
   } else if (location === '/LogIn') {
     location = '로그인'
+  } else if (location === '/') {
+    leftBtn = null
+    location = ''
   } else {
     location = ''
   }

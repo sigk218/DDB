@@ -3,8 +3,6 @@ import DatePicker from '../../components/DatePicker/DatePicker'
 import GradeBox from '../../components/HosGrades/GradeBox'
 import Pets from '@material-ui/icons/Pets'
 import Add from '@material-ui/icons/Add'
-import styles from './mystyle.module.scss';
-import classNames from 'classnames/bind'
 import history from "../../history";
 import AWS from 'aws-sdk'
 import { connect } from 'react-redux'
@@ -13,7 +11,8 @@ import {
   doDojang,
   postReview
 } from '../../actions'
-
+import styles from './mystyle.module.scss';
+import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
 class ReviewForm extends React.Component {

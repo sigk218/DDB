@@ -13,8 +13,8 @@
 }
 
 
-$darkgreen: rgb(40, 64, 64);
-$beige: rgb(231, 221, 209);
+$darkgreen: rgb(40, 64, 64); //#284040
+$beige: rgb(231, 221, 209); //#e7ddd1
 $lightened: lighten($beige, 4%);
 $darkened: darken($beige, 4%);
 $red: #C00000;
@@ -245,6 +245,41 @@ $title: 'BMEULJIRO';
   color: $red
 }
 
+.modal-header {
+  text-align: center;
+}
+
+.search-box {
+  @include flex-between;
+}
+
+.search-btn {
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  color: $beige;
+  background-color: $darkgreen;
+  cursor: pointer;
+  @include round-border();
+  @include flex-center();
+}
+
+.modal-body {
+  @include width-size(5px);
+  @include scroll();
+  margin-bottom: 10px;
+}
+
+.search-list-box {
+  @include round-border();
+  width: calc(100% - 20px);
+  padding: 1px 5px;
+  cursor: pointer;
+  p {
+    margin: 3px 0;
+  }
+}
+
 
 
 textarea {
@@ -266,3 +301,20 @@ textarea {
   }
 }
 
+input[type="text"] {
+  background-color: transparent;
+  width: calc(100% - 25px);
+  margin-right: 5px;
+  @include round-border();
+  font-family: 'NeoDunggeunmo';
+  line-height:140%;
+  padding: 1px 5px;
+  &:focus {
+    outline: none;
+    @include active-background();
+  }
+  &::selection {
+    background-color: $darkgreen;
+    color: $beige;
+  }
+}
