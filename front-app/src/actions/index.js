@@ -18,12 +18,13 @@ import {
   SET_NEAR_HOS_STATUS,
   GET_NEAR_HOS_BY_STAR,
   SET_NEAR_HOS_BY_STAR_STATUS,
-  SET_SEARCH_KEYWORD
+  SET_SEARCH_KEYWORD,
+  SIGNIN,
+  GET_PET_DETAIL,
+  REGISTER,
 } from "./types";
-import axios from 'axios'
-
-
-//=============DATA=========
+import apis from '../apis/apis';
+import axios from 'axios';
 
 const hosData = [
   {
@@ -131,6 +132,23 @@ const reviewData = {
   h_code: 1
 }
 
+const petData = [
+  {
+      a_code: 1,
+      a_type: "골든 리트리버",
+      a_species: "강아지",
+      a_kig: 10,
+      a_year: 5,
+      image: 'https://picsum.photos/id/1018/250/150/',
+  },
+  {
+      a_code: 2,
+      a_type: "노르웨이숲 고양이",
+      a_species: "고양이",
+      a_kig: 9,
+      a_year: 5,
+  }
+]
 
 const hos_list = [
   { id: 1, name: "행복동물병원", address: "서울시 관악구 행복동 행복로 1길" },
@@ -144,6 +162,40 @@ const hos_list = [
 
 //====================================================================
 
+// axios header 설정
+const config = {
+  headers: {
+    // 'Access-Control-Allow-Origin': '*',
+    'Content-Type': 'application/json'
+  }
+}
+
+
+
+export const signin = (user_id, user_pw) => async dispatch => {
+  console.log("=========singreduce=======")
+  const url = `http://192.168.1.108:7888/user/login?`
+  console.log(user_id)
+  console.log(user_pw)
+
+  const response = await axios.post(url + 'uId=' + user_id + '&uPw=' + user_pw);
+
+  
+  const data = response.data.data;
+  console.log(response)
+  await dispatch({ type: SIGNIN, payload: response.data.data });
+};
+
+export const register = (user_id, user_pw) => async dispatch => {
+  const response = await axios.post(`http://192.168.1.108:7888/user/signup`, {
+    uid: user_id,
+    upw: user_pw
+  });
+  const data = response.data.data;
+  console.log(data)
+  await dispatch({ type: REGISTER, payload: response.data.data });
+}
+
 export const getUserInfo = () => async dispatch => {
   const response = []
   await dispatch({ type: GET_USER_INFO, payload: response.data.data });
@@ -151,34 +203,22 @@ export const getUserInfo = () => async dispatch => {
 
 export const getHosData = () => async dispatch => {
   const response = hosData;
-  // console.log("======리덕스======")
-  // console.log(response)
+  console.log(response)
   dispatch({ type: GET_HOS_DATA, payload: response });
 }
 
 export const getReviewData = () => async dispatch => {
   const response = reviewData;
-  // const body = {
-  //   careinfo : careinfo,
-  //   review: review
-  // }
-  // const config = {headers: {
-  //   'Access-Control-Allow-Origin': '*',
-  //   'Content-Type': 'application/json'
-  // }}
-  // console.log(body)
-  // await axios.post('http://192.168.1.193:7888/review/insert', body, config)
-  // console.log("======리덕스======")
-  // console.log(response)
+  console.log("======리덕스======")
+  console.log(response)
   dispatch({ type: GET_REVIEW_DATA, payload: response });
 }
 
-// axios header 설정
-const config = {
-  headers: {
-    // 'Access-Control-Allow-Origin': '*',
-    'Content-Type': 'application/json'
-  }
+
+export const getPetDetail = () => async dispatch => {
+  const response = petData;
+  console.log(response)
+  dispatch({ type: GET_PET_DETAIL, payload: response });
 }
 
 // 병원의 모든 리뷰 가져오기
@@ -405,8 +445,4 @@ export const recieveHosSearchList = (list) => {
     list
   }
 }
-
-
-
-
 

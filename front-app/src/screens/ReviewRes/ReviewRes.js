@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
-import {getHosData} from "../../actions";
+import { getHosData } from "../../actions";
 import ReviewInfoCard from '../../components/ReviewInfoCard/ReviewInfoCard';
 const widthLength = 100;
+
 
 const reviewData = [
   {
@@ -17,20 +18,20 @@ const reviewData = [
     r_reciept: true,
     r_treatmentdata: '2020-05-10',
     r_date: '2020-05-10',
-    tags: ['중성화수술', "고양이", "15kg",'정기적', "친절", "전용풀장", "감사"],
+    tags: ['중성화수술', "고양이", "15kg", '정기적', "친절", "전용풀장", "감사"],
     r_overtreatement: 1,
     r_kindness: 4,
     r_result: 4,
     r_clean: 4,
     r_report: 0,
     r_deleted: false,
-    Like: [{u_id:1}, {u_id:2}, {u_id:3}],
+    Like: [{ u_id: 1 }, { u_id: 2 }, { u_id: 3 }],
     careinfo: [
       {
         ci_no: 2,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:25000,
+        ci_price: 25000,
         CareList: {
           c_code: 3,
           c_name: '중성화수술',
@@ -42,7 +43,7 @@ const reviewData = [
         ci_no: 3,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:30000,
+        ci_price: 30000,
         CareList: {
           c_code: 4,
           c_name: '붕대',
@@ -54,7 +55,7 @@ const reviewData = [
         ci_no: 4,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:50000,
+        ci_price: 50000,
         CareList: {
           c_code: 2,
           c_name: '마취약',
@@ -74,20 +75,20 @@ const reviewData = [
     r_reciept: true,
     r_treatmentdata: '2020-05-10',
     r_date: '2020-05-10',
-    tags: ['중성화수술', "고양이", "15kg",'정기적', "친절", "전용풀장", "감사"],
+    tags: ['중성화수술', "고양이", "15kg", '정기적', "친절", "전용풀장", "감사"],
     r_overtreatement: 1,
     r_kindness: 4,
     r_result: 4,
     r_clean: 4,
     r_report: 0,
     r_deleted: false,
-    Like: [{u_id:1}, {u_id:2}, {u_id:3}],
+    Like: [{ u_id: 1 }, { u_id: 2 }, { u_id: 3 }],
     careinfo: [
       {
         ci_no: 2,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:25000,
+        ci_price: 25000,
         CareList: {
           c_code: 3,
           c_name: '중성화수술',
@@ -99,7 +100,7 @@ const reviewData = [
         ci_no: 3,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:30000,
+        ci_price: 30000,
         CareList: {
           c_code: 4,
           c_name: '붕대',
@@ -111,7 +112,7 @@ const reviewData = [
         ci_no: 4,
         h_code: 1,
         ci_vet: '고양이',
-        ci_price:50000,
+        ci_price: 50000,
         CareList: {
           c_code: 2,
           c_name: '마취약',
@@ -123,40 +124,45 @@ const reviewData = [
     h_code: 1
   },
 ]
-  
 
 class ReviewRes extends Component {
 
-componentDidMount() {
+  componentDidMount() {
     this.state.cards = reviewData;
-}
+  }
 
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
-        cards: [],
+      cards: [],
     };
-}
+  }
 
-onChange = chips => {
-
-};
-
-render() {
+  render() {
     this.state.cards = reviewData;
     return (
 
-        <div>
+      <div>
 
-            {this.state.cards
-                ? this.state.cards.map(card => (
-                    <ReviewInfoCard
-                        hospitalData={card}
-                        widthLength={widthLength}
-                        key={`newCard${card.h_code}`}
-                    />
-                ))
-                : null}
+        {this.state.cards
+          ? this.state.cards.map(card => (
+            <ReviewInfoCard
+              hospitalData={card}
+              widthLength={widthLength}
+              key={`newCard${card.h_code}`}
+            />
+          ))
+          : null}
+
+          {this.state.cards
+            ? this.state.cards.map(card => (
+              <ReviewInfoCard
+                hospitalData={card}
+                widthLength={widthLength}
+                key={`newCard${card.h_code}`}
+              />
+            ))
+            : null}
 
         </div>
 

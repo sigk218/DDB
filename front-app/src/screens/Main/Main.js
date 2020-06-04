@@ -9,6 +9,13 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      word: ''
+    }
+  }
+
   componentDidMount() {
 
   }
@@ -18,6 +25,12 @@ class Main extends React.Component {
   mypage() {
     history.push("/mypage");
   }
+  async handleEnter(e) {
+    if (e.key === 'Enter') {
+      console.log(this.state)
+    }
+  }
+
   render() {
     const getKeywords = ['심장사상충', '중성화수술', '6월예방접종', '스케일링', '건강검진', '광견병접종', '햄스터깁스']
     const keword = getKeywords.map(word => {

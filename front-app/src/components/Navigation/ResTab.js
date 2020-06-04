@@ -1,86 +1,78 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Paper from '@material-ui/core/Paper';
+import React from "react";
+import styles from './mystyle.module.scss';
+import { connect } from "react-redux";
+import classNames from 'classnames/bind';
 import HosRes from '../../screens/HosRes/HosRes';
 import ReviewRes from '../../screens/ReviewRes/ReviewRes';
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+const cx = classNames.bind(styles)
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`scrollable-auto-tabpanel-${index}`}
-            aria-labelledby={`scrollable-auto-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
+
+
+
+class ResTab extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            data: false,
+        }
+
+    }
+    componentDidMount() {
+
+
+    }
+    handleOnclick(e) {
+        if(e) {
+            this.setState({
+                data: true
+            })
+        }
+        else {
+            this.setState({
+                data: false
+            })
+        }
+
+    }
+
+    display_click() {
+        if (this.state.data) {
+            return (
+                <div>
+                    <ReviewRes/>
+                </div>
+            );
+        }
+        return (
+            <div>
+                <HosRes/>
+            </div>
+        );
+    }
+    render() {
+        return (
+            <>
+                <div className={cx('tab-container')}>
+                    <button className={cx('tab-box')} onClick={() => this.handleOnclick(true)}>review</button>
+                    <button className={cx('tab-box')} onClick={() => this.handleOnclick(false)}>hospital</button>
+
+                </div>
+                {this.display_click(this.state.data)}
+            </>
+        )
+
+    }
 }
 
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+const mapStateToProps = state => {
+    return {
+        review_data: state.review_info,
+    };
 };
 
-function a11yProps(index) {
-    return {
-        id: `scrollable-auto-tab-${index}`,
-        'aria-controls': `scrollable-auto-tabpanel-${index}`,
-    };
-}
+export default connect(mapStateToProps, {
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-        alignItems: 'center',
-        width: '100%',
-        backgroundColor: theme.palette.background.paper,
-    },
-}));
+})(ResTab);
 
-export default function ResTab() {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    return (
-        <div>
-
-            <Paper className={classes.root}>
-                <Tabs
-                    variant="fullWidth"
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    scrollButtons="auto"
-                    centered
-                >
-                    <Tab label="리뷰" {...a11yProps(0)} />
-                    <Tab label="병원" {...a11yProps(1)} />
-                </Tabs>
-            </Paper>
-            <TabPanel value={value} index={0}>
-                <ReviewRes/>
-      </TabPanel>
-            <TabPanel value={value} index={1}>
-                <HosRes />
-            </TabPanel>
-        </div>
-    );
-}

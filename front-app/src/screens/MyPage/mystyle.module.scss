@@ -88,3 +88,20 @@ div {
   text-align: left;
   @include width-size(0px)
 }
+
+.modal {
+  position: absolute;
+  background-color: $beige;
+  width: 90%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1.3px solid $darkgreen;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  &:focus {
+    outline: none;
+  }
+}

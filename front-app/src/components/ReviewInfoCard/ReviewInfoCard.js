@@ -70,11 +70,14 @@ for (var i = 0; i < reviewData.careinfo.length; i++) {
 }
 const tags = []
 for (const [index, value] of reviewData.tags.entries()) {
+  console.log(value)
   tags.push(<div className={cx('tag')} key={index}>#{value}</div>)
 }
 var cont = []
 
+console.log(cont)
 cont = reviewData.r_content.substr(0, 120)
+console.log(cont)
 
 function handleClick() {
   history.push("/ReviewDetail")
@@ -97,13 +100,14 @@ const ReviewInfoCard = props => {
           {reviewData.careinfo[0].CareList.c_name}
         </div>
 
-    <div>
-      {cont} ...
-    </div>
-    <text onClick= {() => handleClick()}>더보기</text>
-    <br />
-  </div>
-</>
+
+        <div>
+          {cont} ...
+        </div>
+        <text onClick= {() => handleClick()}>더보기</text>
+        <br />
+      </div>
+    </>
   );
 }
 
