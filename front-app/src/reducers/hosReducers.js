@@ -1,4 +1,5 @@
 import {
+  MAIN_SEARCH,
   GET_NEAR_HOS,
   GET_NEAR_HOS_BY_STAR,
   GET_NEAR_HOS_BY_REVIEW,
@@ -8,6 +9,12 @@ import {
 } from '../actions/types'
 
 const initializer = {
+  mainSearch: {
+    searchWord: '',
+    lat: 37.504909,
+    long: 127.048463,
+    category: null,
+  },
   nearHos: [],
   nearHosByStar: [],
   nearHosByReview: [],
@@ -20,6 +27,16 @@ let updated;
 
 export default (state = initializer, action) => {
   switch (action.type) {
+    case MAIN_SEARCH:
+      return {
+        ...state, 
+        mainSearch: {
+          searchWord:action,
+          lat: action.lat === null ? state.mainSearch.lat : action.lat,
+          long: action.long === null ? state.mainSearch.long : action.long,
+          category:action.category
+        }
+      }
     case GET_NEAR_HOS:
       updated = state.nearHos.map(p => {
         if ((p.lat === action.lat) & (p.long === action.long)) {
@@ -61,6 +78,7 @@ export default (state = initializer, action) => {
           return { ...p, list: action.list }
         } else { return p }
       })
+      return { ...state, hosByReview: [...updated] };
     default:
       return state;
   }

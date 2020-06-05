@@ -150,6 +150,21 @@ $title: 'BMEULJIRO';
   background-color: darken($beige, 4%);
 }
 
+@mixin absolute-xcenter() {
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+@mixin basic-color() {
+  color: $beige;
+	background-color: $darkgreen;
+}
+
+@mixin revert-color() {
+  color: $darkgreen;
+	background-color: $beige;
+}
 
 .category {
   @include retro-deco($darkgreen, $beige, 5px, 0)

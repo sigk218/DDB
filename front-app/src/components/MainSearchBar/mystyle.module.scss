@@ -1,14 +1,16 @@
 @import '../../styles/utils.scss';
 
 .main-search {
-    // @include width-size(0px);
-    margin-top: 30px;
-    width: 80%;
-    height:40px;
-
     .search-btn {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border: 0px;
+        cursor: pointer;
     }
+}
+
+.main-page {
+    width: 80%;
+    max-width: calc(2.5rem * 3 + 250px);
+    height:35px;
 }

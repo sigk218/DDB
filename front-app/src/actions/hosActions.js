@@ -1,4 +1,5 @@
 import {
+  MAIN_SEARCH,
   GET_NEAR_HOS,
   GET_NEAR_HOS_BY_STAR,
   GET_NEAR_HOS_BY_REVIEW,
@@ -16,6 +17,27 @@ import {
   GET_MY_LIKE_HOS
 } from './types'
 import apis from '../apis/apis';
+
+// ---------- main.js ---------------------
+export const mainSearch = (searchWord, lat, long, category) => {
+  console.log('mainSearch')
+  return dispatch => {
+    dispatch(setMainSearch(searchWord, lat, long, category))
+    if (category === 'nearHos') {
+      dispatch(getNearHos(lat, long, 0, null))
+    } else if (category === 'hosByWord') {
+      dispatch(getHosByWord(searchWord, 0))
+    }
+  }
+}
+
+export const setMainSearch = (searchWord, lat, long, category) => {
+  console.log('setMainSearch')
+  return {
+    type: MAIN_SEARCH,
+    searchWord, lat, long, category
+  }
+}
 
 // ------------- hospital 관련 action --------
 // 1. 현재 내 위치에서 3km 이내의 병원 조회 with 필터
@@ -74,7 +96,7 @@ export const recieveNearHos = (mode, lat, long, list) => {
 
 
 // 2. 병원 키워드로 검색하기
-export const getHosByword = (keyword, page) => {
+export const getHosByWord = (keyword, page) => {
   console.log('getHosByword')
   return dispatch => {
     return apis.post('hospital/name/'+page+'?keyword='+keyword)

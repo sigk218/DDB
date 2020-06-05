@@ -1,97 +1,106 @@
 @import '../../styles/utils.scss';
 
+.main-container {
+	width: 100%;
+	top: 45%;
+	@include absolute-xcenter();
+}
+
 .logo-box {
-    color: $darkgreen;
-    margin: 80px auto 30px;
-    @include flex-center();
-    @include width-size(0px);
-}
+	color: $darkgreen;
+	@include flex-center();
+	@include width-size(0px);
+	margin-bottom: 7vh;
+	.logo {
+		height: 100px;
+	}
 
-.logo {
-    height: 100px;
-}
-
-.phrase {
-    margin: 0;
-    font-family: $title;
-    font-size: x-large;
-    width: 135px;
-    text-align: start;
-    p {
-        margin: 0px;
-        line-height: 40px;
-    }
-    span {
-        font-size: 40px;
-    }
+	.phrase {
+		margin: 0;
+		font-family: $title;
+		font-size: 1.5rem;
+		width: 135px;
+		text-align: start;
+		p {
+			margin: 0px;
+			line-height: 2.5rem;
+		}
+		span {
+			font-size: 2.5rem;
+		}
+	}
 }
 
 .keyword-box {
-    width: 80%;
-    height: 70px;
-    margin: 5px auto 20px;
-    @include flex-center();
-    align-content: center;
-    flex-wrap: wrap;
-    div {
-        margin: 3px 5px;
-        font-style: italic;
-    }
+	width: 80%;
+	max-width: calc(2.5rem * 3 + 250px);
+	@include flex-center();
+	align-content: center;
+	flex-wrap: wrap;
+	margin: 5px auto 7vh;
+	div {
+		margin: 2px 4px;
+		font-style: italic;
+		font-size: 12px;
+	}
 }
 
 .event-box {
-    width: calc(80% - 7px);
-    padding: 7px;
-    position: relative;
-    // background-color: $darkened;
-    margin: 50px auto 30px;
-    @include round-border();
-    // border: 1.3px dashed $darkgreen;
-}
+	width: calc(80% - 5px);
+	max-width: calc(2.5rem * 3 + 250px);
+	padding: 5px;
+	position: relative;
+	margin-top: 13px;
+	@include round-border();
 
-.event-body {
-    margin-top: 10px;
-    @include flex-center();
-}
+	.event-body {
+		margin-top: 7px;
+		@include flex-center();
 
-.event-phrase {
-    width: 60%;
-}
+		.coffee-icon {
+			height: 7vh;
+			max-height: 50px;
+			margin: 10px;
+		}
 
-.event-title {
-    font-weight: bold;
-    // font-size: large;
-}
+		.event-phrase {
+			width: 60%;
+			margin: auto 1rem;
+		}
+	}
+	
 
-.coffee-icon {
-    height: 50px;
-    margin: 10px;
-}
+	
+	.event-title {
+		font-weight: bold;
+		cursor: pointer;
+	}
+	
 
-.event-header {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
+	
+	.event-header {
+		top: 0;
+		@include absolute-xcenter();
+	}
 }
 
 .quick-box {
-    position: absolute;
-    left: 50%;
-    bottom: 0%;
-    text-align: center;
-    transform: translate(-50%, -10%);
-    p {
-     margin: 5px 0;   
-    }
+	bottom: 0%;
+	text-align: center;
+	@include absolute-xcenter();
+	transform: translate(-50%, -10%);
+
+	p {
+		margin: 5px 0;
+	}
+	.quick-btn {
+		cursor: pointer;
+		width: 45px;
+		height: 45px;
+		@include basic-color();
+		@include flex-center();
+		border-radius: 50%;
+		border: 3px double $beige;
+	}
 }
 
-.quick-btn {
-    width: 50px;
-    height: 50px;
-    background-color: $darkgreen;
-    color: $beige;
-    @include flex-center();
-    border-radius: 50%;
-    border: 3px double $beige;
-}

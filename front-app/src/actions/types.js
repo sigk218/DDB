@@ -12,6 +12,7 @@ export const PET_UPDATED = 'PET_UPDATED'
 export const PET_DELETED = 'PET_DELETED'
 
 // 병원
+export const MAIN_SEARCH = 'MAIN_SEARCH'
 export const GET_NEAR_HOS = 'GET_NEAR_HOS'
 export const GET_NEAR_HOS_BY_STAR = 'GET_NEAR_HOS_BY_STAR'
 export const GET_NEAR_HOS_BY_REVIEW = 'GET_NEAR_HOS_BY_REVIEW'
