@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,7 +22,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins="{*}", maxAge=6000)
-@RestController("/animal/*")
+@RestController()
+@RequestMapping("/animal/*")
 @Api(value="동물정보", description="동물정보")
 @EnableAutoConfiguration
 public class AnimalController {
@@ -62,6 +64,7 @@ public class AnimalController {
 		}
 
 		animal.setUId(uId);
+		animal.setADeleted(false);
 
         try {
 			System.out.println("동물 등록 시작...");

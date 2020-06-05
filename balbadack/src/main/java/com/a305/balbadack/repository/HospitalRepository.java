@@ -31,6 +31,9 @@ public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
   // @Query(value="select * from hospital as h where h.h_code hCodeList in :code")
   List<Hospital> findByhCodeIn(List<Integer> hCodeList);
 
+  @Query(value="select * from hospital as h where h.h_code in :hCodeList", nativeQuery = true)
+  List<Hospital> findByhCodeInhCodeList(List<Integer> hCodeList);
+
   // 별점 순 조회
   @Query(value="select * from hospital as h order by h.h_starrating desc, (6371 * acos(cos( radians(:latitude) ) * cos( radians(h.h_latitude) ) * cos( radians(:longtitude) - radians(h.h_longitude) ) + sin( radians(:latitude) ) * sin( radians( h.h_latitude ) ))) limit :page, :limit",nativeQuery = true)
   List<Hospital> findByStar(@Param("latitude") Double latitude, @Param("longtitude") Double longtitude, @Param("page") Integer page, @Param("limit") Integer limit);

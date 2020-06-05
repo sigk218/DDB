@@ -6,6 +6,7 @@ import com.a305.balbadack.model.service.UserService;
 import com.a305.balbadack.payload.ApiResponse;
 import com.a305.balbadack.payload.JwtAuthenticationResponse;
 import com.a305.balbadack.repository.UserRepository;
+import com.a305.balbadack.security.JwtProvider;
 
 import java.util.*;
 
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,7 +31,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "{*}", maxAge = 6000)
-@RestController
+@RestController()
+@RequestMapping("/user/*")
 @Api(value = "회원관리", description = "회원관리")
 @EnableAutoConfiguration
 public class UserController {
@@ -47,7 +50,7 @@ public class UserController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	com.a305.balbadack.security.JwtProvider jwtProvider;
+	JwtProvider jwtProvider;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -72,7 +75,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원가입")
-	@PostMapping("/user/signup")
+	@PostMapping("/signup")
 	public ResponseEntity<?> signUp(@RequestBody User user) {
 
 		user.setUPw(passwordEncoder.encode(user.getUPw()));
@@ -94,7 +97,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원가입(병원 STAFF)")
-    @PostMapping("/user/signup/staff")
+    @PostMapping("/signup/staff")
     public ResponseEntity<Map<String, Object>> signUpStaff(@RequestBody User user) {
 		
 		user.setUPw(passwordEncoder.encode(user.getUPw()));
@@ -113,27 +116,31 @@ public class UserController {
 	}
 	
 	@ApiOperation("로그인")
-	@PostMapping("/user/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody String id, @RequestBody String password) {
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestParam String uId, @RequestParam String uPw) {
         
-        try {
-			boolean flag = userService.login(id, password);
-			if(flag) {
-				return handleSuccess("로그인에 성공하였습니다.");
-			} else {
-				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
-			}
-        } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
-        }
+		System.out.println("로그인");
+		
+		Authentication authentication = authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(uId, uPw)
+		);
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		String jwt = jwtProvider.generateToken(authentication);
+
+		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 
 	}
 
 	@ApiOperation("회원정보수정")
-	@PostMapping("/user/update")
+	@PostMapping("/update")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody User user) {
 
 		User jwtUser = jwtService.getUserFromJwt();
+
+		String password = user.getUPw();
+		user.setUPw(passwordEncoder.encode(password));
 
 		if(jwtUser.getUId().equals(user.getUId())) {
 			try {
@@ -149,8 +156,8 @@ public class UserController {
 	}
 
 	@ApiOperation("회원 탈퇴")
-	@PostMapping("/user/signout")
-	public ResponseEntity<Map<String, Object>> signout(@RequestBody String uId) {
+	@PostMapping("/signout")
+	public ResponseEntity<Map<String, Object>> signout(@RequestParam String uId) {
 		
 		User jwtUser = jwtService.getUserFromJwt();
 
@@ -168,17 +175,17 @@ public class UserController {
 	}
 
 	@ApiOperation("마이페이지 조회")
-	@PostMapping("/user/mypage")
-	public ResponseEntity<Map<String, Object>> mypage(@RequestBody String id) {
+	@PostMapping("/mypage")
+	public ResponseEntity<Map<String, Object>> mypage(@RequestParam String uId) {
 		
 		String jwtId = jwtService.getIdFromJwt();
-		if(!id.equals(jwtId)) {
+		if(!uId.equals(jwtId)) {
 			return handleFail("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		
 		User user = null;
         try {
-            user = userService.findById(id);
+            user = userService.findById(uId);
             return handleSuccess(user);
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
