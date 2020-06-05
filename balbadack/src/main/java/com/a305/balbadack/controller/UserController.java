@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "{*}", maxAge = 6000)
-@RestController("/user/*")
+@RestController()
+@RequestMapping("/user/*")
 @Api(value = "회원관리", description = "회원관리")
 @EnableAutoConfiguration
 public class UserController {
@@ -115,18 +117,19 @@ public class UserController {
 	
 	@ApiOperation("로그인")
 	@PostMapping("/login")
-	public ResponseEntity<Map<String, Object>> login(@RequestBody String id, @RequestBody String password) {
+	public ResponseEntity<?> login(@RequestParam String uId, @RequestParam String uPw) {
         
-        try {
-			boolean flag = userService.login(id, password);
-			if(flag) {
-				return handleSuccess("로그인에 성공하였습니다.");
-			} else {
-				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
-			}
-        } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
-        }
+		System.out.println("로그인");
+		
+		Authentication authentication = authenticationManager.authenticate(
+			new UsernamePasswordAuthenticationToken(uId, uPw)
+		);
+
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		String jwt = jwtProvider.generateToken(authentication);
+
+		return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
 
 	}
 
@@ -135,6 +138,9 @@ public class UserController {
 	public ResponseEntity<Map<String, Object>> update(@RequestBody User user) {
 
 		User jwtUser = jwtService.getUserFromJwt();
+
+		String password = user.getUPw();
+		user.setUPw(passwordEncoder.encode(password));
 
 		if(jwtUser.getUId().equals(user.getUId())) {
 			try {
@@ -151,7 +157,7 @@ public class UserController {
 
 	@ApiOperation("회원 탈퇴")
 	@PostMapping("/signout")
-	public ResponseEntity<Map<String, Object>> signout(@RequestBody String uId) {
+	public ResponseEntity<Map<String, Object>> signout(@RequestParam String uId) {
 		
 		User jwtUser = jwtService.getUserFromJwt();
 
@@ -170,16 +176,16 @@ public class UserController {
 
 	@ApiOperation("마이페이지 조회")
 	@PostMapping("/mypage")
-	public ResponseEntity<Map<String, Object>> mypage(@RequestBody String id) {
+	public ResponseEntity<Map<String, Object>> mypage(@RequestParam String uId) {
 		
 		String jwtId = jwtService.getIdFromJwt();
-		if(!id.equals(jwtId)) {
+		if(!uId.equals(jwtId)) {
 			return handleFail("잘못된 접근입니다.", HttpStatus.BAD_REQUEST);
 		}
 		
 		User user = null;
         try {
-            user = userService.findById(id);
+            user = userService.findById(uId);
             return handleSuccess(user);
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.BAD_REQUEST);

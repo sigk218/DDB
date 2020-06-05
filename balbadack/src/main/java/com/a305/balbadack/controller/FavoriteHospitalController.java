@@ -1,6 +1,7 @@
 package com.a305.balbadack.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
@@ -73,7 +74,7 @@ public class FavoriteHospitalController {
 
     @ApiOperation("즐겨찾기 회원별 조회하기")
     @PostMapping(value="/findById")
-    public ResponseEntity<Map<String, Object>> findFavoriteHospitalByUId(@RequestBody String uId) {
+    public ResponseEntity<Map<String, Object>> findFavoriteHospitalByUId(@RequestParam String uId) {
 
         List<Hospital> hospitals = null;
 
