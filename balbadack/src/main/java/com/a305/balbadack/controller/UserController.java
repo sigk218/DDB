@@ -6,6 +6,7 @@ import com.a305.balbadack.model.service.UserService;
 import com.a305.balbadack.payload.ApiResponse;
 import com.a305.balbadack.payload.JwtAuthenticationResponse;
 import com.a305.balbadack.repository.UserRepository;
+import com.a305.balbadack.security.JwtProvider;
 
 import java.util.*;
 
@@ -29,7 +30,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @CrossOrigin(origins = "{*}", maxAge = 6000)
-@RestController
+@RestController("/user/*")
 @Api(value = "회원관리", description = "회원관리")
 @EnableAutoConfiguration
 public class UserController {
@@ -47,7 +48,7 @@ public class UserController {
 	AuthenticationManager authenticationManager;
 
 	@Autowired
-	com.a305.balbadack.security.JwtProvider jwtProvider;
+	JwtProvider jwtProvider;
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -72,7 +73,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원가입")
-	@PostMapping("/user/signup")
+	@PostMapping("/signup")
 	public ResponseEntity<?> signUp(@RequestBody User user) {
 
 		user.setUPw(passwordEncoder.encode(user.getUPw()));
@@ -94,7 +95,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원가입(병원 STAFF)")
-    @PostMapping("/user/signup/staff")
+    @PostMapping("/signup/staff")
     public ResponseEntity<Map<String, Object>> signUpStaff(@RequestBody User user) {
 		
 		user.setUPw(passwordEncoder.encode(user.getUPw()));
@@ -113,7 +114,7 @@ public class UserController {
 	}
 	
 	@ApiOperation("로그인")
-	@PostMapping("/user/login")
+	@PostMapping("/login")
 	public ResponseEntity<Map<String, Object>> login(@RequestBody String id, @RequestBody String password) {
         
         try {
@@ -130,7 +131,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원정보수정")
-	@PostMapping("/user/update")
+	@PostMapping("/update")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody User user) {
 
 		User jwtUser = jwtService.getUserFromJwt();
@@ -149,7 +150,7 @@ public class UserController {
 	}
 
 	@ApiOperation("회원 탈퇴")
-	@PostMapping("/user/signout")
+	@PostMapping("/signout")
 	public ResponseEntity<Map<String, Object>> signout(@RequestBody String uId) {
 		
 		User jwtUser = jwtService.getUserFromJwt();
@@ -168,7 +169,7 @@ public class UserController {
 	}
 
 	@ApiOperation("마이페이지 조회")
-	@PostMapping("/user/mypage")
+	@PostMapping("/mypage")
 	public ResponseEntity<Map<String, Object>> mypage(@RequestBody String id) {
 		
 		String jwtId = jwtService.getIdFromJwt();
