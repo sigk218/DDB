@@ -16,41 +16,50 @@ const initializer = {
   hosByStar: [],
 }
 
+let updated;
+
 export default (state = initializer, action) => {
   switch (action.type) {
     case GET_NEAR_HOS:
-      const updated = state.nearHos.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, list: action.list } : p
+      updated = state.nearHos.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, list: action.list }
+        } 
       })
       return { ...state, nearHos: [...updated] };
     case GET_NEAR_HOS_BY_STAR:
-      const updated = state.nearHosByStar.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, list: action.list } : p
+      updated = state.nearHosByStar.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, list: action.list }
+        } else { return p }
       })
       return { ...state, nearHosByStar: [...updated] };
     case GET_NEAR_HOS_BY_REVIEW:
-      const updated = state.nearHosByReview.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, list: action.list } : p
+      updated = state.nearHosByReview.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, list: action.list }
+        } else { return p}
       })
       return { ...state, nearHosByReview: [...updated] };
     case GET_HOS_BY_WORD:
-      const updated = state.nearHosByReview.map(p => {
-        p.keyword === action.keyword ? { ...p, list: action.list } : p
+      updated = state.nearHosByReview.map(p => {
+        if (p.keyword === action.keyword) {
+          return { ...p, list: action.list } 
+        } else { return p }
       })
       return { ...state, hosByWord: [...updated] };
     case GET_HOS_BY_STAR:
-      const updated = state.hosByStar.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, list: action.list } : p
+      updated = state.hosByStar.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, list: action.list }
+        } else { return p }
       })
       return { ...state, hosByStar: [...updated] };
     case GET_HOS_BY_REVIEW:
-      const updated = state.hosByStar.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, list: action.list } : p
+      updated = state.hosByStar.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, list: action.list }
+        } else { return p }
       })
     default:
       return state;

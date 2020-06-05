@@ -4,10 +4,7 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 
 import { connect } from 'react-redux'
-import { 
-  setHosScore,
-  getTotalGrade
-} from '../../actions'
+import { review } from '../../actions'
 
 
 const cx = classNames.bind(styles)
@@ -44,10 +41,10 @@ class HosGrades extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setHosScore: (name, score, i) => {
-      dispatch(setHosScore(name, score, i))
-      dispatch(getTotalGrade())
+      dispatch(review.setHosScore(name, score, i))
+      dispatch(review.getTotalGrade())
     },
-    getTotalGrade: () => dispatch(getTotalGrade())
+    getTotalGrade: () => dispatch(review.getTotalGrade())
   };
 };
 

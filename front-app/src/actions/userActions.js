@@ -1,6 +1,5 @@
 import {
   SIGNIN, // 유저 
-  REGISTER,
   GET_MY_PAGE,
   USER_UPDATED,
   LOGOUT,
@@ -27,7 +26,7 @@ export const signIn = (user_id, user_pw) => {
 // 1.1. 유저 정보를 user 에 저장하기
 export const signedIn = (userInfo) => {
   console.log('signedIn')
-  apis.defaults.headers.common['Authorization'] = `Bearer ${token}`
+  apis.defaults.headers.common['Authorization'] = `Bearer ${userInfo.token}`
   return {
     type: SIGNIN,
     userInfo
@@ -40,20 +39,9 @@ export const register = (user_id, user_pw) => {
   const body = { uid: user_id, upw: user_pw }
   return dispatch => {
     return apis.post('/user/signup', body)
-      .then(res => dispatch(registered(res.data)))
+      .then(() => dispatch(signIn(user_id, user_pw)))
   }
 }
-
-// 2.1. 유저 정보를 user 에 저장하기
-export const registered = (userInfo) => {
-  console.log('registered')
-  return {
-    type: REGISTER,
-    userInfo
-  }
-}
-
-// 회원가입 요청결과 확인하고 signin과 합치거나하고 자동로그인 위해서 dispatch 붙이기 
 
 // 3. 마이페이지 조회 요청하기
 export const getMyPage = (uid) => {
@@ -145,7 +133,7 @@ export const recieveMyPets = (list) => {
 // 2.1. 유저의 펫 상세 정보 요청하기
 export const getPetDetail = (a_code, u_id) => {
   console.log('getPetDetail')
-  return dipatch => {
+  return dispatch => {
     return apis.post('animal/one?a_code=' + a_code + '&u_id=' + u_id)
       .then(res => dispatch(recievePetDetail(res.data)))
   }

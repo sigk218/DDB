@@ -74,40 +74,41 @@ export default (state = initializer, action) => {
     case REPORT_CANCELED:
       return { ...state, reportCanceled: action.code }
     case SET_NEAR_HOS_STATUS:
-      const updated = state.nearHos.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, nearHos: [...updated] }
+      return { ...state, nearHos: state.nearHos.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      }) }
     case SET_NEAR_HOS_BY_STAR_STATUS:
-      const updated = state.nearHosByStar.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, nearHosByStar: [...updated] }
+      return { ...state, nearHosByStar: state.nearHosByStar.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      })  }
     case SET_NEAR_HOS_BY_REVIEW_STATUS:
-      const updated = state.nearHosByReview.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, nearHosByReview: [...updated] }
+      return { ...state, nearHosByReview: state.nearHosByReview.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      })   }
     case SET_HOS_BY_WORD_STATUS:
-      const updated = state.hosByWord.map(p => {
-        p.keyword === action.keyword ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, hosByWord: [...updated] }
+      return { ...state, hosByWord: state.hosByWord.map(p => {
+        if (p.keyword === action.keyword) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      }) }
     case SET_HOS_BY_REVIEW_STATUS:
-      const updated = state.hosByReview.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, hosByReview: [...updated] }
+      return { ...state, hosByReview: state.hosByReview.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      })    }
     case SET_HOS_BY_STAR_STATUS:
-      const updated = state.hosByStar.map(p => {
-        (p.lat === action.lat) & (p.long === action.long)
-          ? { ...p, page: action.page, next: action.next } : p
-      })
-      return { ...state, hosByStar: [...updated] }
+      return { ...state, hosByStar: state.hosByStar.map(p => {
+        if ((p.lat === action.lat) & (p.long === action.long)) {
+          return { ...p, page: action.page, next: action.next }
+        } else { return p }
+      })     }
     default:
       return state;
   }

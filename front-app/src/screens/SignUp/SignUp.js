@@ -2,14 +2,21 @@
 import React, { Component } from "react";
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
-import axios from 'axios';
+import history from "../../history";
 import { connect } from "react-redux";
-import { register } from '../../actions';
+import { user } from '../../actions';
 const cx = classNames.bind(styles)
 
 class SignUp extends Component {
     componentDidMount() {
-       
+        if (this.props.user !== {}) {
+            const r = window.confirm('이미 로그인했다냥, 로그아웃할거냥')
+            if (r === true) {
+                this.props.logOut()
+            } else {
+                history.push('/')
+            }
+        }
     }
     constructor(props) {
         super(props);
@@ -38,8 +45,10 @@ class SignUp extends Component {
             return <div> 잘못된 정보입니다. </div>
         }
     }
-    handleSummit() {
-        this.props.register(this.state.username, this.state.password)
+    async handleSummit() {
+        await this.props.register(this.state.username, this.state.password)
+        window.alert('회원가입이 완료되었다냥')
+        history.push('/')
     }
     render() {
         return (
@@ -64,9 +73,15 @@ class SignUp extends Component {
 
 const mapStatetoProps = state => {
     return {
-        user_info: state.user_info,
+        user: state.user.user
     };
 };
 
+const mapStateToDispatch = dispatch => {
+    return {
+        register: (id, pwd) => {dispatch(user.register(id, pwd))},
+        logOut: () => {dispatch(user.logOut())}
+    }
+}
 
-export default (connect(mapStatetoProps, { register })(SignUp));
+export default (connect(mapStatetoProps, mapStateToDispatch)(SignUp));

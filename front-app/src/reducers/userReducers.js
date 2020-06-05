@@ -1,10 +1,8 @@
 import {
     SIGNIN,
     LOGOUT,
-    REGISTER,
-    SINGOUT,
+    SIGNOUT,
     GET_MY_PAGE,
-    SAVE_USER_UPDATE,
     GET_MY_PETS,
     GET_PET_DETAIL,
     GET_MY_LIKE_HOS
@@ -22,9 +20,9 @@ const initializer = {
 
 export default (state = initializer, action) => {
     switch (action.type) {
-        case SIGNIN || REGISTER || SAVE_USER_UPDATE:
+        case SIGNIN:
             return { ...state, user: action.userInfo };
-        case SINGOUT || LOGOUT:
+        case SIGNOUT || LOGOUT:
             return {...state, user: {}}
         case GET_MY_PAGE:
             return { ...state, myPage: action.mypage }

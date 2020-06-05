@@ -1,4 +1,4 @@
-import { GET_PET_DETAIL } from '../actions/types'
+import { GET_PET_DETAIL } from '../../actions/types'
 
 export default (state = {}, action) => {
     switch(action.type){

@@ -1,7 +1,6 @@
 // 유저와 펫
 export const SIGNIN = "SIGNIN";
 export const LOGOUT = "LOGOUT";
-export const REGISTER = 'REGISTER';
 export const SIGNOUT = 'SIGNOUT';
 export const GET_MY_PAGE = "GET_MY_PAGE";
 export const USER_UPDATED = 'USER_UPDATED';
@@ -48,7 +47,6 @@ export const DO_DOJANG = 'DO_DOJANG'
 export const UPLOAD_RECIEPT = 'UPLOAD_RECIEPT'
 
 export const REVIEW_REPORTED = 'REVIEW_REPORTED'
-export const REPORT_CANCELED = 'REPORT_CANCELED'
 export const REPORT_CANCELED = 'REPORT_CANCELED'
 export const GET_MY_REPORT = 'GET_MY_REPORT'
 export const GET_REVIEW_REPORT = 'GET_REVIEW_REPORT'

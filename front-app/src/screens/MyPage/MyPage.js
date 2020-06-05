@@ -9,24 +9,6 @@ import MyPetList from "../../components/MyPetList/MyPetList";
 import Modal from '@material-ui/core/Modal';
 const cx = classNames.bind(styles)
 
-const petData = [
-    {
-        a_code: 1,
-        a_type: "dog",
-        a_species: "dog",
-        a_kig: 10,
-        a_year: 5,
-    },
-    {
-        a_code: 2,
-        a_type: "dog",
-        a_species: "cat",
-        a_kig: 9,
-        a_year: 5,
-    },
-
-]
-
 class MyPage extends React.Component {
     constructor(props) {
         super(props);

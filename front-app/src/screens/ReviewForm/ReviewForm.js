@@ -7,10 +7,7 @@ import history from "../../history";
 import AWS from 'aws-sdk'
 import { connect } from 'react-redux'
 import reviewFormer from './reviewFormer'
-import {
-  doDojang,
-  postReview
-} from '../../actions'
+import { review } from '../../actions'
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
@@ -135,7 +132,7 @@ class ReviewForm extends React.Component {
     }]
     const body = new reviewFormer(10, data, carelist, 'sim').getBody()
     console.log('body', body)
-    await postReview(body)
+    await review.postReview(body)
     if (this.props.status.completeReview === true) {
       window.alert('후기 작성이 완료되었다냥')
       history.push('/')
@@ -299,18 +296,18 @@ class ReviewForm extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    dojang: state.hosGrade.dojang,
-    scorelist: state.hosGrade.scorelist,
-    totalscore: state.hosGrade.totalscore,
+    dojang: state.review.dojang,
+    scorelist: state.review.scorelist,
+    totalscore: state.review.totalscore,
     status: state.status,
-    reciept: state.reciept_info.bufferData
+    reciept: state.review.reciept
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    doDojang: (revisit) => dispatch(doDojang(revisit)),
-    postReview: (body) => dispatch(postReview(body)),
+    doDojang: (revisit) => dispatch(review.doDojang(revisit)),
+    postReview: (body) => dispatch(review.postReview(body)),
   }
 }
 

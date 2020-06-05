@@ -6,7 +6,7 @@ import {
     SET_NEAR_HOS_STATUS,
     SET_NEAR_HOS_BY_STAR_STATUS,
     SET_SEARCH_KEYWORD
-} from '../actions/types'
+} from '../../actions/types'
 
 const initializer = {
     isAuthorized: false,

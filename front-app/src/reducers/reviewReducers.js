@@ -10,7 +10,7 @@ import {
     GET_TOTAL_GRADE,
     DO_DOJANG,
     UPLOAD_RECIEPT,
-} from './types'
+} from '../actions/types'
 
 const scorelist = [0, 0, 0, 0, 0]
 const scorelabel = ['청결', '친절함', '치료결과', '전문성', '적정한 치료']
@@ -40,8 +40,6 @@ export default (state = initializer, action) => {
             return { ...state, hosReview: [...action.list] }
         case GET_MY_REVIEW:
             return { ...state, myReview: [...action.list] }
-        case GET_MY_REVIEW_LIST:
-            return { ...state, mylist: action.list }
         case GET_REVIEW_REPORT:
             return { ...state, reviewReport: action.list }
         case GET_MY_REPORT:

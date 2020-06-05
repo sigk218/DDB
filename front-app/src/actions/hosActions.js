@@ -149,7 +149,7 @@ export const getHosByStar = (lat, long, page) => {
 }
 
 // 4.1. 전체 지역 병원 검색 별점순 hos_info에 저장하기
-export const recieveHosByStar = (list) => {
+export const recieveHosByStar = (lat, long, list) => {
   console.log('recieveHosByStar')
   return {
     type: GET_HOS_BY_STAR,
@@ -218,11 +218,11 @@ export const hosDisliked = (code) => {
 // 3. 유저의 병원 즐겨찾기 조회 요청
 export const getMyLikeHos = (u_id) => {
   console.log('getMyLikeHos')
-  const u_id = {
+  const body = {
     u_id: u_id
   }
   return dispatch => {
-    return apis.post('favoriteHospital/findById', u_id)
+    return apis.post('favoriteHospital/findById', body)
       .then(res => dispatch(recieveMyLikeHos(res.data)))
   }
 }

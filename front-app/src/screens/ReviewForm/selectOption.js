@@ -10,14 +10,7 @@ import vision from 'react-cloud-vision-api'
 import resJson from './test2.json'
 
 import { connect } from 'react-redux'
-import {
-  uploadReciept,
-  setHosInfo,
-  getHosSearchList,
-  toggleSearchModal,
-  selectHos,
-  hasReciept
-} from '../../actions'
+import { review, hos } from '../../actions'
 import history from "../../history";
 
 
@@ -265,7 +258,7 @@ class selectOption extends React.Component {
           </div>
 
         </div>
-        <div className={this.state.currStage === 0 ? cx('action-box') : cx('hide')}>
+        {/* <div className={this.state.currStage === 0 ? cx('action-box') : cx('hide')}>
           <div className={this.props.status.isAuthorized? cx('hide') : cx('border-button', 'smaller-btn')}>
             핸드폰 인증하기
           </div>
@@ -307,7 +300,7 @@ class selectOption extends React.Component {
           <div className={cx('border-button', 'smaller-btn')} onClick={() => history.push("/ReviewForm")}>
             리뷰 쓰러가기
           </div>
-        </div>
+        </div> */}
         <Modal
           open={this.props.status.isSearching}
           onClose={() => this.props.toggleSearchModal(this.props.status.isSearching)}
@@ -322,25 +315,25 @@ class selectOption extends React.Component {
 const mapStateToProps = state => {
   return {
     user: state.users,
-    hosSearchList: state.hos_info.searchList,
+    hosSearchList: state.hos.hosByWord,
     status: state.status,
-    hosInfo: state.new_Review.hosInfo
+    hosInfo: state.review.hosInfo
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    uploadReciept: (file, dateIs, hasHos, items) => dispatch(uploadReciept(
+    uploadReciept: (file, dateIs, hasHos, items) => dispatch(review.uploadReciept(
       file,
       dateIs,
       hasHos,
       items
     )),
-    setHosInfo: (id, name, address) => dispatch(setHosInfo(id, name, address)),
-    getHosSearchList: () => dispatch(getHosSearchList()),
-    toggleSearchModal: () => dispatch(toggleSearchModal()),
-    selectHos: (selected, hosName) => dispatch(selectHos(selected, hosName)),
-    hasReciept: (has) => dispatch(hasReciept(has))
+    setHosInfo: (id, name, address) => dispatch(review.setHosInfo(id, name, address)),
+    getHosSearchList: () => dispatch(review.getHosSearchList()),
+    toggleSearchModal: () => dispatch(review.toggleSearchModal()),
+    selectHos: (selected, hosName) => dispatch(review.selectHos(selected, hosName)),
+    hasReciept: (has) => dispatch(review.hasReciept(has))
   }
 }
 

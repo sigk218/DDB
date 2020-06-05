@@ -11,7 +11,7 @@ class GradeBox extends React.Component {
 
   render() {
     const dojangMark = require("../../assets/visitnyang.png")
-    const { grade, editable, totalgrade, dojang } = this.props.hosGrade
+    const { grade, editable, totalgrade, dojang } = this.props.review
     return (
         <div className={cx('basic-box', 'relative')}>
           <HosGrade 
@@ -35,7 +35,7 @@ class GradeBox extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    hosGrade: state.hosGrade,
+    review: state.review,
   };
 };
 

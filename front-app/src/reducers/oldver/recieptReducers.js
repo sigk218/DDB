@@ -1,4 +1,4 @@
-import { UPLOAD_RECIEPT_INFO } from './../actions/types'
+import { UPLOAD_RECIEPT_INFO } from '../../actions/types'
 
 
 const initializer = {

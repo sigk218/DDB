@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { getPetDetail } from "../../actions";
+import { user } from "../../actions";
 import styles from './mystyle.module.scss';
 import { connect } from "react-redux";
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles)
 class MyPetList extends Component {
     componentDidMount() {
-        this.props.getPetDetail();
+        user.getPetDetail('psj');
     }
     constructor(props) {
         super(props);
@@ -15,8 +15,7 @@ class MyPetList extends Component {
 
     setList() {
         console.log('setlist')
-        var a = this.props.pet_info.pet_info
-        console.log(a)
+        var a = this.props.pet_info
         var dis = [];
         if (a) {
             for (var i = 0; i < a.length; i++) {
@@ -44,9 +43,7 @@ class MyPetList extends Component {
     }
     render() {
         if (!this.props.pet_info) {
-            this.props.getPetDetail();
-            console.log(this.props.pet_info)
-
+            user.getPetDetail('psj');
         }
         return (
             <div>
@@ -61,10 +58,8 @@ class MyPetList extends Component {
 
 const mapStateToProps = state => {
     return {
-        pet_info: state.pet_info,
+        pet_info: state.user.mypets,
     };
 };
 
-export default connect(mapStateToProps, {
-    getPetDetail,
-})(MyPetList);
+export default connect(mapStateToProps)(MyPetList);

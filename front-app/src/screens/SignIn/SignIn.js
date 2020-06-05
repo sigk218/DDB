@@ -2,14 +2,21 @@
 import React, { Component } from "react";
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
-import axios from 'axios';
 import { connect } from "react-redux";
-import { signin } from '../../actions';
+import { user } from '../../actions';
+import history from "../../history";
 const cx = classNames.bind(styles)
 
 class SignInPage extends Component {
     componentDidMount() {
-        
+        if (this.props.user !== {}) {
+            const r = window.confirm('이미 로그인했다냥, 로그아웃할거냥')
+            if (r === true) {
+                this.props.logOut()
+            } else {
+                history.push('/')
+            }
+        }
     }
     constructor(props) {
         super(props);
@@ -33,9 +40,9 @@ class SignInPage extends Component {
             return <div> 잘못된 정보입니다. </div>
         }
     }
-    handleSummit() {
-        console.log("-------clicked------")
-        this.props.signin(this.state.username, this.state.password);
+    async handleSummit() {
+        await this.props.signIn(this.state.username, this.state.password);
+        history.push('/')
     }
     render() {
         return (
@@ -57,9 +64,13 @@ class SignInPage extends Component {
 
 const mapStatetoProps = state => {
     return {
-        user_info: state.user_info,
-    };
+        user: state.user 
+    }
 };
 
+const mapDispatchToProps = dispatch => ({
+    signIn: (uid, pwd) => dispatch(user.signIn(uid, pwd)),
+    logOut: () => dispatch(user.logOut())
+})
 
-export default (connect(mapStatetoProps, { signin })(SignInPage));
+export default (connect(mapStatetoProps, mapDispatchToProps)(SignInPage));

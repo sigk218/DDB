@@ -6,79 +6,18 @@ import ThumbIcon from '@material-ui/icons/ThumbUpAlt';
 import SportsIcon from '@material-ui/icons/Sports';
 import classNames from 'classnames/bind';
 import { connect } from "react-redux";
-import {getReviewData} from '../../actions';
+import { review } from '../../actions';
 
 const cx = classNames.bind(styles)
 
-const reviewData = {
-  r_no: 0,
-  u_id: 'aestas',
-  r_nickname: '익명의 코끼리',
-  r_photo: 'https://lh3.googleusercontent.com/proxy/QYikpOM5d8B4H0_YTn1sfYzEQcGYjKwUtseoQXBpXqhjh3bsn04ZdeNL533bsCyivn3OzERLxq2zBPl5l9rt_UU_B6PlMBkQHef624cQ8DI0TjJkozUb8Qyhs8kYkTGclUI-uGs83FjcgEo,http://www.busan.com/nas/wcms/wcms_data/photos/2020/02/12/2020021209194665170_l.jpg,https://modo-phinf.pstatic.net/20160629_37/1467141681611RHSrJ_JPEG/mosaazDVas.jpeg?type=w1100',
-  r_content: '2010년부터 다니던 병원입니다. 고양이에게 중성화 수술은 꼭 필요한 것 같아요. 계속 힘들어해서 몇 차례 검진 받고 선생님과 상담후에 중성화 수술을 하게되었습니다. 선생님 정말 친절하시고요 여기 애견용 풀도 있는 것 같아서 상처 부위 치료되면 또 오려고요!',
-  r_reciept: true,
-  r_revisit: true,
-  r_treatmentdata: '2020-05-10',
-  r_date: '2020-05-10',
-  tags: ['중성화수술', "고양이", "15kg",'정기적', "친절", "전용풀장", "감사"],
-  r_overtreatement: 1,
-  r_kindness: 4,
-  r_result: 4,
-  r_clean: 4,
-  r_report: 0,
-  r_deleted: false,
-  Like: [{u_id:1}, {u_id:2}, {u_id:3}],
-  careinfo: [
-    {
-      ci_no: 2,
-      h_code: 1,
-      ci_vet: '고양이',
-      ci_price:25000,
-      CareList: {
-        c_code: 3,
-        c_name: '중성화수술',
-        c_category: '수술'
-      },
-      r_no: 0
-    },
-    {
-      ci_no: 3,
-      h_code: 1,
-      ci_vet: '고양이',
-      ci_price:30000,
-      CareList: {
-        c_code: 4,
-        c_name: '붕대',
-        c_category: '시술'
-      },
-      r_no: 0
-    },
-    {
-      ci_no: 4,
-      h_code: 1,
-      ci_vet: '고양이',
-      ci_price:50000,
-      CareList: {
-        c_code: 2,
-        c_name: '마취약',
-        c_category: '주사'
-      },
-      r_no: 0
-    }
-  ],
-  h_code: 1
-}
-
 class ReviewDetail extends React.Component {
-  componentDidMount() {
-    //리뷰데이터 불러오기
-    this.props.getReviewData();
-
-    console.log(this.props.reviewData);
+  componentDidMount () {
+    review.getHosReview(10)
   }
+
   constructor(props) {
     super(props);
-    const scorelist =  [reviewData.r_overtreatement, reviewData.r_kindness, reviewData.r_result, reviewData.r_clean]
+    const scorelist =  [0, 0, 0, 0]
     const scorelabel = ['적정한 치료', '친절함', '치료결과', '청결']
     const grade = scorelist.map((g, i) => ({name:scorelabel[i], score:g}))
     const totalgrade = this.calcTotalScore(scorelist)
@@ -97,21 +36,17 @@ class ReviewDetail extends React.Component {
   }
 
   render() {
-    //=============리덕스에서 불러온 값================
-    console.log(this.props.review_data.info)
-    console.log(this.props)
-    //===============================================
-    const photolist = reviewData.r_photo.split(',')
+    const photolist = this.props.reviewData.r_photo.split(',')
     const photos = photolist.map(
       p => (
         <img className={cx('photo')} src={p} key={p} alt={p}/>
       )
     )
 
-    const totallike = reviewData.Like.length
+    const totallike = this.props.reviewData.Like.length
     const tags = []
 
-    for (const [index, value] of reviewData.tags.entries()) {
+    for (const [index, value] of this.props.reviewData.tags.entries()) {
       console.log(value)
       tags.push(<div className={cx('tag')} key={index}>#{value}</div>)
     }
@@ -119,8 +54,8 @@ class ReviewDetail extends React.Component {
     return (
       <div className={cx('container')}>
         <div className={cx('meta-box')}>
-          <p>{reviewData.r_treatmentdata} 진료</p>
-          <p>{reviewData.r_date} 작성</p>
+          <p>{this.props.reviewData.r_treatmentdata} 진료</p>
+          <p>{this.props.reviewData.r_date} 작성</p>
         </div>
         <div className={cx('tag-box')}>
           {tags}
@@ -138,14 +73,14 @@ class ReviewDetail extends React.Component {
         <div className={cx('category')}><p>병원상세평가</p></div>
         <GradeBox 
           grade={this.state.grade} 
-          dojang={reviewData.r_revisit} 
+          dojang={this.props.reviewData.r_revisit} 
           totalgrade={this.state.totalgrade}
           editable={this.editablegrade}
           />
         <div className={cx('category')}><p>진료 후기 상세</p></div>
         <div className={cx('basic-box')}>
           <p>
-            {reviewData.r_content}
+            {this.props.reviewData.r_content}
           </p>
         </div>
         <div className={cx('category')}><p>사진후기</p></div>
@@ -154,7 +89,7 @@ class ReviewDetail extends React.Component {
         </div>
         <div className={cx('category')}><p>비용표</p></div>
         <div className={cx('price-box')}>
-          <ReviewPrice careinfo={reviewData.careinfo}/>
+          <ReviewPrice careinfo={this.props.reviewData.careinfo}/>
         </div>
       </div>
     )
@@ -163,13 +98,11 @@ class ReviewDetail extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    review_data: state.review_info,
+    reviewData: state.review.hosReview,
   };
 };
 
-export default connect(mapStateToProps, {
-  getReviewData,
- })(ReviewDetail);
+export default connect(mapStateToProps)(ReviewDetail);
  
 
  

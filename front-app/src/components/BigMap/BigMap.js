@@ -18,12 +18,9 @@ class BigMap extends Component {
 
     click_marker(map, marker, idx, that) {
         return function () {
-            console.log(that)
             that.setState( {
                 cur_pick: idx,
             },() => (console.log(that.state.cur_pick)));
-            console.log(idx)
-            console.log("=======Click event Happened!=======")
         }
     }
     get_first() {
