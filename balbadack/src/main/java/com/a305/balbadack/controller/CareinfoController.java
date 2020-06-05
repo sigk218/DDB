@@ -1,5 +1,7 @@
 package com.a305.balbadack.controller;
 
+import java.util.List;
+
 import com.a305.balbadack.model.dto.Careinfo;
 import com.a305.balbadack.model.service.CareinfoService;
 
@@ -42,8 +44,9 @@ public class CareinfoController {
 
     @ApiOperation("진료 정보 리뷰별 조회하기")
     @PostMapping(value="/findByReview")
-    public void findCareinfoByReview(@RequestBody int r_code) {
-        careinfoService.findByR_code(r_code);
+    public List<Careinfo> findCareinfoByReview(@RequestBody int r_code) {
+        List<Careinfo> careinfos = careinfoService.findByR_code(r_code);
+        return careinfos;
     }
 
 }

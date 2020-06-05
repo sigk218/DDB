@@ -3,7 +3,6 @@ package com.a305.balbadack.model.service;
 import java.util.List;
 
 import com.a305.balbadack.model.dto.Good;
-import com.a305.balbadack.model.dto.Review;
 
 public interface GoodService {
     

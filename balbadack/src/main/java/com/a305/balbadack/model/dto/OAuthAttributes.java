@@ -1,7 +1,5 @@
 package com.a305.balbadack.model.dto;
 
-import com.a305.balbadack.model.dto.Role;
-import com.a305.balbadack.model.dto.User;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -37,7 +35,6 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .email((String) attributes.get("email"))
                 .name((String) attributes.get("name"))
-                .picture((String) attributes.get("picture"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
@@ -47,7 +44,7 @@ public class OAuthAttributes {
         return User.builder()
                 .uName(this.name)
                 .uId(this.email)
-                .uRole(Role.GUEST)
+                // .uRole(Role.GUEST)
                 .build();
     }
 }

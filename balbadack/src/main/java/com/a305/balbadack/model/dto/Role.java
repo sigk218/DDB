@@ -1,18 +1,39 @@
 package com.a305.balbadack.model.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NaturalId;
+
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
-@RequiredArgsConstructor
-public enum Role {
+@Entity
+@Table(name = "roles")
+public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="role_id")
+    private Long id;
 
-    // Spring Security에서 권한 코드 설정 시 'ROLE_' 반드시 붙어야 함.
-    ADMIN("ROLE_ADMIN", "관리자")
-    , STAFF("ROLE_STAFF", "병원 관계자")
-    , USER("ROLE_USER", "일반 사용자")
-    , GUEST("ROLE_GUEST", "손님");
+    @Enumerated(EnumType.STRING)
+    @NaturalId
+    @Column(length = 60, name="role_name")
+    private RoleName name;
 
-    private final String key;
-    private final String title;
+    public Role() {
+    }
+
+    public Role(RoleName name) {
+        this.name = name;
+    }
+
 }
