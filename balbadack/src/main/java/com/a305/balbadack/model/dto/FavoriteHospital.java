@@ -28,11 +28,15 @@ import lombok.ToString;
 public class FavoriteHospital {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY로 해야 Auto Increment
-	@Column(nullable = false, unique = true)
-    private int f_code;
+	@Column(nullable = false, unique = true, name = "f_code")
+    private int fCode;
 
     // 아이디
     @ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "u_id", referencedColumnName = "u_id", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_favoritehospital_uid"))
-	private User user;
+    private User user;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "h_code", referencedColumnName = "h_code", insertable = false, updatable = false, foreignKey = @ForeignKey(name = "fk_favoritehospital_hcode"))
+    private Hospital hospital;
 }
