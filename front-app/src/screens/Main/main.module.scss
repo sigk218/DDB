@@ -1,0 +1,11 @@
+@import '../../styles/utils.scss';
+
+.search-container {
+    @include width-size(0px)
+}
+.search-box {
+    border-radius: 20px;
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+}
