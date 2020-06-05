@@ -38,14 +38,6 @@ public class UserController {
 		resultMap.put("message", data);
 		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
 	}
-	
-	private ResponseEntity<Map<String, Object>> handleSuccess(Object data,String token){
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		resultMap.put("state", HttpStatus.OK);
-		resultMap.put("message", data);
-		resultMap.put("JWT",token);
-		return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
-	}
 
 	private ResponseEntity<Map<String, Object>> handleFail(Object data, HttpStatus status) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -65,7 +57,7 @@ public class UserController {
 			}
             return handleSuccess("회원가입을 완료하였습니다.");
         } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
+            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
         }
 
 	}
@@ -79,10 +71,10 @@ public class UserController {
 			if(flag) {
 				return handleSuccess("로그인에 성공하였습니다.");
 			} else {
-				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.OK); // 여기 HTTP Code 다르게
+				return handleFail("아이디나 비밀번호가 잘못되었습니다.", HttpStatus.BAD_REQUEST);
 			}
         } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
+            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
         }
 
 	}
@@ -95,7 +87,7 @@ public class UserController {
             userService.update(user);
             return handleSuccess("회원정보를 수정하였습니다.");
         } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
+            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
         }
 
 	}
@@ -108,7 +100,7 @@ public class UserController {
             userService.delete(id);
             return handleSuccess("회원탈퇴를 완료하였습니다.");
         } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK); //Status 다시 지정
+            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
         }
 
 	}
@@ -121,7 +113,7 @@ public class UserController {
             user = userService.findById(id);
             return handleSuccess(user);
         } catch (Exception e) {
-            return handleFail(e.toString(), HttpStatus.OK);
+            return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
         }
 	}
 
