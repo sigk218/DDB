@@ -87,5 +87,11 @@ public class Review {
 
     @Column(nullable = true, name = "r_starrating")
     private double rStarrating;
+
+    @Column(nullable = false, columnDefinition = "int default 0", name = "r_totalgood")
+    private int rTotalgood;
+
+    @Transient
+    private int min;
     
 }

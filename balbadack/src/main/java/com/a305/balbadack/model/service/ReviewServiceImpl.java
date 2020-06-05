@@ -89,6 +89,36 @@ public class ReviewServiceImpl implements ReviewService{
         }catch(Exception e){
             e.printStackTrace();
         }
-    }    
+    }
+
+    @Override
+    public List<Review> findByrPurpose(String r_purpose) {
+        try{
+            return reviewRepository.findByrPurposeContainingAndrDeleted(r_purpose);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Review> findByrContent(String r_content) {
+        try{
+            return reviewRepository.findByrContentContainingAndrDeleted(r_content);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getPurpose(String r_purpose) {
+        try {
+            return reviewRepository.getPurpose(r_purpose);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
