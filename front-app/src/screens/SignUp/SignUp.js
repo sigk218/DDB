@@ -9,7 +9,7 @@ const cx = classNames.bind(styles)
 
 class SignUp extends Component {
     componentDidMount() {
-        if (this.props.user !== {}) {
+        if (JSON.stringify(this.props.user) !== '{}') {
             const r = window.confirm('이미 로그인했다냥, 로그아웃할거냥')
             if (r === true) {
                 this.props.logOut()
@@ -24,31 +24,42 @@ class SignUp extends Component {
             c_log: 1,
             username: '',
             password: '',
-            passwordC: '',
+            password2: '',
+            hasError: false
         };
-        this.updateId = this.updateId.bind(this);
-        this.updatePw = this.updatePw.bind(this);
-        this.updatePwc = this.updatePwc.bind(this);
     }
-    updateId(event) {
-        this.setState({ username: event.target.value })
+    static getDerivedStateFromError(error) {
+        return { hasError: true }
     }
-    updatePw(event) {
-        this.setState({ password: event.target.value })
+    ValidateEmail() {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.state.username)) {
+            return true
+        } else {
+            return false
+        }
     }
-    updatePwc(event) {
-        this.setState({ password: event.target.value })
-    }
-    correct_id(e) {
-        if (e) return <div> </div>
-        else {
-            return <div> 잘못된 정보입니다. </div>
+    validatePwd() {
+        if (this.state.password.length < 8 ) {
+            return false
+        } else {
+            return true
         }
     }
     async handleSummit() {
-        await this.props.register(this.state.username, this.state.password)
-        window.alert('회원가입이 완료되었다냥')
-        history.push('/')
+        if (this.state.hasError) {
+            window.alert('회원가입 과정에서 문제가 발생했습니다. 다시 시도해보세요.')
+            await this.setState({username: '', password: '', hasError:false})
+        } else {
+            const validEmail = this.ValidateEmail()
+            const validPwd = this.validatePwd()
+            if ( ( validEmail === true ) & ( validPwd === true ) ) {
+                await this.props.register(this.state.username, this.state.password)
+                window.alert('회원가입이 완료되었다냥')
+                history.push('/')
+            } else {
+                window.alert('형식을 지켜달라냥')
+            }
+        }
     }
     render() {
         return (
@@ -56,15 +67,28 @@ class SignUp extends Component {
                 <div className={cx('category')}><p>Sign Up</p></div>
 
                 <div className={cx('basic-box')}>
-                    <p>아이디</p>
-                    <input type="text" className={cx('input-box')} placeholder="Your Id.." onChange={this.updateId}></input>
+                    <p>이메일</p>
+                    <input 
+                        type="text" 
+                        className={cx('input-box')} 
+                        placeholder="이메일을 입력해주세요" 
+                        onChange={(e) => this.setState({email: e.target.value})}></input>
                     <p>비밀번호</p>
-                    <input type="text" className={cx('input-box')} placeholder="Your Password.." onChange={this.updatePw}></input>
+                    <input 
+                        type="text" 
+                        className={cx('input-box')} 
+                        placeholder="8자 이상의 비밀번호를 입력해주세요" 
+                        onChange={(e) => this.setState({password: e.target.value})}></input>
                     <p>비밀번호 확인</p>
-                    <input type="text" className={cx('input-box')} placeholder="Password check" onChange={this.updatePwc}></input>
+                    <input 
+                        type="text" 
+                        className={cx('input-box')} 
+                        placeholder="비밀번호를 다시 입력해주세요" 
+                        onChange={(e) => this.setState({password2: e.target.value})}></input>
                     <div className={cx('border-button')} onClick={() => this.handleSummit()}>
                         <p>가입</p>
                     </div>
+                    <p>이미 회원이라면 <a onClick={() => history.push('/SignUp')}>로그인</a>하러가기</p>
                 </div>
             </div>
         );

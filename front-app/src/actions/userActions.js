@@ -19,14 +19,16 @@ export const signIn = (user_id, user_pw) => {
   console.log("signin")
   return dispatch => {
     return apis.post('/user/login?uId=' + user_id + '&uPw=' + user_pw)
-      .then(res => dispatch(signedIn(res.data)))
+      .then(res => dispatch(signedIn(res, res.data)))
   }
 };
 
 // 1.1. 유저 정보를 user 에 저장하기
-export const signedIn = (userInfo) => {
+export const signedIn = (res, userInfo) => {
   console.log('signedIn')
+  console.log(res)
   apis.defaults.headers.common['Authorization'] = `Bearer ${userInfo.token}`
+  window.sessionStorage.setItem('user', userInfo)
   return {
     type: SIGNIN,
     userInfo
