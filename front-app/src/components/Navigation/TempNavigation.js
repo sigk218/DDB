@@ -19,9 +19,12 @@ const checkCancel = () => {
 
 
 const Navigation = (props) => {
+  console.log(props.user)
   let l = useLocation()
   let location = l.pathname
-  let rightBtn = <PersonIcon />
+  let rightBtn = JSON.stringify(props.user)  === '{}' ?
+  <PersonIcon onClick={()=> history.push('/SignIn')}/> :
+  <PersonIcon onClick={()=> history.push('/MyPage')}/>
   let leftBtn = <ChevronLeftIcon onClick={history.goBack} />                                   
   // console.log('loca', location)
   if (location === '/MyPage') {
@@ -76,6 +79,7 @@ const Navigation = (props) => {
 
 const mapStateToProps = (state) => ({
   status: state.status,
+  user: state.user.user
 })
 
 export default connect(
