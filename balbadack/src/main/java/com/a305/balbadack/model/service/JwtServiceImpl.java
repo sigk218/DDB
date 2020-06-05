@@ -2,6 +2,8 @@ package com.a305.balbadack.model.service;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.a305.balbadack.model.dto.User;
+import com.a305.balbadack.repository.UserRepository;
 import com.a305.balbadack.security.*;
 
 import org.springframework.util.StringUtils;
@@ -22,6 +24,9 @@ public class JwtServiceImpl implements JwtService {
     @Autowired
     CustomUserDetailService customUserDetailService;
 
+    @Autowired
+    UserRepository userRepository;
+    
     @Override
     public String getIdFromJwt() {
         String token = getJwt();
@@ -30,6 +35,18 @@ public class JwtServiceImpl implements JwtService {
         System.out.println("getIdFromJwt() ... " + uId);
 
         return uId;
+    }
+
+    @Override
+    public User getUserFromJwt() {
+        String token = getJwt();
+        String uId = jwtProvider.getUserIdFromJWT(token);
+
+        System.out.println("getUserFromJwt() ... " + uId);
+
+        User user = userRepository.findByUserId(uId);
+
+        return user;
     }
 
     @Override
