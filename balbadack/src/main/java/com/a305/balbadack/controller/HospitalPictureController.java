@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class HospitalPictureController {
   // create : 병원 사진 등록하기 
   @ApiOperation("병원 사진 등록하기")
   @PostMapping(value="/insert")
-  public void insertReport(@RequestBody HospitalPicture hospitalPicture) {
+  public void insert(@RequestBody HospitalPicture hospitalPicture) {
       hospitalPictureService.insert(hospitalPicture);
   }
 
@@ -42,9 +43,9 @@ public class HospitalPictureController {
   // Delete : 병원 사진 삭제하기
   @ApiOperation("병원 사진 삭제하기")
   @PostMapping(value="/delete")
-  public void deleteReport(@RequestBody HospitalPicture hospitalPicture) {
+  public void delete(@RequestParam Integer pCode) {
       //hp_deleted  true로 바꾸기
-      hospitalPictureService.delete(hospitalPicture);
+      hospitalPictureService.delete(pCode);
   }
 
   

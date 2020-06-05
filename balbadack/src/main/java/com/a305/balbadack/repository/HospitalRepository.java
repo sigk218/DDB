@@ -11,6 +11,10 @@ import org.springframework.data.repository.query.Param;
 
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Integer> {
+  
+  // 병원 사진 코드로 병원 코드 찾기 
+  @Query(value = "select * from hospital as h where h.h_photocode=:hPhotoCode",nativeQuery = true)
+  Hospital findhCode(@Param("hPhotoCode") String hPhotoCode);
 
   // 이름이 있으면 이름 검색, 위치 검색 
   @Query(value = "select * from hospital h where h.h_name like concat('%', :keyword, '%') or h.h_gu like concat('%', :keyword, '%') or h.h_dong like concat('%', :keyword, '%') or h.h_station like concat('%', :keyword, '%')", nativeQuery = true)

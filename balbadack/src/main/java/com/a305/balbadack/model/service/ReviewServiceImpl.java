@@ -111,4 +111,14 @@ public class ReviewServiceImpl implements ReviewService{
         return null;
     }
 
+    @Override
+    public List<String> getPurpose(String r_purpose) {
+        try {
+            return reviewRepository.getPurpose(r_purpose);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
