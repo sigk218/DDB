@@ -36,4 +36,6 @@ public interface ReviewService {
     // 내가 쓴 리뷰 삭제 (r_deleted를 true로 변경)
     public void delete(int r_code);
     
+    // 모든 목적 list 가져오기
+    public List<String> getPurpose(String r_purpose);
 }

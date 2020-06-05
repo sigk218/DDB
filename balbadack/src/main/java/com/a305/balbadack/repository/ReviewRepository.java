@@ -45,4 +45,7 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
 
     // Review findFirstByOrderByrCodeDesc();
 
+    @Query(value = "select r.r_purpose from review r where r.r_purpose like %:rpurpose% group by r.r_purpose", nativeQuery = true)
+    List<String> getPurpose(String rpurpose);
+
 }

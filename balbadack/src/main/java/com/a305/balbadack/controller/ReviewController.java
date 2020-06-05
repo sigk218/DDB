@@ -146,6 +146,13 @@ public class ReviewController {
         return re;
     }
 
+    @ApiOperation("목적 List 가져오기")
+    @PostMapping("/purpose/{r_purpose}")
+    public List<String> getPurpose(@PathVariable String r_purpose) {
+        List<String> purpose = reviewService.getPurpose(r_purpose);
+        return purpose;
+    }
+
     @ApiOperation("리뷰 검색하기 {'yes' or 'no'} / {'star' or 'good' or 'price'} / {keyword}")
     @PostMapping("/findByKeyword/{distance}/{filter}/{keyword}")
     public List<Review> findByKeyword(@PathVariable String distance, @PathVariable String filter, @PathVariable String keyword, @RequestParam Double latitude, @RequestParam Double longtitude){
