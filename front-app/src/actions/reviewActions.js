@@ -63,8 +63,9 @@ export const recieveMyReview = (list) => {
 export const postReview = (body) => {
   console.log('postReview')
   return dispatch => {
+    dispatch(reviewPosted(false))
     return apis.post('review/insert', body)
-      .then(res => dispatch(reviewPosted(res.status)))
+      .then(() => dispatch(reviewPosted(true)))
   }
 }
 
@@ -81,8 +82,9 @@ export const reviewPosted = (code) => {
 export const updateReview = (body) => {
   console.log('updateReview')
   return dispatch => {
+    dispatch(reviewUpdated(false))
     return apis.put('review/update', body)
-      .then(res => dispatch(reviewUpdated(res.status)))
+      .then(() => dispatch(reviewUpdated(true)))
   }
 }
 
@@ -99,8 +101,9 @@ export const reviewUpdated = (code) => {
 export const deleteReview = (r_code) => {
   console.log('deleteReview')
   return dispatch => {
+    dispatch(reviewDeleted(false))
     return apis.post('review/update?r_code=', r_code)
-      .then(res => dispatch(reviewDeleted(res.status)))
+      .then(() => dispatch(reviewDeleted(true)))
   }
 }
 
@@ -185,8 +188,9 @@ export const reportReview = (reCode) => {
     reCode : reCode
   }
   return dispatch => {
+    dispatch(reviewReported(false))
     return apis.post('report/insert', report)
-      .then(res => dispatch(reviewReported(res.status)))
+      .then(() => dispatch(reviewReported(true)))
   }
 }
 
@@ -203,8 +207,9 @@ export const reviewReported = (code) => {
 export const reportCancel = (reCode) => {
   console.log('reportCancel')
   return dispatch => {
+    dispatch(reportCanceled(false))
     return apis.post('report/delete', reCode)
-      .then(res => dispatch(reportCanceled(res.status)))
+      .then(() => dispatch(reportCanceled(true)))
   }
 }
 
@@ -274,8 +279,9 @@ export const goodReview = (hcode, rcode, ucode) => {
     }
   }
   return dispatch => {
+    dispatch(reviewGood(false))
     return apis.post('good/insert', good)
-    .then(res => dispatch(reviewGood(res.status)))
+    .then(() => dispatch(reviewGood(true)))
   }
 }
 
@@ -299,8 +305,9 @@ export const badReview = (hcode, rcode, ucode) => {
     }
   }
   return dispatch => {
+    dispatch(reviewBad(false))
     return apis.delete('good/delete', good)
-    .then(res => dispatch(reviewBad(res.status)))
+    .then(res => dispatch(reviewBad(true)))
   }
 }
 

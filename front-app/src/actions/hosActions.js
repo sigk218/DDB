@@ -174,8 +174,9 @@ export const likeHos = (hcode, ucode) => {
     user: {ucode: ucode}
   }
   return dispatch => {
+    dispatch(hosLiked(false))
     return apis.post('favoriteHospital/insert', favoriteHospital)
-      .then(res => dispatch(hosLiked(hcode, res.status, true)))
+      .then(() => dispatch(hosLiked(true)))
   }
 }
 
@@ -188,8 +189,9 @@ export const dislikeHos = (hcode, ucode) => {
     user: {ucode: ucode}
   }
   return dispatch => {
+    dispatch(hosDisliked(false))
     return apis.post('favoriteHospital/delete', favoriteHospital)
-      .then(res => dispatch(hosDisliked(res.status)))
+      .then(() => dispatch(hosDisliked(true)))
   }
 }
 

@@ -77,8 +77,9 @@ export const recieveMyPage = (mypage) => {
 export const updateUser = (user) => {
   console.log('updateUser')
   return dispatch => {
+    dispatch(userUpdated(false))
     return apis.post('user/update', user)
-      .then(res => dispatch(userUpdated(res.status)))
+      .then(() => dispatch(userUpdated(true)))
   }
 }
 
@@ -105,21 +106,19 @@ export const signOut = (uid) => {
   console.log('signOut')
   const body = { uId: uid }
   return dispatch => {
+    dispatch(signedOut(false))
     return apis.post('user/signout', body)
-      .then(res => dispatch(signedOut(res.status)))
+      .then(() => dispatch(signedOut(true)))
   }
 }
 
 // 7. 탈퇴 결과 user에 저장하기
 export const signedOut = (code) => {
-  if (code === 200) {
-    console.log('signedOut')
-    apis.defaults.headers.common['Authorization'] = null
-    return {
-      type: SIGNOUT
-    }
-  } else {
-    window.alert('탈퇴 중 문제가 발생하였습니다')
+  console.log('signedOut')
+  apis.defaults.headers.common['Authorization'] = null
+  return {
+    type: SIGNOUT
+    ,code
   }
 }
 
@@ -165,8 +164,9 @@ export const recievePetDetail = (animal) => {
 export const registerPet = (body) => {
   console.log('registerPet')
   return dispatch => {
+    dispatch(petRegistered(false))
     return apis.post('animal/insert', body)
-      .then(res => dispatch(petRegistered(res.status)))
+      .then(() => dispatch(petRegistered(true)))
   }
 }
 
@@ -183,8 +183,9 @@ export const petRegistered = (code) => {
 export const updatePet = (body) => {
   console.log('updatePet')
   return dispatch => {
+    dispatch(petUpdated(false))
     return apis.post('animal/update', body)
-      .then(res => dispatch(petUpdated(res.status)))
+      .then(() => dispatch(petUpdated(true)))
   }
 }
 
@@ -201,8 +202,9 @@ export const petUpdated = (code) => {
 export const deletePet = (a_code, u_id) => {
   console.log('deletePet')
   return dispatch => {
+    dispatch(petDeleted(false))
     return apis.post('animal/delete?a_code=' + a_code + '&u_id=' + u_id)
-      .then(res => dispatch(petDeleted(res.status)))
+      .then(() => dispatch(petDeleted(true)))
   }
 }
 
