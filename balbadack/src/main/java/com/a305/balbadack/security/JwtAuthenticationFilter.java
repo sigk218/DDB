@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.a305.balbadack.context.BeanUtils;
+import com.a305.balbadack.model.dto.CustomUserdetails;
 import com.a305.balbadack.model.service.CustomUserDetailService;
 
 import java.io.IOException;
@@ -46,19 +47,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println(tokenProvider.returnToken(jwt));                
                 
                 if(tokenProvider.validateToken(jwt)) {
-                System.out.println("if..............................!!!");
                 String userId = tokenProvider.getUserPk(jwt);
                 System.out.println("userId: " + userId);
                 UserDetails userDetails = customUserDetailService.loadUserById(userId);
-                System.out.println("userDetails: " + userDetails.toString());
+                CustomUserdetails customUserdetails = (CustomUserdetails) userDetails;
+                System.out.println("userDetails: " + customUserdetails.toString());
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-                System.out.println("else............1...........");
             }
-            System.out.println("else...........................");
         } catch (Exception ex) {
             logger.error("Could not set user authentication in security context", ex);
         }
