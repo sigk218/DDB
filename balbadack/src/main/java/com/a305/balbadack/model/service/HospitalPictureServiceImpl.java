@@ -29,6 +29,7 @@ public class HospitalPictureServiceImpl implements HospitalPictureService {
   @Override
   public List<HospitalPicture> findByhPhotoCode(String hPhotoCode) {
     try {
+      // System.out.println(hPhotoCode);
       return hospitalPictureRepository.findByhPhotoCode(hPhotoCode);
     } catch (Exception e) {
       e.printStackTrace();

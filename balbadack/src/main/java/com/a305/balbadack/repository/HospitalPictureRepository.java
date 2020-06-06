@@ -22,7 +22,7 @@ public interface HospitalPictureRepository extends JpaRepository<HospitalPicture
   void delete(@Param("pCode") Integer pCode);
 
   // 병원별 사진 찾기
-  @Query(value = "select * from hospital_picture as hp where hp.h_photocode = :hPhotoCode", nativeQuery = true)
+  @Query(value = "select * from hospital_picture as hp where hp.h_photocode = :hPhotoCode and hp.hp_deleted=false", nativeQuery = true)
   List<HospitalPicture> findByhPhotoCode(@Param("hPhotoCode") String hPhotoCode);
 
 

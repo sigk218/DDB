@@ -30,8 +30,11 @@ public class Hospital{
   @Column(nullable = false, unique = true, name = "h_code")
   private Integer hCode;
   
-  // @Transient
-	// private Double dist;
+  @Transient
+  private Double dist;
+  
+  @Transient
+	private List<HospitalPicture> hospitalPicture;
 
   // @OneToMany(mappedBy="hospital")
   // private List<Review> review;
