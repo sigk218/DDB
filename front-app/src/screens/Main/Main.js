@@ -9,8 +9,8 @@ import { hos } from '../../actions'
 const cx = classNames.bind(styles)
 
 class Main extends React.Component {
-  getSearchResults(word, lat, long, cateogry) {
-    this.props.mainSearch(word, lat, long, cateogry)
+  getSearchResults(word, lat, long, cateogry, filter) {
+    this.props.mainSearch(word, lat, long, cateogry, filter)
     history.push('/ResTab')
   }
 
@@ -23,14 +23,17 @@ class Main extends React.Component {
   async getUserLoca() {
     const position = await this.getCurrentPosition()
     const {latitude, longitude} = position.coords
-    this.props.mainSearch('', latitude, longitude, 'nearHos')
+    console.log('요청')
+    await this.props.mainSearch('', latitude, longitude, 'hos', 'nearHos')
+    console.log('정보를 받아왔음?')
+    console.log(this.props.hos)
     history.push('/ResTab')
   }
 
   render() {
     const getKeywords = ['중성화', '입원', '심장사상충', '응급', '검진', '소동물', '슬개', '접종', '외과', '치과']
     const keword = getKeywords.map(word => {
-    return <div onClick={() => this.getSearchResults(word, null, null, 'hosByWord')} key={word}>#{word}</div>
+    return <div onClick={() => this.getSearchResults(word, null, null, 'hos', 'hosByWord')} key={word}>#{word}</div>
     })
     return (
       <div>
@@ -82,13 +85,19 @@ class Main extends React.Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    hos : state.hos
+  }
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    mainSearch: (word, lat, long, cateogry) => dispatch(hos.mainSearch(word, lat, long, cateogry)),
+    mainSearch: (word, lat, long, cateogry, filter) => dispatch(hos.mainSearch(word, lat, long, cateogry, filter)),
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Main)

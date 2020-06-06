@@ -19,14 +19,14 @@ export const signIn = (user_id, user_pw) => {
   console.log("signin")
   return dispatch => {
     return apis.post('/user/login?uId=' + user_id + '&uPw=' + user_pw)
-      .then(res => dispatch(signedIn(res, res.data)))
+      .then(res => dispatch(signedIn(res.data, res)))
   }
 };
 
 // 1.1. 유저 정보를 user 에 저장하기
-export const signedIn = (res, userInfo) => {
-  console.log('signedIn')
+export const signedIn = (userInfo, res) => {
   console.log(res)
+  console.log('signedIn')
   apis.defaults.headers.common['Authorization'] = `Bearer ${userInfo.token}`
   window.sessionStorage.setItem('user', userInfo)
   return {
@@ -85,6 +85,7 @@ export const userUpdated = (code) => {
 // 5. 로그아웃결과 user에 저장하기
 export const logOut = () => {
   console.log('logOut')
+  window.sessionStorage.removeItem('user')
   apis.defaults.headers.common['Authorization'] = null
   return {
     type: LOGOUT
@@ -98,7 +99,10 @@ export const signOut = (uid) => {
   return dispatch => {
     dispatch(signedOut(false))
     return apis.post('user/signout', body)
-      .then(() => dispatch(signedOut(true)))
+      .then(() => {
+        dispatch(signedOut(true))
+        dispatch(logOut())
+      })
   }
 }
 

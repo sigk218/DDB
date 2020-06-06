@@ -10,18 +10,17 @@ import {
 // import { combineReducers } from "redux";
 
 const initializer = {
-    user: sessionStorage.getItem('user'),
+    user: sessionStorage.getItem('user') || {},
     myPage:{},
     myPets: [],
     myPetDetails: [],
     likedHos: [],
-
 }
 
 export default (state = initializer, action) => {
     switch (action.type) {
         case SIGNIN:
-            return { ...state, user: action.userInfo };
+            return { ...state, user: action.userInfo};
         case SIGNOUT || LOGOUT:
             return {...state, user: {}}
         case GET_MY_PAGE:

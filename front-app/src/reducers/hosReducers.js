@@ -13,7 +13,8 @@ const initializer = {
     searchWord: '',
     lat: 37.504909,
     long: 127.048463,
-    category: null,
+    category: 'hos',
+    filter: 'nearHos',
   },
   nearHos: [],
   nearHosByStar: [],
@@ -31,18 +32,23 @@ export default (state = initializer, action) => {
       return {
         ...state, 
         mainSearch: {
-          searchWord:action,
+          searchWord:action.searchWord,
           lat: action.lat === null ? state.mainSearch.lat : action.lat,
           long: action.long === null ? state.mainSearch.long : action.long,
-          category:action.category
+          category:action.category,
+          filter: action.filter
         }
       }
     case GET_NEAR_HOS:
-      updated = state.nearHos.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } 
-      })
+      if (state.nearHos.some(s => (s.lat === action.lat) & (s.long === action.long))) {
+        updated = state.nearHos.map(p => {
+          if ((p.lat === action.lat) & (p.long === action.long)) {
+            return { ...p, list: p.list.concat(...action.list) }
+          } else {return p}
+        })
+      } else {
+        updated = state.nearHos.concat({lat:action.lat, long:action.long, list:action.list})
+      }
       return { ...state, nearHos: [...updated] };
     case GET_NEAR_HOS_BY_STAR:
       updated = state.nearHosByStar.map(p => {

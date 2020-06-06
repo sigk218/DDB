@@ -15,6 +15,11 @@ const store = createStore(
   composeEnhancers(applyMiddleware(reduxThunk))
 );
 
+window.sessionStorage.setItem('test', 'a')
+console.log(sessionStorage.getItem('test'))
+window.sessionStorage.setItem('test', 'b')
+console.log(sessionStorage.getItem('test'))
+
 // console.log(store.getState())
 
 // const unsubscribe = store.subscribe(() => console.log(store.getState()))

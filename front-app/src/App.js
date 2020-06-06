@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Router, Route } from "react-router-dom";
 import { connect } from "react-redux";
-import TempNavigation from "./components/Navigation/TempNavigation";
+import Navigation from "./components/Navigation/Navigation";
 import { Link } from "react-router-dom";
 
 import Main from "./screens/Main/Main";
@@ -9,14 +9,14 @@ import history from "./history";
 
 import MyPage from "./screens/MyPage/MyPage";
 import HosDetail from "./screens/HosDetail/HosDetail";
-import HosRes from "./screens/HosRes/HosRes";
-import ResTab from "./components/Navigation/ResTab";
+import HosRes from "./screens/Res/HosRes";
+import ResTab from "./screens/Res/ResTab";
 // import { Link } from "react-router-dom";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
 import SelectOption from "./screens/ReviewForm/selectOption";
 import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import HosMapRes from './screens/HosMapRes/HosMapRes';
-import ReviewRes from './screens/ReviewRes/ReviewRes';
+import ReviewRes from './screens/Res/ReviewRes';
 import SignIn from './screens/SignIn/SignIn';
 import smsVer from './screens/smsVer/smsVer';
 import MyPetList from './components/MyPetList/MyPetList';
@@ -25,7 +25,7 @@ const App = () => {
   return (
     <div>
       <Router history={history}>
-        <TempNavigation>
+        <Navigation>
           <div>
             <Route path="/" exact component={Main} />
             <Route path="/Main" exact component={Main} />
@@ -43,7 +43,7 @@ const App = () => {
             <Route path="/MyPetList" exact component={MyPetList} />
             <Route path="/SignUp" exact component={SignUp} />
           </div>
-        </TempNavigation>
+        </Navigation>
 
       </Router>
     </div>

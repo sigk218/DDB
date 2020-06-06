@@ -32,8 +32,8 @@ class MainSearchBar extends Component {
 			<div 
 				className={
 					this.props.location === ('Main') ? 
-					cx('search-box', 'main-search', 'main-page')
-					: cx('search-box', 'main-search')}>
+					cx('search-box', 'main-search')
+					: cx('search-box', 'res-search')}>
 				<input 
 					type="text"
 					placeholder="병원이름, 진료명, 지역, 동물 종류 등"

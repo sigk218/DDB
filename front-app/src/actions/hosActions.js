@@ -19,23 +19,24 @@ import {
 import apis from '../apis/apis';
 
 // ---------- main.js ---------------------
-export const mainSearch = (searchWord, lat, long, category) => {
+export const mainSearch = (searchWord, lat, long, category, filter) => {
   console.log('mainSearch')
   return dispatch => {
-    dispatch(setMainSearch(searchWord, lat, long, category))
-    if (category === 'nearHos') {
-      dispatch(getNearHos(lat, long, 0, null))
-    } else if (category === 'hosByWord') {
-      dispatch(getHosByWord(searchWord, 0))
+    dispatch(setMainSearch(searchWord, lat, long, category, filter))
+    if (filter === 'nearHos') {
+      return dispatch(getNearHos(lat, long, 0, null))
+    } else if (filter === 'hosByWord') {
+      return dispatch(getHosByWord(searchWord, 0))
     }
   }
 }
 
-export const setMainSearch = (searchWord, lat, long, category) => {
+export const setMainSearch = (searchWord, lat, long, category, filter) => {
   console.log('setMainSearch')
+  console.log(searchWord, lat, long, category, filter)
   return {
     type: MAIN_SEARCH,
-    searchWord, lat, long, category
+    searchWord, lat, long, category, filter
   }
 }
 
@@ -44,7 +45,7 @@ export const setMainSearch = (searchWord, lat, long, category) => {
 export const getNearHos = (lat, long, page, mode) => {
   console.log('getNearHospitals')
   const url = 'hospital/location/'+page+ '?latitude=' + lat + '&longtitude=' + long
-  const reqURL = mode === '' ? url : url + '&mode=' + mode
+  const reqURL = mode === null ? url : url + '&mode=' + mode
   return dispatch => {
     return apis.post(reqURL)
       .then(res => {
@@ -56,7 +57,7 @@ export const getNearHos = (lat, long, page, mode) => {
 
 // 1.1 현재 검색 중인 위치와 받았던 페이지와 next여부 status에 저장하기
 export const setNearHosStatus = (mode, lat, long, page, next) => {
-  if (mode === '') {
+  if (mode === null) {
     return {
       type: SET_NEAR_HOS_STATUS,
       mode, lat, long, page, next
@@ -76,7 +77,9 @@ export const setNearHosStatus = (mode, lat, long, page, next) => {
 
 // 1.2 getNearHospitals로 받은 병원 리스트를 hos_info 에 저장하기
 export const recieveNearHos = (mode, lat, long, list) => {
-  if (mode === '') {
+  console.log('recieveNearHos')
+  if (mode === null) {
+    console.log('yes')
     return {
       type: GET_NEAR_HOS,
       lat, long, list
