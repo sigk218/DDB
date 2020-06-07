@@ -16,7 +16,21 @@ export const mainSearch = (searchWord, lat, long, category, filter) => {
     dispatch(setMainSearch(searchWord, lat, long, category, filter))
     dispatch(setSearchStatus(false))
     if (category === 'hosByLoc') {
-      return dispatch(getNearHos(lat, long, 0, null, category, filter))
+      if (filter === 'hosByReview') {
+        return dispatch(getHosByReview(lat, long, 0, null, category, filter))
+      } else if (filter === 'hosByStar') {
+        return dispatch(getHosByStar(lat, long, 0, null, category, filter))
+      } else {
+        let mode
+        if (filter === 'nearHosByReview') {
+          mode = 'review'
+        } else if (filter === 'nearHosByStar') {
+          mode = 'starrating'
+        } else {
+          mode = null
+        }
+        return dispatch(getNearHos(lat, long, 0, mode, category, filter))
+      }
     } else {
       return dispatch(getHosByWord(searchWord, 0, category, filter))
     }

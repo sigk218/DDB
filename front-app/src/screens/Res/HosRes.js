@@ -4,8 +4,6 @@ import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
 import { hos, status } from '../../actions'
 // import InfiniteScroll from "react-infinite-scroller";
 
-const widthLength = 100;
-
 // 검색이 mainSearchBar 또는 main 페이지에서 발생했을 때
 // 검색이 발생
 // 검색이 완료되었을 때
@@ -46,12 +44,12 @@ class HosRes extends Component {
 			if (category === 'hosByLoc') {
 				result = this.props.hos[filter].find(s => (s.lat === lat) & (s.long === long)).list
 				hosCards = result.map(
-					h => <HosInfoCard hospitalData={h} widthLength={widthLength} key={h.hcode}/>
+					h => <HosInfoCard hospitalData={h} key={h.hcode}/>
 				)
 			} else {
 				result = this.props.hos[filter].find(s => (s.keyword === searchWord)).list
 				hosCards = result.map(
-					h => <HosInfoCard hospitalData={h} widthLength={widthLength} key={h.hcode}/>
+					h => <HosInfoCard hospitalData={h} key={h.hcode}/>
 				)
 			}
 		} else {

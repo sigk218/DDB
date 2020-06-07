@@ -6,32 +6,41 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles)
 
 const HosInfoCard = props => {
-  let {hname, haddress, hospitalPicture} = props.hospitalData;
+  let {hname, haddress, hospitalPicture, hstarrating, hreviewCount} = props.hospitalData;
+  console.log(props.hospitalData)
   const hosImage = ((hospitalPicture !== null) && (hospitalPicture.length > 0)) ? 
-  <img className={cx('photo')} src={hospitalPicture[1].himage}/>
-  : <img className={cx('photo')} src={require('../../assets/imgA.png')}/>
+  <img className={cx('hos-photo')} src={hospitalPicture[1].himage}/>
+  : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}/>
   return (
-    <>
       <div className={cx('container-box')}>
-        <div className={cx('photo-box')}>
-          {hosImage}
-        </div>
-        <div className={cx('column-box')}>
+        <div className={cx('box-header')}>
           <div className={cx('hos-name')}>
-            {hname}
+            <p>{hname}</p>
           </div>
-          <div className={cx('tag-box')}>
-            <div className={cx('tag')} >#중성화</div>
-            <div className={cx('tag')} >#광견병</div>
-            <div className={cx('tag')} >#예방접종</div>
-          </div>
-          <p>{haddress}</p>
+          <div className={cx('box-body')}>
+
+            <div className={cx('meta-box')}>
+              <img className={cx('hos-icon')} src={require('../../assets/star.png')}/>
+              <p>평점 : {hstarrating}점</p>
+              <img className={cx('hos-icon')} src={require('../../assets/review4.png')}/>
+              <p>리뷰 : {hreviewCount === null ? 0 : hreviewCount}개</p>
+            </div>
+
+            <div className={cx('tag-box')}>
+              <div className={cx('tag')} >#중성화</div>
+              <div className={cx('tag')} >#광견병</div>
+              <div className={cx('tag')} >#예방접종</div>
+            </div>
+            <p className={cx('hos-address')}>{haddress}</p>
+
         </div>
-        <br />
+
+
+        </div>
+          <div className={cx('hos-photo-box')}>
+            {hosImage}
+          </div>
       </div>
-
-    </>
-
   );
 }
 

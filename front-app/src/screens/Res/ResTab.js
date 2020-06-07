@@ -31,8 +31,15 @@ class ResTab extends React.Component {
 		}
 	}
 
-	async handleOnclick(category, filter) {
-		const {searchWord, lat, long} = this.props.hos.mainSearch
+	async changeNearFilter() {
+		const { near } = this.state
+		await this.setState({near: !near})
+		const { filter } = this.prpos.hos.mainSearch
+		this.changeFilter(filter)
+	}
+
+	async changeFilter(filter) {
+		const {searchWord, lat, long, category} = this.props.hos.mainSearch
 		if ( this.state.near === false ) {
 			if ( filter === 'nearHosByStar' ) {
 				filter = 'hosByStar'
@@ -40,28 +47,39 @@ class ResTab extends React.Component {
 				filter = 'hosByReview'
 			}
 		}
-		await this.setState({curr:category})
-		this.props.mainSearch(searchWord, lat, long, category, filter)
+		await this.props.mainSearch(searchWord, lat, long, category, filter)
 	}
 
 	render() {
-		const resDisplay = this.state.curr === 'hos' ? <HosRes /> : <ReviewRes />
+		const { curr, near } = this.state
+		const { filter } = this.props.hos.mainSearch
+		const resDisplay = curr === 'hos' ? <HosRes /> : <ReviewRes />
 		return (
 			<>
 				<div className={cx('tab-container')}>
-					<button className={cx('tab-box')}>review</button>
-					<button className={cx('tab-box')} 
-						onClick={() => this.handleOnclick('hos','nearHos')}>hospital</button>
+					<div className={curr === 'hos' ? 
+						cx('cate-btn', 'passive-cate') : cx('cate-btn')}><p>REVIEW</p></div>
+					<div className={cx('spacer')}></div>
+					<div className={curr === 'hos' ?
+						cx('cate-btn') : cx('cate-btn', 'passive-cate')}
+						onClick={() => this.setState({curr:'hos'})}
+						><p>HOSPITAL</p></div>
 				</div>
 				<div className={cx('tab-container')}>
-					<button className={cx('tab-box')} 
-						onClick={() => this.setState({near: !this.state.near})}>3km 이내</button>
-					<button className={cx('tab-box')} 
-						onClick={() => this.handleOnclick('hos','nearHosByStar')}>리뷰순</button>
-					<button className={cx('tab-box')} 
-						onClick={() => this.handleOnclick('hos','nearHosByReview')}>별점순</button>
+					<div className={near === true ? 
+						cx('tab-box', 'active-tab') : cx('tab-box')} 
+						onClick={() => this.changeNearFilter()}><p>3km 이내</p></div>
+					<div className={filter.includes('Star') ? 
+						cx('tab-box', 'active-tab') : cx('tab-box')} 
+						onClick={() => this.changeFilter('nearHosByStar')}><p>별점순</p></div>
+					<div className={filter.includes('Review') ? 
+						cx('tab-box', 'active-tab') : cx('tab-box')} 
+						onClick={() => this.changeFilter('nearHosByReview')}><p>리뷰순</p></div>
 				</div>
-				{resDisplay}
+				<div className={cx('res-box')}>
+					{resDisplay}
+				</div>
+				
 			</>
 		)
 

@@ -84,6 +84,7 @@ $title: 'BMEULJIRO';
   }
 }
 
+
 @mixin width-size($padsize) {
   width: calc(100% - 44px - #{$padsize * 2});
 }
@@ -166,6 +167,34 @@ $title: 'BMEULJIRO';
 	background-color: $beige;
 }
 
+@mixin crop-centered() {
+  object-fit: cover;
+  object-position: center;
+}
+
+@mixin stripe-bgc() {
+  background: repeating-linear-gradient(
+    to bottom,
+    $darkgreen, 
+    $darkgreen 2%, 
+    $beige 2%, 
+    $beige 5%,
+    $darkgreen 5%, 
+    $darkgreen 8%, 
+    $beige 8%, 
+    $beige 20%,
+    $darkgreen 20%,
+    $darkgreen 80%,
+    $beige 80%, 
+    $beige 92%,
+    $darkgreen 92%,
+    $darkgreen 95%,
+    $beige 95%, 
+    $beige 98%, 
+    $darkgreen 98%
+  );
+}
+
 .category {
   @include retro-deco($darkgreen, $beige, 5px, 0)
 }
@@ -189,6 +218,21 @@ $title: 'BMEULJIRO';
     z-index: -99999999999;
   }
 }
+
+
+.small-category {
+  @include retro-deco($darkgreen, $beige, 5px, 0);
+}
+
+.deco-box {
+  @include retro-deco($beige, $darkgreen, 5px, 0);
+  border: 3px double $darkgreen;
+}
+
+.small-col {
+  width: calc((100% - 5px) / 2)
+}
+
 
 .divider {
   width: 14em;
@@ -224,6 +268,8 @@ $title: 'BMEULJIRO';
 .hide {
   display: none;
 }
+
+
 
 .photo-box {
   height:calc(18vh + 4px);
