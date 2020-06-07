@@ -21,7 +21,7 @@
 
 
   .box-body {
-    @include flex-vertical()
+    @include flex-vertical();
     width: 100%;
     margin-top: 5px;
       .meta-box {
