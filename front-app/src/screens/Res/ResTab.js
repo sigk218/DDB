@@ -5,22 +5,15 @@ import { hos } from '../../actions'
 
 import HosRes from './HosRes';
 import ReviewRes from './ReviewRes';
+import BigMap from './BigMap';
+
+import MapIcon from '@material-ui/icons/Map';
+import ListIcon from '@material-ui/icons/List';
+import history from "../../history";
 
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles)
-
-
-// 1. 병원 검색 결과를 보여주기
-	// 1.1. 선택된 모드로 이미 요청해 받은 검색 결과를 확인해
-	// 1.2. 보여주고
-	// 1.3. 다른 필터를 누를 경우에
-	// 1.4. 재 요청하고 1.1.과 1.2.를 반복한다
-
-// 2. 리뷰 검색 결과를 보여주기
-	// 2.1. 로그인 된 사용자일 경우에
-	// 2.2. 리뷰 탭을 누를 경우에만
-	// 2.3. 선택된 필터에 맞는 리뷰를 가져와 보여주기
 
 class ResTab extends React.Component {
 	constructor(props) {
@@ -28,34 +21,75 @@ class ResTab extends React.Component {
 		this.state = {
 			curr: 'hos',
 			near: true,
+			filter: 'nearHos',
+			map: false
 		}
 	}
 
 	async changeNearFilter() {
-		const { near } = this.state
+		const { near, filter } = this.state
 		await this.setState({near: !near})
-		const { filter } = this.prpos.hos.mainSearch
-		this.changeFilter(filter)
+		if ( this.state.near === false ) {
+			if (filter === 'nearHos') {
+				await this.setState({near: true})
+			} else if (filter === 'nearHosByReview') {
+				await this.setState({filter: 'hosByReview'})
+			} else if (filter === 'near') {
+				await this.setState({filter: 'hosByStar'})
+			}
+		} else {
+			if (filter === 'hosByReview') {
+				await this.setState({filter: 'nearHosByReview'})
+			} else if (filter === 'hosByStar') {
+				await this.setState({filter: 'nearHosByStar'})
+			}
+		}
+		const {searchWord, lat, long, category} = this.props.hos.mainSearch
+		await this.props.mainSearch(searchWord, lat, long, category, this.state.filter)
 	}
 
 	async changeFilter(filter) {
 		const {searchWord, lat, long, category} = this.props.hos.mainSearch
-		if ( this.state.near === false ) {
-			if ( filter === 'nearHosByStar' ) {
-				filter = 'hosByStar'
-			} else if (filter === 'nearHosByReview') {
-				filter = 'hosByReview'
+		if (filter === 'hosByWord') {
+			if (filter === this.state.filter) {
+				filter = 'hosByWord'
+			} 
+		} else {
+			if (filter === this.state.filter) {
+				filter = 'nearHos'
+				await this.setState({near:true})
+			} else {
+				if ( this.state.near === false ) {
+					if ( filter === 'nearHosByStar' ) {
+						filter = 'hosByStar'
+					} else if (filter === 'nearHosByReview') {
+						filter = 'hosByReview'
+					}
+				}
 			}
 		}
-		await this.props.mainSearch(searchWord, lat, long, category, filter)
+
+		await this.setState({filter: filter})
+		await this.props.mainSearch(searchWord, lat, long, category, this.state.filter)
 	}
 
+	async goMap() {
+		await this.setState({map: !this.state.map})
+		console.log(this.state.map)
+	}
+
+
 	render() {
-		const { curr, near } = this.state
+		const { curr, near, map } = this.state
 		const { filter } = this.props.hos.mainSearch
-		const resDisplay = curr === 'hos' ? <HosRes /> : <ReviewRes />
+		console.log('mapmpa', map)
+		const floating = (map === true) ? <ListIcon/> : <MapIcon/>
+		let resDisplay
+		if (curr === 'hos') {
+			if (map === true) { resDisplay = <BigMap/> } else { resDisplay = <HosRes/> }
+		} else { resDisplay = <ReviewRes /> }
 		return (
-			<>
+			<div className={cx('res-page')}>
 				<div className={cx('tab-container')}>
 					<div className={curr === 'hos' ? 
 						cx('cate-btn', 'passive-cate') : cx('cate-btn')}><p>REVIEW</p></div>
@@ -65,7 +99,8 @@ class ResTab extends React.Component {
 						onClick={() => this.setState({curr:'hos'})}
 						><p>HOSPITAL</p></div>
 				</div>
-				<div className={cx('tab-container')}>
+				<div className={filter === 'hosByWord' ? 
+				cx('hide') : cx('tab-container')}>
 					<div className={near === true ? 
 						cx('tab-box', 'active-tab') : cx('tab-box')} 
 						onClick={() => this.changeNearFilter()}><p>3km 이내</p></div>
@@ -79,8 +114,11 @@ class ResTab extends React.Component {
 				<div className={cx('res-box')}>
 					{resDisplay}
 				</div>
-				
-			</>
+				<div className={cx('map-btn')}
+				onClick={this.goMap.bind(this)}>
+					{floating}
+				</div>
+			</div>
 		)
 
 	}

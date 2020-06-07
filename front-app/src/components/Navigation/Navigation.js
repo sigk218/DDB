@@ -43,6 +43,7 @@ const Navigation = (props) => {
     location = '로그인'
   } else if (location === '/ResTab') {
     location = '/ResTab'
+    leftBtn = <ChevronLeftIcon onClick={() => history.push('/')} />  
     rightBtn = null
   } else if (location === '/') {
     leftBtn = null
@@ -52,7 +53,7 @@ const Navigation = (props) => {
   }
 
   if (location === '/ResTab') {
-    middle = <MainSearchBar/>
+    middle = <MainSearchBar loca={location}/>
   } else {
     middle = <p className={cx('nav-title')}>{location}</p>
   }

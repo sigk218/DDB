@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
-import { hos, status } from '../../actions'
+import { hos } from '../../actions'
 // import InfiniteScroll from "react-infinite-scroller";
 
 // 검색이 mainSearchBar 또는 main 페이지에서 발생했을 때
@@ -44,12 +44,12 @@ class HosRes extends Component {
 			if (category === 'hosByLoc') {
 				result = this.props.hos[filter].find(s => (s.lat === lat) & (s.long === long)).list
 				hosCards = result.map(
-					h => <HosInfoCard hospitalData={h} key={h.hcode}/>
+					h => <HosInfoCard map={false} hospitalData={h} key={h.hcode}/>
 				)
 			} else {
 				result = this.props.hos[filter].find(s => (s.keyword === searchWord)).list
 				hosCards = result.map(
-					h => <HosInfoCard hospitalData={h} key={h.hcode}/>
+					h => <HosInfoCard map={false} hospitalData={h} key={h.hcode}/>
 				)
 			}
 		} else {

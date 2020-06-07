@@ -11,12 +11,11 @@ const HosInfoCard = props => {
   function handleOnClick() {
     history.push("/HosDetail", { localhos })
   }
-
   const hosImage = ((hospitalPicture !== null) && (hospitalPicture.length > 0)) ? 
   <img className={cx('hos-photo')} src={hospitalPicture[1].himage}/>
   : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}/>
   return (
-      <div className={cx('container-box')} onClick={() => handleOnClick()}>
+      <div className={props.map === false ? cx('container-box') : cx('container-box', 'map-info-box')} onClick={() => handleOnClick()}>
         <div className={cx('box-header')}>
           <div className={cx('hos-name')}>
             <p>{hname}</p>

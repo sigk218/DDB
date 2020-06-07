@@ -13,8 +13,8 @@ import apis from '../apis/apis';
 export const mainSearch = (searchWord, lat, long, category, filter) => {
   console.log('mainSearch')
   return dispatch => {
-    dispatch(setMainSearch(searchWord, lat, long, category, filter))
     dispatch(setSearchStatus(false))
+    dispatch(setMainSearch(searchWord, lat, long, category, filter))
     if (category === 'hosByLoc') {
       if (filter === 'hosByReview') {
         return dispatch(getHosByReview(lat, long, 0, null, category, filter))
@@ -29,6 +29,7 @@ export const mainSearch = (searchWord, lat, long, category, filter) => {
         } else {
           mode = null
         }
+        console.log('mode----------', mode)
         return dispatch(getNearHos(lat, long, 0, mode, category, filter))
       }
     } else {

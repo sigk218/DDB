@@ -1,5 +1,9 @@
 @import '../../styles/utils.scss';
 
+.res-page {
+  position: relative
+}
+
 .tab-container {
   @include flex-between();
   @include width-size(0px)
@@ -43,4 +47,32 @@
 
 .res-box {
   @include width-size(0px);
+  height: calc(100vh - 140px);
+  margin-bottom : 20px;
+  @include scroll();
+}
+
+.map-btn {
+  padding: 5px;
+  position: absolute;
+  right: 50%;
+  bottom: 0;
+  transform: translate(50%, 50%);
+  border-radius: 50%;
+  border: 3px double $beige;
+  @include flex-center;
+  @include basic-color;
+  z-index: 99999999999999999;
+}
+
+.container {
+  width: calc(100% - 5px);
+  margin: 0;
+  height: 100%;
+  position: relative;
+}
+.map {
+  width: 100%;
+  height: calc(100% - 10px);
+  @include round-border;
 }
