@@ -6,9 +6,8 @@ import classNames from 'classnames/bind';
 const cx = classNames.bind(styles)
 
 const HosInfoCard = props => {
-  console.log('-------------', props.hospitalData)
   let {hname, haddress, hospitalPicture} = props.hospitalData;
-  const hosImage =  hospitalPicture !== null ? 
+  const hosImage = ((hospitalPicture !== null) && (hospitalPicture.length > 0)) ? 
   <img className={cx('photo')} src={hospitalPicture[1].himage}/>
   : <img className={cx('photo')} src={require('../../assets/imgA.png')}/>
   return (

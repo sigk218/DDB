@@ -23,14 +23,14 @@ class Main extends React.Component {
   async getUserLoca() {
     const position = await this.getCurrentPosition()
     const {latitude, longitude} = position.coords
-    await this.props.mainSearch('', latitude, longitude, 'hos', 'nearHos')
+    await this.props.mainSearch('', latitude, longitude, 'hosByLoc', 'nearHos')
     history.push('/ResTab')
   }
 
   render() {
     const getKeywords = ['중성화', '입원', '심장사상충', '응급', '검진', '소동물', '슬개', '접종', '외과', '치과']
     const keword = getKeywords.map(word => {
-    return <div onClick={() => this.getSearchResults(word, null, null, 'hos', 'hosByWord')} key={word}>#{word}</div>
+    return <div onClick={() => this.getSearchResults(word, null, null, 'hosByWord', 'hosByWord')} key={word}>#{word}</div>
     })
     return (
       <div>

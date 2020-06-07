@@ -1,5 +1,6 @@
 import {
   MAIN_SEARCH,
+  SEARCH_STATUS,
   GET_HOS_BY_LOC,
   GET_HOS_BY_WORD,
   HOS_LIKED,
@@ -12,9 +13,9 @@ import apis from '../apis/apis';
 export const mainSearch = (searchWord, lat, long, category, filter) => {
   console.log('mainSearch')
   return dispatch => {
-    console.log(searchWord, lat, long, category, filter)
     dispatch(setMainSearch(searchWord, lat, long, category, filter))
-    if (filter === 'nearHos') {
+    dispatch(setSearchStatus(false))
+    if (category === 'hosByLoc') {
       return dispatch(getNearHos(lat, long, 0, null, category, filter))
     } else {
       return dispatch(getHosByWord(searchWord, 0, category, filter))
@@ -32,6 +33,14 @@ export const setMainSearch = (searchWord, lat, long, category, filter) => {
   }
 }
 
+export const setSearchStatus = (code) => {
+  console.log('setSearchStatus')
+  return {
+    type: SEARCH_STATUS,
+    code
+  }
+}
+
 // ------------- hospital 관련 action --------
 // 1. 현재 내 위치에서 3km 이내의 병원 조회 with 필터
 export const getNearHos = (lat, long, page, mode, category, filter) => {
@@ -42,6 +51,7 @@ export const getNearHos = (lat, long, page, mode, category, filter) => {
     return apis.post(reqURL)
       .then(res => {
         dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }
@@ -53,6 +63,7 @@ export const getHosByReview = (lat, long, page, category, filter) => {
     return apis.post('hospital/reviewcnt/'+page+ '?latitude=' + lat + '&longtitude=' + long)
       .then(res => {
         dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }
@@ -64,6 +75,7 @@ export const getHosByStar = (lat, long, page, category, filter) => {
     return apis.post('hospital/starrating/'+page+ '?latitude=' + lat + '&longtitude=' + long)
       .then(res => {
         dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }
@@ -85,6 +97,7 @@ export const getHosByWord = (keyword, page, category, filter) => {
     return apis.post('hospital/name/'+page+'?keyword='+keyword)
       .then(res => {
         dispatch(recieveHosByWord(keyword, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }

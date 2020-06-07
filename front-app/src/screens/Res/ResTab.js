@@ -26,14 +26,20 @@ class ResTab extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			curr: 'hos'
+			curr: 'hos',
+			near: true,
 		}
 	}
-	componentDidMount() {
-		
-	}
+
 	async handleOnclick(category, filter) {
 		const {searchWord, lat, long} = this.props.hos.mainSearch
+		if ( this.state.near === false ) {
+			if ( filter === 'nearHosByStar' ) {
+				filter = 'hosByStar'
+			} else if (filter === 'nearHosByReview') {
+				filter = 'hosByReview'
+			}
+		}
 		await this.setState({curr:category})
 		this.props.mainSearch(searchWord, lat, long, category, filter)
 	}
@@ -43,8 +49,17 @@ class ResTab extends React.Component {
 		return (
 			<>
 				<div className={cx('tab-container')}>
-					<button className={cx('tab-box')} onClick={() => this.handleOnclick('review')}>review</button>
-					<button className={cx('tab-box')} onClick={() => this.handleOnclick('hos','nearHos')}>hospital</button>
+					<button className={cx('tab-box')}>review</button>
+					<button className={cx('tab-box')} 
+						onClick={() => this.handleOnclick('hos','nearHos')}>hospital</button>
+				</div>
+				<div className={cx('tab-container')}>
+					<button className={cx('tab-box')} 
+						onClick={() => this.setState({near: !this.state.near})}>3km 이내</button>
+					<button className={cx('tab-box')} 
+						onClick={() => this.handleOnclick('hos','nearHosByStar')}>리뷰순</button>
+					<button className={cx('tab-box')} 
+						onClick={() => this.handleOnclick('hos','nearHosByReview')}>별점순</button>
 				</div>
 				{resDisplay}
 			</>
