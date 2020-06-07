@@ -15,10 +15,8 @@ const cx = classNames.bind(styles)
 
 class BigMap extends Component {
 	constructor(props) {
-		console.log('constructor')
 		super(props);
 		const { searchWord, lat, long, category, filter} = props.hos.mainSearch
-		console.log(searchWord, lat, long, category, filter)
 		if (props.hos[filter].length !== 0) {
 			if (category === 'hosByLoc') {
 				if (!props.hos[filter].find(s => (s.lat === lat) & (s.long === long))) {
@@ -39,22 +37,15 @@ class BigMap extends Component {
 	}
 
 	click_marker(map, marker, hosinfo, that) {
-		console.log('-------------', hosinfo)
 		return function () {
 			that.setState({cur_pick: hosinfo});
 		}
 	}
 
 	render() {
-
-		console.log('didMount')
-				
 		let result;
 		const { searchWord, lat, long, category, filter} = this.props.hos.mainSearch
-		console.log('체크전')
-		console.log(this.props.search)
 		if (this.props.search === true) {
-			console.log('yes')
 			if (category === 'hosByLoc') {
 				result = this.props.hos[filter].find(s => (s.lat === lat) & (s.long === long)).list
 			} else {
@@ -64,7 +55,6 @@ class BigMap extends Component {
 			script.async = true;
 			script.src = "https://dapi.kakao.com/v2/maps/sdk.js?appkey=e78c23fbd9656d2db2f5df69fb693cfb&autoload=false";
 			document.head.appendChild(script);
-			console.log('------------', result)
 			script.onload = () => {
 				kakao.maps.load(() => {
 					let el = document.getElementById('map');
@@ -103,7 +93,6 @@ class BigMap extends Component {
 			);
 
 		} else {
-			console.log('no')
 			return (
 				<div></div>
 			)
