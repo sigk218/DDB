@@ -11,14 +11,7 @@ import {
   REVIEW_UPDATED,
   REVIEW_DELETED,
   REVIEW_REPORTED, // report 관련
-  REPORT_CANCELED,
-  SET_NEAR_HOS_STATUS,
-  SET_NEAR_HOS_BY_STAR_STATUS,
-  SET_NEAR_HOS_BY_REVIEW_STATUS,
-  SET_HOS_BY_WORD_STATUS,
-  SET_HOS_BY_STAR_STATUS,
-  SET_HOS_BY_REVIEW_STATUS,
-
+  REPORT_CANCELED
 } from '../actions/types'
 
 const initializer = {
@@ -73,42 +66,6 @@ export default (state = initializer, action) => {
       return { ...state, reviewReported: action.code }
     case REPORT_CANCELED:
       return { ...state, reportCanceled: action.code }
-    case SET_NEAR_HOS_STATUS:
-      return { ...state, nearHos: state.nearHos.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      }) }
-    case SET_NEAR_HOS_BY_STAR_STATUS:
-      return { ...state, nearHosByStar: state.nearHosByStar.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      })  }
-    case SET_NEAR_HOS_BY_REVIEW_STATUS:
-      return { ...state, nearHosByReview: state.nearHosByReview.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      })   }
-    case SET_HOS_BY_WORD_STATUS:
-      return { ...state, hosByWord: state.hosByWord.map(p => {
-        if (p.keyword === action.keyword) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      }) }
-    case SET_HOS_BY_REVIEW_STATUS:
-      return { ...state, hosByReview: state.hosByReview.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      })    }
-    case SET_HOS_BY_STAR_STATUS:
-      return { ...state, hosByStar: state.hosByStar.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, page: action.page, next: action.next }
-        } else { return p }
-      })     }
     default:
       return state;
   }

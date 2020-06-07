@@ -28,7 +28,7 @@ export const signedIn = (userInfo, res) => {
   console.log(res)
   console.log('signedIn')
   apis.defaults.headers.common['Authorization'] = `Bearer ${userInfo.token}`
-  window.sessionStorage.setItem('user', userInfo)
+  window.sessionStorage.setItem('user', JSON.stringify(userInfo))
   return {
     type: SIGNIN,
     userInfo

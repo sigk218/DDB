@@ -30,13 +30,12 @@ class ResTab extends React.Component {
 		}
 	}
 	componentDidMount() {
-		const {mainSearch} = this.props.hos
-		console.log(mainSearch)
+		
 	}
 	async handleOnclick(category, filter) {
 		const {searchWord, lat, long} = this.props.hos.mainSearch
 		await this.setState({curr:category})
-		this.props.setMainSearch(searchWord, lat, long, category, filter)
+		this.props.mainSearch(searchWord, lat, long, category, filter)
 	}
 
 	render() {
@@ -62,7 +61,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setMainSearch: (searchWord, lat, long, category, filter) => dispatch(hos.setMainSearch(searchWord, lat, long, category, filter))
+		mainSearch: (searchWord, lat, long, category, filter) => dispatch(hos.mainSearch(searchWord, lat, long, category, filter))
 	};
 };
 

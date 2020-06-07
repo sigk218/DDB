@@ -17,13 +17,13 @@ class MainSearchBar extends Component {
 	}
 	async handleEnter(e) {
     if (e.key === 'Enter') {
-      this.getSearchResult()
+      await this.getSearchResult()
     }
 	}
 	
 	async getSearchResult() {
-		this.props.mainSearch(this.state.word, null, null, 'hosByWord')
-    history.push('/ResTab')
+		await this.props.mainSearch(this.state.word, null, null, 'hosByWord', 'hosByWord')
+		history.push('/ResTab')
 	}
 
 	render() {
@@ -54,7 +54,7 @@ class MainSearchBar extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    mainSearch: (word, lat, long, cateogry) => dispatch(hos.mainSearch(word, lat, long, cateogry)),
+    mainSearch: (word, lat, long, cateogry, filter) => dispatch(hos.mainSearch(word, lat, long, cateogry, filter)),
   }
 }
 

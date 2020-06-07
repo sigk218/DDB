@@ -23,10 +23,7 @@ class Main extends React.Component {
   async getUserLoca() {
     const position = await this.getCurrentPosition()
     const {latitude, longitude} = position.coords
-    console.log('요청')
     await this.props.mainSearch('', latitude, longitude, 'hos', 'nearHos')
-    console.log('정보를 받아왔음?')
-    console.log(this.props.hos)
     history.push('/ResTab')
   }
 

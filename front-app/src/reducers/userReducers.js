@@ -10,7 +10,7 @@ import {
 // import { combineReducers } from "redux";
 
 const initializer = {
-    user: sessionStorage.getItem('user') || {},
+    user: JSON.parse(sessionStorage.getItem('user')) || {},
     myPage:{},
     myPets: [],
     myPetDetails: [],
