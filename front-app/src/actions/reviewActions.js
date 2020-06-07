@@ -22,10 +22,10 @@ import apis from '../apis/apis';
 
 // ------------- review 관련 action --------
 // 1. 리뷰 병원별로 요청하기
-export const getHosReview = (hcode) => {
+export const getHosReview = (hcode, atoken) => {
   console.log('getHosReview')
   return dispatch => {
-    return apis.post('review/findByHospital?h_code=' + hcode)
+    return apis.post('review/findByHospital?h_code=' + hcode ,{Authorization: atoken})
       .then(res => dispatch(recieveHosReview(res.data)))
   }
 }

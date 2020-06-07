@@ -1,18 +1,23 @@
 import React from 'react';
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind';
-
+import history from'../../history';
 
 const cx = classNames.bind(styles)
 
 const HosInfoCard = props => {
   let {hname, haddress, hospitalPicture, hstarrating, hreviewCount} = props.hospitalData;
-  console.log(props.hospitalData)
+  const localhos= props.hospitalData;
+  function handleOnClick() {
+    console.log(localhos)
+    history.push("/HosDetail", { localhos })
+  }
+
   const hosImage = ((hospitalPicture !== null) && (hospitalPicture.length > 0)) ? 
   <img className={cx('hos-photo')} src={hospitalPicture[1].himage}/>
   : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}/>
   return (
-      <div className={cx('container-box')}>
+      <div className={cx('container-box')} onClick={this.handleOnClick.bind(this)}>
         <div className={cx('box-header')}>
           <div className={cx('hos-name')}>
             <p>{hname}</p>
