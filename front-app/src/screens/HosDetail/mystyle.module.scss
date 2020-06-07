@@ -68,14 +68,22 @@ div {
     width: 100%;
     padding-bottom: 5px;
   }
-  .icon-box {
-    width:32%;
+  .grade-box {
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    
+    @include width-size(0px);
     @include round-border();
-    @include flex-center();
-    p {
-      margin: 0px 3px;
-      line-height: 24px;
-    }
+  }
+  .grade-avg {
+    font-size: 30px;
+    margin: auto;
+  }
+  .grade{
+    display: block;
+    padding-right: 20px;
+    border-right: 3px solid $darkgreen;
   }
   .pipe {
     padding-left: 10px;
@@ -94,7 +102,7 @@ div {
     font-size: 10px;
   }
   .day {
-    font-size: 13px;
+    font-size: 12px;
     margin: 0px 0px 0px 0px;
   }
   .photo {
@@ -105,7 +113,6 @@ div {
   .column-box {
     flex: auto;
     max-height: 18vh;
-    padding-top: 10px;
     padding-left: 30px;
     text-align: left;
     
@@ -131,4 +138,28 @@ div {
     @include width-size(0px);
     padding-top: 5px;
     padding-bottom: 5px;
+  }
+  .review-main {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+  }
+  .button-container {
+    @include width-size(0px);
+  }
+  .border-button {
+    background-color:$beige;
+    width: 100%;
+    cursor:pointer;
+    color:$darkgreen;
+      font-weight:bold;
+      text-shadow:0px 1px 0px #ffffff;
+    @include flex-center();
+    @include round-border();
+    border-bottom: 3px double $darkgreen;
+    border-right: 3px double $darkgreen;
+    position:relative;
+    p {
+      margin:2px;
+    }
   }
