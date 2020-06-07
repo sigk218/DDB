@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
-import { connect } from "react-redux";
+// import { connect } from "react-redux";
 
-import InfiniteScroll from "react-infinite-scroller";
-import HosInfoCard from "../../components/HosInfoCard/HosInfoCard"
-import Paper from '@material-ui/core/Paper';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+// import InfiniteScroll from "react-infinite-scroller";
+// import Paper from '@material-ui/core/Paper';
+// import Tabs from '@material-ui/core/Tabs';
+// import Tab from '@material-ui/core/Tab';
 
+import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
+import {getHosData} from "../../actions";
 
 const widthLength = 100;
 
@@ -86,9 +87,6 @@ class HosRes extends Component {
 
             <div>
 
-                <text>tab을 만들자</text>
-                <br/>
-                <br/>
                 {this.state.cards
                     ? this.state.cards.map(card => (
                         <HosInfoCard

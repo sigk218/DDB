@@ -1,44 +1,94 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import MainSearchBar from "../../components/MainSearchBar/MainSearchBar";
-import imgA from "../../assets/imgA.png";
+import Pets from '@material-ui/icons/Pets'
+import history from "../../history";
+import styles from './mystyle.module.scss';
+import classNames from 'classnames/bind'
+import { hos } from '../../actions'
+const cx = classNames.bind(styles)
+
 class Main extends React.Component {
-  componentDidMount() {
-
+  getSearchResults(word, lat, long, cateogry) {
+    this.props.mainSearch(word, lat, long, cateogry)
+    history.push('/ResTab')
   }
-  users() {
 
+  getCurrentPosition () {
+    return new Promise((resolve) => {
+      navigator.geolocation.getCurrentPosition(resolve);
+    });
+  };
+
+  async getUserLoca() {
+    const position = await this.getCurrentPosition()
+    const {latitude, longitude} = position.coords
+    this.props.mainSearch('', latitude, longitude, 'nearHos')
+    history.push('/ResTab')
   }
+
   render() {
+    const getKeywords = ['중성화', '입원', '심장사상충', '응급', '검진', '소동물', '슬개', '접종', '외과', '치과']
+    const keword = getKeywords.map(word => {
+    return <div onClick={() => this.getSearchResults(word, null, null, 'hosByWord')} key={word}>#{word}</div>
+    })
     return (
       <div>
-        <div align="center">
-          <img src={imgA} width="200" height="200"></img>
+        <div className={cx('main-container')}>
+          <div className={cx('logo-box')} align="center">
+            <div className={cx('phrase')}>
+              <p><span>발</span>품팔지않고</p>
+              <p>바로 <span>만</span>나는</p>
+              <p>애니멀 <span>닥</span>터</p>
+            </div>
+            <img 
+              className={cx('logo')} 
+              src={require('../../assets/veterinary.png')}
+              alt='logo'/>
+          </div>
+          <MainSearchBar location={'Main'}/>
+          <div className={cx('keyword-box')}>
+            {keword}
+          </div>
+          <div className={cx('event-box')}>
+            <div className={cx('category', 'event-header')}>
+              <p>발바닥 런칭 기념 이벤트</p>
+            </div>
+            <div className={cx('event-body')}>
+              <img
+                className={cx('coffee-icon')}
+                src={require('../../assets/coffee.png')}
+                alt='coffee-icon'/>
+              <div className={cx('event-phrase')}>
+                <p>리뷰를 작성하면 추첨을 통해 스타벅스 쿠폰을 드립니다</p>
+                <p
+                  onClick={() => history.push('/SelectOption')} 
+                  className={cx('event-title')}>리뷰 쓰러가자냥</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <MainSearchBar />
-        <div>
-          <ul>
-            <li>
-              <Link to="/MyPage">마이페이지</Link>
-            </li>
-            <li>
-              <Link to="/HosDetail">병원상세페이지</Link>
-            </li>
-            <li>
-              <Link to="/HosRes">병원 리스트</Link>
-            </li>
-            <li>
-              <Link to="/ReviewDetail">리뷰상세페이지</Link>
-              <Link to="/ResTab">탭 입니당</Link>
-            </li>
-          </ul>
+        <div 
+          className={cx('quick-box')}
+          onClick={this.getUserLoca.bind(this)}
+        >
+          <div className={cx('quick-btn')}>
+            <Pets/>
+          </div>
+          <p>Quick Search</p>
         </div>
       </div>
     );
   }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    mainSearch: (word, lat, long, cateogry) => dispatch(hos.mainSearch(word, lat, long, cateogry)),
+  }
+}
 
-
-export default Main;
+export default connect(
+  null,
+  mapDispatchToProps
+)(Main)
