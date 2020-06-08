@@ -399,7 +399,7 @@ public class ReviewController {
             List<Integer> hcodes = new LinkedList<>();
             for (String word : keywords) {
                 System.out.println("keyword는 " + word);
-                List<Hospital> H = hospitalService.findByKeyword(word);
+                List<Hospital> H = hospitalService.findByKeyword(word, latitude, longtitude);
                 for (Hospital hospital : H) {
                     if(hcodes.contains(hospital.getHCode())){
                         hcodes.add(hospital.getHCode());
@@ -523,7 +523,7 @@ public class ReviewController {
             List<Integer> hcodes = new LinkedList<>();
             for (String word : keywords) {
                 System.out.println("keyword는 " + word);
-                List<Hospital> H = hospitalService.findByKeyword(word);
+                List<Hospital> H = hospitalService.findByKeyword(word, latitude, longtitude);
                 for (Hospital hospital : H) {
                     if(hcodes.contains(hospital.getHCode())){
                         hcodes.add(hospital.getHCode());
