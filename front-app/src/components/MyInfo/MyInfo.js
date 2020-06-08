@@ -59,8 +59,11 @@ class MyInfo extends Component {
 }
 
 const mapStatetoProps = state => {
+    console.log("user");
+    console.log(state)
+    console.log(state.user.mypage);
     return {
-        user: state.user.user
+        user: state.user.mypage
     };
 };
 

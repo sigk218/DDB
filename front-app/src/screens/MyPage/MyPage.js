@@ -8,6 +8,7 @@ import plus_b from "../../assets/plus_b.png";
 import MyPetList from "../../components/MyPetList/MyPetList";
 import MyInfo from "../../components/MyInfo/MyInfo";
 import Modal from '@material-ui/core/Modal';
+import { user } from "../../actions"
 import { CssBaseline } from "@material-ui/core";
 const cx = classNames.bind(styles)
 
