@@ -3,6 +3,8 @@ import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind';
 import SportsIcon from '@material-ui/icons/Sports';
 import history from '../../history';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import StarIcon from '@material-ui/icons/Star';
 import { review } from '../../actions'
 import { connect } from "react-redux";
 
@@ -45,18 +47,29 @@ const ReviewInfoCard = props => {
   return (
     <>
       <div className={cx('rev-box')}>
-        <div className={cx('tag-box')}>
-          #{reviewData.hospital.hname} <br/>
-          #{reviewData.rdate.substr(0, 10)} #도움이 됐어요! {reviewData.rtotalgood}명 #★{totalgrade}
+        <div classname={cx('rev-header')}>
+          <h3>{reviewData.hospital.hname}</h3>
+          {/* <div className={cx('divider')}></div> */}
+          <p>방문 날짜 : {reviewData.rdate.substr(0, 7)}</p>
+          <p>방문 목적 : {reviewData.rpurpose}</p>
         </div>
-        <div>
-        &nbsp;&nbsp; 방문 목적 : {reviewData.rpurpose}
+        <div className={cx('divider')}></div>
+        <div className={cx('rev-meta-box')}>
+        
+          <FavoriteIcon sytle={{fontSize: 8}}/>
+          <p>{reviewData.rtotalgood}명 </p>
+          <StarIcon sytle={{fontSize: 8}}/>
+          <p>{totalgrade} 점</p>
         </div>
-
-
-        <div style={{marginLeft:'19px', marginRight:'2px'}}>
-        * 이 리뷰는 예시입니다. <br/>
-        {cont} ...
+        <div className={cx('divider')}></div>
+        {/* <div className={cx('tag-box')}> */}
+          {/* #{reviewData.hospital.hname} <br/> */}
+          {/* #{reviewData.rdate.substr(0, 10)}  */}
+          {/* #도움이 됐어요! {reviewData.rtotalgood}명 #★{totalgrade} */}
+        {/* </div> */}
+        <div className={cx('rev-content')}>
+        <p>* 이 리뷰는 예시입니다. <br/>
+        {cont} ...</p>
         </div>
         <div className={cx('div-center')}>
         <span onClick= {() => handleClick()}>더보기</span> 
