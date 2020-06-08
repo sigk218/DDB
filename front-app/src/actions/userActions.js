@@ -14,20 +14,27 @@ import apis from '../apis/apis';
 
 // ------------- user 관련 action --------------
 
+const config = {
+  headers: {
+    Authorization: JSON.parse(sessionStorage.getItem('user')).accessToken,
+
+  }
+}
 // 1. 로그인 요청하기
 export const signIn = (user_id, user_pw) => {
   console.log("signin")
   return dispatch => {
-    return apis.post('/user/login?uId=' + user_id + '&uPw=' + user_pw)
-      .then(res => dispatch(signedIn(res.data, res)))
+    return apis.post('/user/login?uId=' + user_id + '&uPw=' + user_pw, config=config)
+      .then(res => dispatch(signedIn(res.data, res.data)))
   }
 };
 
 // 1.1. 유저 정보를 user 에 저장하기
 export const signedIn = (userInfo, res) => {
   console.log(res)
+  console.log(userInfo)
   console.log('signedIn')
-  apis.defaults.headers.common['Authorization'] = `Bearer ${userInfo.token}`
+  apis.defaults.headers.common['Authorization'] = `${userInfo.accessToken}`
   window.sessionStorage.setItem('user', JSON.stringify(userInfo))
   return {
     type: SIGNIN,
@@ -40,7 +47,7 @@ export const register = (user_id, user_pw) => {
   console.log('register')
   const body = { uid: user_id, upw: user_pw }
   return dispatch => {
-    return apis.post('/user/signup', body)
+    return apis.post('/user/signup', body, config=config)
       .then(() => dispatch(signIn(user_id, user_pw)))
   }
 }
@@ -49,7 +56,7 @@ export const register = (user_id, user_pw) => {
 export const getMyPage = () => {
   console.log('getMyPage')
   return dispatch => {
-    return apis.post('/user/mypage')
+    return apis.post('/user/mypage', config=config)
       .then(res => dispatch(recieveMyPage(res.data)))
   }
 }
@@ -122,7 +129,7 @@ export const signedOut = (code) => {
 export const getMyPets = (u_id) => {
   console.log('getMyPets')
   return dispatch => {
-    return apis.post('animal/mycompanion/all?u_id=' + u_id)
+    return apis.post('animal/mycompanion/all?u_id=' + u_id, config=config)
       .then(res => dispatch(recieveMyPets(res.data)))
   }
 }
@@ -140,7 +147,7 @@ export const recieveMyPets = (list) => {
 export const getPetDetail = (a_code, u_id) => {
   console.log('getPetDetail')
   return dispatch => {
-    return apis.post('animal/one?a_code=' + a_code + '&u_id=' + u_id)
+    return apis.post('animal/one?a_code=' + a_code + '&u_id=' + u_id, config=config)
       .then(res => dispatch(recievePetDetail(res.data)))
   }
 }
@@ -197,7 +204,7 @@ export const deletePet = (a_code, u_id) => {
   console.log('deletePet')
   return dispatch => {
     dispatch(petDeleted(false))
-    return apis.post('animal/delete?a_code=' + a_code + '&u_id=' + u_id)
+    return apis.post('animal/delete?a_code=' + a_code + '&u_id=' + u_id, config=config)
       .then(() => dispatch(petDeleted(true)))
   }
 }

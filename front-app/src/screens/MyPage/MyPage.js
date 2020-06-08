@@ -80,7 +80,7 @@ class MyPage extends React.Component {
                     <p>내 정보 </p>
                 </div>
                 <div>
-                    <MyInfo />
+                    <MyInfo user = {this.state.user}/>
                 </div>
                 <div className={cx('category')}>
                     <p>나의 펫 </p>

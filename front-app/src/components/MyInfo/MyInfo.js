@@ -7,13 +7,18 @@ import { user } from '../../actions';
 const cx = classNames.bind(styles)
 
 class MyInfo extends Component {
+    componentDidMount() {
+        this.state.user = user.getMyPage()
+    }
+
     constructor(props) {
         super(props);
         this.state = {
             c_log: 1,
             username: props.username,
             password: props.password,
-            passwordC: props.passwordC,                                                                                                                                                                                                                                                                                                                                                                                                                      
+            passwordC: props.passwordC,
+            user: {}                                                                                                                                                                                                                                                                                                                                                                                                            
         };
         this.updateId = this.updateId.bind(this);
         this.updatePw = this.updatePw.bind(this);
@@ -40,6 +45,10 @@ class MyInfo extends Component {
         // history.push('/')
     }
     render() {
+        console.log(this.props)
+        if(!this.props.mypage) {
+            user.getMyPage();
+        }
         return (
             <div className={cx('container')}>
                 <div className={cx('basic-box')}>
@@ -60,16 +69,18 @@ class MyInfo extends Component {
 
 const mapStatetoProps = state => {
     console.log("user");
-    console.log(state.user.mypage);
+    console.log(state.user);
     return {
-        user: state.user.mypage
+        mypage: state.user.mypage
+        // user: this.state.user
     };
 };
 
 const mapStateToDispatch = dispatch => {
     return {
         register: (id, pwd) => {dispatch(user.register(id, pwd))},
-        logOut: () => {dispatch(user.logOut())}
+        logOut: () => {dispatch(user.logOut())},
+        getMyPage: () => {dispatch(user.getMyPage())}
     }
 }
 
