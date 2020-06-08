@@ -26,7 +26,7 @@ const Navigation = (props) => {
   <div className={cx('nav-icon-box')}><PersonIcon onClick={()=> history.push('/SignIn')}/></div> :
   <div className={cx('nav-icon-box')}><PersonIcon onClick={()=> history.push('/MyPage')}/></div>
     
-  
+  console.log(props.status)
   if (location === '/MyPage') {
     location = '마이페이지'
   } else if (location === '/HosDetail') {
