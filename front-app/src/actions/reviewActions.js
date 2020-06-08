@@ -74,7 +74,8 @@ export const getReview = (searchWord, lat, long, distance, filter) => {
 
 // 1.2 getNearHospitals로 받은 병원 리스트를 hos_info 에 저장하기
 export const recieveReview = (searchWord, lat, long, list, distance, filter) => {
-  console.log('recieveHos')
+  console.log('recieveReview')
+  console.log(list)
   return {
     type: GET_REVIEW,
     searchWord, lat, long, list, distance, filter
