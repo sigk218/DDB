@@ -21,10 +21,10 @@ const store = createStore(
 
 // const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-store.dispatch(hos.likeHos(10))
-.then(() =>
-  console.log(store.getState().hos)
-)
+// store.dispatch(hos.likeHos(10))
+// .then(() =>
+//   console.log(store.getState().hos)
+// )
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>
@@ -48,8 +48,6 @@ ReactDOM.render(
     <React.StrictMode>
     <App />
     </React.StrictMode>
-      
-    
   </Provider>,
   document.querySelector("#root")
 );

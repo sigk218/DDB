@@ -1,4 +1,5 @@
 import {
+  NAME_LIST,
   MAIN_SEARCH,
   SEARCH_STATUS,
   GET_HOS_BY_LOC,
@@ -16,6 +17,25 @@ let config = sessionStorage.getItem('user') ? {
     'Access-Control-Allow-Origin': '*'
   }
 } : null
+
+export const getHosSearchList = (searchword) => {
+  console.log('getHosSearchList')
+  return dispatch =>{
+    dispatch(setSearchStatus(false))
+    return apis.post('hospital/name?Name='+searchword, null, config)
+    .then(res => {
+      dispatch(recieveHosSearchList(searchword, res.data))
+      dispatch(setSearchStatus(true))
+    })
+  }
+}
+
+export const recieveHosSearchList = (searchWord, list) => {
+  return {
+    type:NAME_LIST,
+    searchWord, list
+  }
+}
 
 
 // ---------- main.js ---------------------
