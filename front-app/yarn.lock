@@ -1105,7 +1105,7 @@
     chalk "^2.0.1"
     exit "^0.1.2"
     graceful-fs "^4.1.15"
-    jest-changed-files "^24.9.0"
+    jest-창ed-files "^24.9.0"
     jest-config "^24.9.0"
     jest-haste-map "^24.9.0"
     jest-message-util "^24.9.0"
@@ -6069,9 +6069,9 @@ istanbul-reports@^2.2.6:
   dependencies:
     html-escaper "^2.0.0"
 
-jest-changed-files@^24.9.0:
+jest-창ed-files@^24.9.0:
   version "24.9.0"
-  resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-24.9.0.tgz#08d8c15eb79a7fa3fc98269bc14b451ee82f8039"
+  resolved "https://registry.yarnpkg.com/jest-창ed-files/-/jest-창ed-files-24.9.0.tgz#08d8c15eb79a7fa3fc98269bc14b451ee82f8039"
   integrity sha512-6aTWpe2mHF0DhL28WjdkO8LyGjs3zItPET4bMSeXU6T3ub4FPMw+mcOcbdGXQOAfmLcxofD23/5Bl9Z4AkFwqg==
   dependencies:
     "@jest/types" "^24.9.0"

@@ -32,7 +32,7 @@ export const getHosReview = (hcode, atoken) => {
 
 // 1.1. 병원별 리뷰 review_info에 저장하기
 export const recieveHosReview = (list) => {
-  console.log('recieveHosReview')
+  console.log('recieveHosReview', list)
   return {
     type: GET_HOS_REVIEW,
     list
