@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.a305.balbadack.model.dto.Hospital;
+import com.a305.balbadack.model.dto.HospitalPicture;
+import com.a305.balbadack.model.service.HospitalPictureService;
 import com.a305.balbadack.model.service.HospitalService;
 
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +27,9 @@ public class HospitalController {
 
   @Autowired
   HospitalService hospitalService;
+
+  @Autowired
+  HospitalPictureService hospitalPictureService;
 
   @ApiOperation("병원 정보 등록하기")
   @PostMapping(value="/insert")
@@ -79,7 +84,19 @@ public class HospitalController {
       System.out.println("리뷰모드");
       hospitalList = hospitalService.findByReviewNear(latitude, longtitude, page);
     }
-    // Map에 Object 넣어주기
+
+    // 돌면서 거리, 사진 객체 설정 해주기
+    for(int i =0; i<hospitalList.size(); i++){
+      Hospital hospital = hospitalList.get(i);
+
+      Double dist = (6371 * Math.acos(Math.cos( Math.toRadians(latitude)) * Math.cos(Math.toRadians(hospital.getHLatitude()) ) * Math.cos(Math.toRadians(longtitude) - Math.toRadians(hospital.getHLongitude())) + Math.sin(Math.toRadians(latitude)) * Math.sin(Math.toRadians( hospital.getHLatitude()))));
+   
+      hospital.setDist(dist);
+      List<HospitalPicture> HospitalPictureList = hospitalPictureService.findByhPhotoCode(hospital.getHPhotocode());
+      // System.out.println(hospital.getHPhotocode());
+      hospital.setHospitalPicture(HospitalPictureList);
+     }
+
     if (hospitalList.size()==0){
       resultmap.put("hospital", null);
     }else{
@@ -110,6 +127,16 @@ public class HospitalController {
       resultmap.put("next", true);
     }
     final List<Hospital> hospitalList = hospitalService.findByStar(latitude, longtitude, page);
+    for(int i =0; i<hospitalList.size(); i++){
+      Hospital hospital = hospitalList.get(i);
+
+      Double dist = (6371 * Math.acos(Math.cos( Math.toRadians(latitude)) * Math.cos(Math.toRadians(hospital.getHLatitude()) ) * Math.cos(Math.toRadians(longtitude) - Math.toRadians(hospital.getHLongitude())) + Math.sin(Math.toRadians(latitude)) * Math.sin(Math.toRadians( hospital.getHLatitude()))));
+   
+      hospital.setDist(dist);
+      List<HospitalPicture> HospitalPictureList = hospitalPictureService.findByhPhotoCode(hospital.getHPhotocode());
+      // System.out.println(hospital.getHPhotocode());
+      hospital.setHospitalPicture(HospitalPictureList);
+     }
     if (hospitalList.size()==0){
       resultmap.put("hospital", null);
     }else{
@@ -132,6 +159,16 @@ public class HospitalController {
       resultmap.put("next", true);
     }
     List<Hospital> hospitalList = hospitalService.findByReview(latitude, longtitude, page);
+    for(int i =0; i<hospitalList.size(); i++){
+      Hospital hospital = hospitalList.get(i);
+
+      Double dist = (6371 * Math.acos(Math.cos( Math.toRadians(latitude)) * Math.cos(Math.toRadians(hospital.getHLatitude()) ) * Math.cos(Math.toRadians(longtitude) - Math.toRadians(hospital.getHLongitude())) + Math.sin(Math.toRadians(latitude)) * Math.sin(Math.toRadians( hospital.getHLatitude()))));
+   
+      hospital.setDist(dist);
+      List<HospitalPicture> HospitalPictureList = hospitalPictureService.findByhPhotoCode(hospital.getHPhotocode());
+      // System.out.println(hospital.getHPhotocode());
+      hospital.setHospitalPicture(HospitalPictureList);
+     }
     if (hospitalList.size()==0){
       resultmap.put("hospital", null);
     }else{
