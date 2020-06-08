@@ -19,7 +19,11 @@ class ResTab extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+<<<<<<< HEAD
 			curr: this.props.curr,
+=======
+			curr: 'hos',
+>>>>>>> 336bd0cf645ef588e73db347b7d7858869e74ac1
 			near: true,
 			filter: 'nearHos',
 			map: false
@@ -83,6 +87,7 @@ class ResTab extends React.Component {
 	}
 
 	render() {
+		console.log(this.props.hos)
 		const { curr, near, map } = this.state
 		const { filter } = this.props.hos.mainSearch
 		const floating = (map === true) ? <ListIcon/> : <MapIcon/>

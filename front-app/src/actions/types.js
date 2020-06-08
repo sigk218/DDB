@@ -22,7 +22,7 @@ export const GET_HOS_BY_WORD = 'GET_HOS_BY_WORD'
 export const HOS_LIKED = 'HOS_LIKED'
 export const HOS_DISLIKED = 'HOS_DISLIKED'
 export const GET_MY_LIKE_HOS = 'GET_MY_LIKE_HOS'
-
+export const GET_HOS_PHOTO ='GET_HOS_PHOTO'
 // 리뷰
 export const GET_HOS_REVIEW = 'GET_HOS_REVIEW'
 export const GET_MY_REVIEW = 'GET_MY_REVIEW'
