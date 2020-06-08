@@ -11,13 +11,14 @@ import LittleMap from "../../components/LittleMap/LittleMap";
 import HosGrades from '../../components/HosGrades/HosGrades';
 import history from '../../history';
 import { connect } from "react-redux";
-import { review, user, hos } from '../../actions';
+import { review, user, hos, stat } from '../../actions';
 import imgA from "../../assets/imgA.png";
 //썸내일은... 리사이징...
 import fav1 from '../../assets/fav1.png';
 import fav2 from '../../assets/fav2.png';
 import ReviewInfoCard from '../../components/ReviewInfoCard/ReviewInfoCard';
 import HosReviewInfo from './HosReviewInfo';
+import { sample } from "rxjs-compat/operator/sample";
 const reviewData = {
     r_no: 0,
     u_id: 'aestas',
@@ -81,6 +82,7 @@ class HosDetail extends Component {
     componentDidMount() {
         this.state.current_hos = this.props.location.state.localhos;
         // console.log(this.props.location.state.localhos)
+        this.props.setPathName(this.state.current_hos.hname)
         this.props.getHosReview(this.state.current_hos.hcode);
         review.setHosInfo(this.state.current_hos.hcode, this.state.current_hos.hname, this.state.current_hos.haddress);
     }
@@ -241,7 +243,8 @@ class HosDetail extends Component {
     clickReviewList() {
         // console.log(this.state.current_hos.hcode)
         this.props.getHosReview(this.state.current_hos.hcode)
-        history.push(`/hosRevForDetail`)
+        let localRev = this.props.reviewData;
+        history.push(`/hosRevForDetail`, {localRev})
     }
     setPrice() {
         return (
@@ -364,7 +367,7 @@ class HosDetail extends Component {
         if(this.props.reviewData.length > 0) {
 
         }
-        console.log(this.props)
+        // console.log(this.props)
         if(!this.state.chk_fav) {
             if(this.props.userlike) {
                 this.setFirstFav();
@@ -445,7 +448,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         getHosPhoto: (photocode) => dispatch(hos.getHosPhoto(photocode)),
         getMyLikeHos: (u_id) => dispatch(user.getMyLikeHos(u_id)),
         getHosReview: (hcode, atoken) => dispatch(review.getHosReview(hcode, atoken)),
-        likeHos: (hcode) => dispatch(hos.likeHos(hcode))
+        likeHos: (hcode) => dispatch(hos.likeHos(hcode)),
+        setPathName: (pathname) => dispatch(stat.setPathName(pathname))
     }
 }
 
