@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-
 import { connect } from "react-redux";
-
-import HosInfoCard from "../../components/HosInfoCard/HosInfoCard";
-import { getHosData } from "../../actions";
 import ReviewInfoCard from '../../components/ReviewInfoCard/ReviewInfoCard';
+<<<<<<< HEAD
+import { review } from '../../actions'
+=======
 const widthLength = 100;
 
 
@@ -131,40 +130,69 @@ const reviewData = [
     h_code: 1
   },
 ]
+>>>>>>> 8cb9cb7126d7f4328a681cbf9924b88cadade81f
 
 class ReviewRes extends Component {
-
-  componentDidMount() {
-    this.state.cards = reviewData;
-  }
-
   constructor(props) {
     super(props);
-    this.state = {
-      cards: [],
-    };
+    console.log('---', props.review)
+    const { searchWord, lat, long, distance, filter } = props.review.mainSearch
+    console.log(props.review)
+    console.log(searchWord, lat, long, distance, filter, 'yeayeah')
+    console.log('---------------', props.review)
+    if (props.review.review.length !== 0) {
+      if (!(props.review.find(s => 
+        ((s.searchWord === searchWord) && 
+        (s.distance === distance) && 
+        (s.filter === filter) && 
+        (s.lat === lat) && 
+        (s.long === long))))) { props.mainSearch(searchWord, lat, long, distance, filter) }
+		} else {
+			props.mainSearch(searchWord, lat, long, distance, filter)
+		}
   }
 
   render() {
-    this.state.cards = reviewData;
+    let resInfo, list, reviewCards;
+		const { searchWord, lat, long, distance, filter } = this.props.review.mainSearch
+		if (this.props.search === true) {
+      resInfo = this.props.review.find(s => 
+        (s.searchWord === searchWord) && 
+        (s.distance === distance) && 
+        (s.filter === filter) && 
+        (s.lat === lat) && 
+        (s.long === long))
+      
+      list = resInfo.list
+      reviewCards = list.map(r => <ReviewInfoCard hospitalData={r} key={`newCard${r.hospital.hcode}`}/>)
+    } else {
+      return (
+        reviewCards = null
+      )
+    }
     return (
-
       <div>
+        {reviewCards}
+      </div>
+    )
 
-        {this.state.cards
-          ? this.state.cards.map(card => (
-            <ReviewInfoCard
-              hospitalData={card}
-              widthLength={widthLength}
-              key={`newCard${card.h_code}`}
-            />
-          ))
-          : null}
-
-        </div>
-
-    );
   }
 }
 
-export default ReviewRes
+const mapStateToProps = state => {
+	return {
+		review: state.review,
+		search: state.status.reviewSearch
+	};
+};
+
+
+
+const mapDispatchToProps = dispatch => {
+	return {
+		mainSearch: (searchWord, lat, long, distance, filter) => dispatch(review.mainSearch(searchWord, lat, long, distance, filter))
+	};
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewRes);
