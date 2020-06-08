@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.a305.balbadack.model.dto.Review;
-import com.a305.balbadack.model.dto.DetailScore;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
