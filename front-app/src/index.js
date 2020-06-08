@@ -6,7 +6,7 @@ import reduxThunk from "redux-thunk";
 import App from './App';
 import './index.css';
 import reducers from './reducers';
-import { user } from './actions'
+import { hos } from './actions'
 // import {getNearHospitals, getNearHosByStar, getHosSearchList} from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -21,10 +21,10 @@ console.log(store.getState())
 
 const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-// store.dispatch(user.getMyPets('psj'))
-// .then(() =>
-//   console.log('-------------')
-// )
+store.dispatch(hos.likeHos(10))
+.then(() =>
+  console.log(store.getState().hos)
+)
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>

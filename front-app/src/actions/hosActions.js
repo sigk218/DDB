@@ -129,15 +129,14 @@ export const recieveHosByWord = (keyword, page, next, list, category, filter) =>
 
 // ------------- 병원 즐겨찾기 기능 관련 action --------------
 // 1. 즐겨찾기 추가 요청
-export const likeHos = (hcode, ucode) => {
+export const likeHos = (hcode) => {
   console.log('likeHos')
   const favoriteHospital = {
-    hospital: {hcode: hcode},
-    user: {ucode: ucode}
+    hcode: hcode
   }
   return dispatch => {
     dispatch(hosLiked(false))
-    return apis.post('favoriteHospital/insert', favoriteHospital)
+    return apis.post('favoriteHospital/insert', favoriteHospital, config)
       .then(() => dispatch(hosLiked(true)))
   }
 }

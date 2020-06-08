@@ -20,32 +20,19 @@ const cx = classNames.bind(styles)
 class selectOption extends React.Component {
   constructor(props) {
     super(props);
-    // const stages = [
-    //   {key: 'auth', val: props.status.isAuthorized}, 
-    //   {key: 'hos', val: props.status.hosSelected},
-    //   {key: 'reciept', val: props.status.hasReciept}
-    // ]
-    const stages = [
-      {key: 'auth', val: false}, 
-      {key: 'hos', val: false},
-      {key: 'reciept', val: false}
-    ]
-    const i = stages.findIndex(e => e.val === false)
-    const currStage = i !== -1? i : 3
+    let stage
+    if (props.user.myPage.usms === false) { stage = 0} 
+    else if (props.hosInfo === null) { stage = 1 } 
+    else if (review.reciept === null) { stage = 2 } 
+    else { stage = 3 }
+
     this.state = {
       reciept: null,
       searchWord: '',
-      stages: stages,
-      currStage: currStage
+      currStage: stage
     }
   }
 
-  // async getCurrStage() {
-  //   const i = this.state.stages.findIndex(e => e.val === false)
-  //   const currStage = i!== -1? i : 3
-  //   console.log('curr', currStage)
-  //   await this.setState({currStage:currStage})
-  // }
   async handleEnter(e) {
     if (e.key === 'Enter') {
       this.showList()
@@ -160,6 +147,64 @@ class selectOption extends React.Component {
       history.push("/smsVer")
     }
 
+    // const stageBox;
+    // if ( stage === 0 ) {
+    //   stageBox = (
+    //     <div className={this.state.currStage === 0 ? cx('action-box') : cx('hide')}>
+    //       <div className={this.props.status.isAuthorized? cx('hide') : cx('border-button', 'smaller-btn')}>
+    //         핸드폰 인증하기
+    //       </div>
+    //       <div className={this.props.status.isAuthorized ? cx('auth-box') : cx('hide')}>
+    //         <EmojiPeople/>
+    //         <div>
+    //           <p>{this.props.user.email} 님</p>
+    //           <p>인증되었다냥!</p>
+    //         </div>            
+    //       </div>
+    //       <div className={cx('border-button', 'xsmall-btn')}>
+    //         다음
+    //       </div>
+    //     </div>
+    //   )
+    // } else if (stage === 1) {
+    //   stageBox = (
+    //     <div className={this.state.currStage === 1 ? cx('action-box') : cx('hide')}>
+    //       <div className={cx('border-button', 'smaller-btn')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
+    //         {hosSearch}
+    //       </div>
+    //       <div className={this.props.status.hosSelected ? cx('hos-box') : cx('hide')}>
+    //         <p>{this.props.hosInfo.name}</p>
+    //         <p className={cx('small-text')}>{this.props.hosInfo.address}</p>
+    //       </div>
+    //     </div>
+    //   )
+    // } else if (stage === 2) {
+    //   return (
+    //     <div className={this.state.currStage === 2 ? cx('action-box') : cx('hide')}>
+    //       <div
+    //         className={cx('border-button', 'upload-btn-wrapper', 'smaller-btn')}
+    //       >
+    //         <p>영수증 인증하기</p>
+    //         <input
+    //           type="file"
+    //           name="file"
+    //           accept="image/*"
+    //           onClick={this.handleHosFirst.bind(this)}
+    //           onChange={this.handleReciept.bind(this)}
+    //         />
+    //       </div>
+    //     </div>
+    //   )
+    // } else {
+    //   return (
+    //     <div className={this.state.currStage === 3 ? cx('action-box') : cx('hide')}>
+    //       <div className={cx('border-button', 'smaller-btn')} onClick={() => history.push("/ReviewForm")}>
+    //         리뷰 쓰러가기
+    //       </div>
+    //     </div>
+    //   )
+    // }
+    
     return (
       <div>
         <div className={cx('category')}>
@@ -263,49 +308,10 @@ class selectOption extends React.Component {
           </div>
 
         </div>
-        {/* <div className={this.state.currStage === 0 ? cx('action-box') : cx('hide')}>
-          <div className={this.props.status.isAuthorized? cx('hide') : cx('border-button', 'smaller-btn')}>
-            핸드폰 인증하기
-          </div>
-          <div className={this.props.status.isAuthorized ? cx('auth-box') : cx('hide')}>
-            <EmojiPeople/>
-            <div>
-              <p>{this.props.user.email} 님</p>
-              <p>인증되었다냥!</p>
-            </div>            
-          </div>
-          <div className={cx('border-button', 'xsmall-btn')}>
-            다음
-          </div>
-        </div>
-        <div className={this.state.currStage === 1 ? cx('action-box') : cx('hide')}>
-          <div className={cx('border-button', 'smaller-btn')} onClick={() => this.props.toggleSearchModal(this.props.status.isSearching)}>
-            {hosSearch}
-          </div>
-          <div className={this.props.status.hosSelected ? cx('hos-box') : cx('hide')}>
-            <p>{this.props.hosInfo.name}</p>
-            <p className={cx('small-text')}>{this.props.hosInfo.address}</p>
-          </div>
-        </div>
-        <div className={this.state.currStage === 2 ? cx('action-box') : cx('hide')}>
-          <div
-            className={cx('border-button', 'upload-btn-wrapper', 'smaller-btn')}
-          >
-            <p>영수증 인증하기</p>
-            <input
-              type="file"
-              name="file"
-              accept="image/*"
-              onClick={this.handleHosFirst.bind(this)}
-              onChange={this.handleReciept.bind(this)}
-            />
-          </div>
-        </div>
-        <div className={this.state.currStage === 3 ? cx('action-box') : cx('hide')}>
-          <div className={cx('border-button', 'smaller-btn')} onClick={() => history.push("/ReviewForm")}>
-            리뷰 쓰러가기
-          </div>
-        </div> */}
+
+
+
+
         <Modal
           open={this.props.status.isSearching}
           onClose={() => this.props.toggleSearchModal(this.props.status.isSearching)}
@@ -326,7 +332,7 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     uploadReciept: (file, dateIs, hasHos, items) => dispatch(review.uploadReciept(
       file,
