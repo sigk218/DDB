@@ -12,18 +12,18 @@ class MainSearchBar extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			word: ''
+			word: props.loca ? props.keyword : ''
 		}
 	}
 	async handleEnter(e) {
     if (e.key === 'Enter') {
-      this.getSearchResult()
+      await this.getSearchResult()
     }
 	}
 	
 	async getSearchResult() {
-		this.props.mainSearch(this.state.word, null, null, 'hosByWord')
-    history.push('/ResTab')
+		await this.props.mainSearch(this.state.word, null, null, 'hosByWord', 'hosByWord')
+		history.push('/ResTab')
 	}
 
 	render() {
@@ -32,15 +32,15 @@ class MainSearchBar extends Component {
 			<div 
 				className={
 					this.props.location === ('Main') ? 
-					cx('search-box', 'main-search', 'main-page')
-					: cx('search-box', 'main-search')}>
+					cx('search-box', 'main-search')
+					: cx('search-box', 'res-search')}>
 				<input 
 					type="text"
 					placeholder="병원이름, 진료명, 지역, 동물 종류 등"
 					onChange={(e) => this.setState({word:e.target.value})}
 					onKeyPress={this.handleEnter.bind(this)}
-				>
-				</input>
+					value={this.state.word}
+				/>
 				<div 
 					className={cx('search-btn')}
 					onClick={this.getSearchResult.bind(this)}
@@ -52,13 +52,19 @@ class MainSearchBar extends Component {
 	}
 }
 
+const mapStateToProps = state => {
+	return {
+		keyword : state.hos.mainSearch.searchWord
+	}
+}
+
 const mapDispatchToProps = dispatch => {
   return {
-    mainSearch: (word, lat, long, cateogry) => dispatch(hos.mainSearch(word, lat, long, cateogry)),
+    mainSearch: (word, lat, long, cateogry, filter) => dispatch(hos.mainSearch(word, lat, long, cateogry, filter)),
   }
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MainSearchBar)

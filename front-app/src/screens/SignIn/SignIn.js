@@ -9,7 +9,6 @@ const cx = classNames.bind(styles)
 
 class SignInPage extends Component {
     componentDidMount() {
-        console.log(this.props.user)
         if (JSON.stringify(this.props.user) !== '{}') {
             const r = window.confirm('이미 로그인했다냥, 로그아웃할거냥')
             if (r === true) {

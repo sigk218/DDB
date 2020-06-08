@@ -1,19 +1,16 @@
 import {
   MAIN_SEARCH,
-  GET_NEAR_HOS,
-  GET_NEAR_HOS_BY_STAR,
-  GET_NEAR_HOS_BY_REVIEW,
+  GET_HOS_BY_LOC,
   GET_HOS_BY_WORD,
-  GET_HOS_BY_STAR,
-  GET_HOS_BY_REVIEW,
 } from '../actions/types'
 
 const initializer = {
-  mainSearch: {
+  mainSearch: JSON.parse(window.localStorage.getItem('mainSearch')) || {
     searchWord: '',
     lat: 37.504909,
     long: 127.048463,
-    category: null,
+    category: 'hos',
+    filter: 'nearHos',
   },
   nearHos: [],
   nearHosByStar: [],
@@ -31,54 +28,50 @@ export default (state = initializer, action) => {
       return {
         ...state, 
         mainSearch: {
-          searchWord:action,
+          searchWord:action.searchWord,
           lat: action.lat === null ? state.mainSearch.lat : action.lat,
           long: action.long === null ? state.mainSearch.long : action.long,
-          category:action.category
+          category:action.category,
+          filter: action.filter
         }
       }
-    case GET_NEAR_HOS:
-      updated = state.nearHos.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } 
-      })
-      return { ...state, nearHos: [...updated] };
-    case GET_NEAR_HOS_BY_STAR:
-      updated = state.nearHosByStar.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } else { return p }
-      })
-      return { ...state, nearHosByStar: [...updated] };
-    case GET_NEAR_HOS_BY_REVIEW:
-      updated = state.nearHosByReview.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } else { return p}
-      })
-      return { ...state, nearHosByReview: [...updated] };
+    case GET_HOS_BY_LOC:
+      if (state[action.filter].some(s => 
+        (s.lat === action.lat) && (s.long === action.long) && (s.page !== action.page))) {
+        return {
+          ...state,
+          [action.filter] : state[action.filter].map(p => {
+            if ((p.lat === action.lat) & (p.long === action.long)) {
+              return { ...p, next:p.next, list: p.list.concat(...action.list) }
+            } else {return p}
+          })
+        }
+      } else {
+        return {
+          ...state,
+          [action.filter] : state[action.filter].concat({
+            lat:action.lat, long:action.long, page:action.page, next:action.next, list:action.list})
+        }
+      }
     case GET_HOS_BY_WORD:
-      updated = state.nearHosByReview.map(p => {
-        if (p.keyword === action.keyword) {
-          return { ...p, list: action.list } 
-        } else { return p }
-      })
-      return { ...state, hosByWord: [...updated] };
-    case GET_HOS_BY_STAR:
-      updated = state.hosByStar.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } else { return p }
-      })
-      return { ...state, hosByStar: [...updated] };
-    case GET_HOS_BY_REVIEW:
-      updated = state.hosByStar.map(p => {
-        if ((p.lat === action.lat) & (p.long === action.long)) {
-          return { ...p, list: action.list }
-        } else { return p }
-      })
-      return { ...state, hosByReview: [...updated] };
+      if (state.hosByWord.some(s => 
+        (s.keyword === action.keyword) && (s.page !== action.page))) {
+        return {
+          ...state,
+          hosByWord: state.hosByWord.map(p => {
+            if (p.keyword === action.keyword) {
+              return { ...p, next:p.next, list: action.list } 
+            } else { return p }
+          })
+        }
+      } else {
+        return {
+          ...state,
+          hosByWord: state.hosByWord.concat({
+            keyword:action.keyword, page:action.page, next:action.page, list:action.list
+          })
+        }
+      }
     default:
       return state;
   }

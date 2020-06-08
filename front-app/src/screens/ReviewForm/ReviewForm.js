@@ -300,6 +300,7 @@ const mapStateToProps = state => {
     scorelist: state.review.scorelist,
     totalscore: state.review.totalscore,
     status: state.status,
+    hosInfo: state.review.hosInfo,
     reciept: state.review.reciept
   };
 };
@@ -308,6 +309,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     doDojang: (revisit) => dispatch(review.doDojang(revisit)),
     postReview: (body) => dispatch(review.postReview(body)),
+
   }
 }
 
