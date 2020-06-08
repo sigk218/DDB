@@ -16,15 +16,20 @@ const HosInfoCard = props => {
   <img className={cx('hos-photo')} src={hospitalPicture[1].himage}/>
   : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}/>
   let tagList, ing
-  if (htag.length > 0) {
-    ing = htag.replace('a', '')
-    if (ing.includes('n')) {
-      ing = ing.replace('n', '').split('|')[0]
+  if (htag !== null) {
+    if (htag.length > 0) {
+      ing = htag.replace('a', '')
+      if (ing.includes('n')) {
+        ing = ing.replace('n', '').split('|')[0]
+      }
     }
+    tagList = ing.split('#').map((i, ii) => (
+      <div key={`${i}_${ii}`} className={cx('tag')}>#{i}</div>
+    ))
+  } else {
+    tagList = null
   }
-  tagList = ing.split('#').map((i, ii) => (
-    <div key={`${i}_${ii}`} className={cx('tag')}>#{i}</div>
-  ))
+
   return (
       <div className={props.map === false ? cx('container-box') : cx('container-box', 'map-info-box')} onClick={() => handleOnClick()}>
         <div className={cx('box-header')}>
