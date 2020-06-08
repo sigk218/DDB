@@ -178,7 +178,8 @@ public class UserController {
 		
 		User user = null;
         try {
-            user = userService.findById(id);
+			user = userService.findById(id);
+			user.setUPw(null);
             return handleSuccess(user);
         } catch (Exception e) {
             return handleFail(e.toString(), HttpStatus.BAD_REQUEST);
