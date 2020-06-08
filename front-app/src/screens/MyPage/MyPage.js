@@ -22,6 +22,10 @@ class MyPage extends React.Component {
             a_species: '',
             a_kig: 0,
             a_year: 0,
+            user: {
+                username: '수진',
+                id: 'psj',
+            }
         }
         this.toggleAdd = this.toggleAdd.bind(this);
         this.addPetName = this.addPetName.bind(this);

@@ -21,10 +21,16 @@ console.log(store.getState())
 
 const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-store.dispatch(user.getMyPets('psj'))
-.then(() =>
-  console.log('-------------')
-)
+// store.dispatch(user.getMyPets('psj'))
+// .then(() =>
+//   console.log('-------------')
+// )
+
+// store.dispatch(user.getMyPage())
+// .then(() => 
+//   console.log('----MyPage-----')
+// )
+
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>

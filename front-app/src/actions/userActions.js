@@ -57,7 +57,7 @@ export const register = (user_id, user_pw) => {
 export const getMyPage = () => {
   console.log('getMyPage')
   return dispatch => {
-    return apis.post('/user/mypage')
+    return apis.post('/user/mypage/', null, config)
       .then(res => dispatch(recieveMyPage(res.data)))
   }
 }
@@ -65,6 +65,7 @@ export const getMyPage = () => {
 // 3.1. 마이페이지 user 에 저장하기
 export const recieveMyPage = (mypage) => {
   console.log('recieveMyPage')
+  console.log(mypage)
   return {
     type: GET_MY_PAGE,
     mypage

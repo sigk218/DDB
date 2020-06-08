@@ -8,7 +8,7 @@ const cx = classNames.bind(styles)
 
 class MyInfo extends Component {
     componentDidMount() {
-        this.state.user = user.getMyPage()
+        // this.state.user = user.getMyPage()
     }
 
     constructor(props) {
@@ -18,7 +18,7 @@ class MyInfo extends Component {
             username: props.username,
             password: props.password,
             passwordC: props.passwordC,
-            user: {}                                                                                                                                                                                                                                                                                                                                                                                                            
+            user: props.user,                                                                                                                                                                                                                                                                                                                                                                                                       
         };
         this.updateId = this.updateId.bind(this);
         this.updatePw = this.updatePw.bind(this);
@@ -45,10 +45,12 @@ class MyInfo extends Component {
         // history.push('/')
     }
     render() {
-        console.log(this.props)
-        if(!this.props.mypage) {
-            user.getMyPage();
-        }
+        // console.log(this.props)
+        // if(!this.props.mypage) {
+        //     user.getMyPage();
+        // }
+        console.log('PROPS: ', this.state)
+        console.log('props: ', this.state.user)
         return (
             <div className={cx('container')}>
                 <div className={cx('basic-box')}>
@@ -68,8 +70,8 @@ class MyInfo extends Component {
 }
 
 const mapStatetoProps = state => {
-    console.log("user");
-    console.log(state.user);
+    // console.log("user");
+    // console.log(state.user);
     return {
         mypage: state.user.mypage
         // user: this.state.user
