@@ -46,10 +46,10 @@ export const register = (user_id, user_pw) => {
 }
 
 // 3. 마이페이지 조회 요청하기
-export const getMyPage = (uid) => {
+export const getMyPage = () => {
   console.log('getMyPage')
   return dispatch => {
-    return apis.post('/user/mypage?uId=' + uid)
+    return apis.post('/user/mypage')
       .then(res => dispatch(recieveMyPage(res.data)))
   }
 }

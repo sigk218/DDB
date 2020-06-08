@@ -13,7 +13,7 @@ class MyInfo extends Component {
             c_log: 1,
             username: props.username,
             password: props.password,
-            passwordC: props.passwordC,
+            passwordC: props.passwordC,                                                                                                                                                                                                                                                                                                                                                                                                                      
         };
         this.updateId = this.updateId.bind(this);
         this.updatePw = this.updatePw.bind(this);
