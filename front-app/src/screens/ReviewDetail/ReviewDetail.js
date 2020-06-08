@@ -89,6 +89,7 @@ class ReviewDetail extends React.Component {
           />
         <div className={cx('category')}><p>진료 후기 상세</p></div>
         <div className={cx('basic-box')}>
+          * 이 리뷰는 예시입니다.
           <p>
             {this.props.location.state.reviewData.rcontent}
           </p>

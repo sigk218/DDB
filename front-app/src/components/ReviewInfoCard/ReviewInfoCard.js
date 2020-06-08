@@ -22,6 +22,13 @@ const ReviewInfoCard = props => {
       c_name: careinfoData[i].ciName
     })
   }
+
+  const scorelist =  [reviewData.rclean, reviewData.rkindness, reviewData.rresult, reviewData.rprofessionality, reviewData.rovertreatment]
+  const totalgrade = calcTotalScore(scorelist)
+  function calcTotalScore(scorelist) {
+    const totalscore = Math.round(((scorelist.reduce((a, b) => a + b, 0) / scorelist.length) + Number.EPSILON) * 100)/100
+    return totalscore
+  }
   // const tags = []
   // for (const [index, value] of reviewData.tags.entries()) {
   //   tags.push(<div className={cx('tag')} key={index}>#{value}</div>)
@@ -40,17 +47,16 @@ const ReviewInfoCard = props => {
       <div className={cx('rev-box')}>
         <div className={cx('tag-box')}>
           #{reviewData.hospital.hname} <br/>
-          #{reviewData.rdate.substr(0, 10)} #도움이 됐어요! {reviewData.rtotalgood}명
-          {/* {tags} */}
+          #{reviewData.rdate.substr(0, 10)} #도움이 됐어요! {reviewData.rtotalgood}명 #★{totalgrade}
         </div>
         <div>
         &nbsp;&nbsp; 방문 목적 : {reviewData.rpurpose}
-          {/* {careinfoData[0].animal.aspecies} */}
         </div>
 
 
-        <div>
-        &nbsp;&nbsp; {cont} ...
+        <div style={{marginLeft:'19px', marginRight:'2px'}}>
+        * 이 리뷰는 예시입니다. <br/>
+        {cont} ...
         </div>
         <div className={cx('div-center')}>
         <span onClick= {() => handleClick()}>더보기</span> 
