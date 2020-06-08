@@ -3,6 +3,7 @@ import {
   GET_MY_REVIEW,
   REVIEW_MAIN_SEARCH,
   REVIEW_SEARCH_STATUS,
+  SEARCH_FLAG,
   GET_REVIEW,
   REVIEW_POSTED,
   REVIEW_UPDATED,
@@ -59,10 +60,19 @@ export const setSearchStatus = (code) => {
   }
 }
 
+export const SearchFlag = (flag) => {
+  console.log('SearchFlag', flag)
+  return {
+    type: SEARCH_FLAG,
+    flag
+  }
+}
+
 // ------------- review 관련 action --------
 // 1. 현재 내 위치에서 3km 이내의 리뷰 조회 with 필터
 export const getReview = (searchWord, lat, long, distance, filter) => {
   console.log('getReview')
+  console.log('reviewActions config', config)
   return dispatch => {
     return apis.post(`/review/findByKeyword/${distance}/${filter}/${searchWord}?latitude=${lat}&longtitude=${long}`, null, config)
       .then(res => {
