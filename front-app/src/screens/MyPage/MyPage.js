@@ -22,10 +22,7 @@ class MyPage extends React.Component {
             a_species: '',
             a_kig: 0,
             a_year: 0,
-            user: {
-                username: '수진',
-                id: 'psj',
-            }
+            user: this.props.user
         }
         this.toggleAdd = this.toggleAdd.bind(this);
         this.addPetName = this.addPetName.bind(this);
@@ -51,6 +48,7 @@ class MyPage extends React.Component {
 
     }
     render() {
+
         const body = (
             <div className={cx('modal')}>
                 <p>반려동물 이름 </p>
@@ -85,6 +83,7 @@ class MyPage extends React.Component {
                 </div>
                 <div>
                     <MyInfo user = {this.state.user}/>
+                    {/* <MyInfo user = {this.state.user}/> */}
                 </div>
                 <div className={cx('category')}>
                     <p>나의 펫 </p>
@@ -99,13 +98,13 @@ class MyPage extends React.Component {
                     <p>내가 작성한 리뷰</p>
                 </div>
                 <div>
-                    <MyInfo />
+                    {/* <MyInfo /> */}
                 </div>
                 <div className={cx('category')}>
                     <p>내가 찜한 병원</p>
                 </div>
                 <div>
-                    <MyInfo />
+                    {/* <MyInfo /> */}
                 </div>
                 <Modal
                     open={this.state.isSearching}

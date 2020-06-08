@@ -2,7 +2,8 @@ import axios from 'axios';
 
 
 const apis = axios.create({
-    baseURL: 'http://k02a3051.p.ssafy.io:7888/'
+    baseURL: 'http://k02a3051.p.ssafy.io/'
+    // baseURL: 'http://balbadack.com'
     // baseURL:'http://192.168.1.242:7888/'
 });
 

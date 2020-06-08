@@ -5,7 +5,8 @@ import {
   GET_HOS_BY_WORD,
   HOS_LIKED,
   HOS_DISLIKED,
-  GET_MY_LIKE_HOS
+  GET_MY_LIKE_HOS,
+  GET_HOS_PHOTO,
 } from './types'
 import apis from '../apis/apis';
 
@@ -195,5 +196,22 @@ export const recieveMyLikeHos = (likeHos) => {
   return {
     type: GET_MY_LIKE_HOS,
     likeHos
+  }
+}
+
+
+export const getHosPhoto = (photocode) => {
+  console.log('photocode', photocode)
+  return dispatch => {
+    return apis.post('hospitalpicture/findByhospital', photocode)
+      .then((res) => dispatch(recievePhoto(res.data)))
+  }
+}
+
+export const recievePhoto = (photocode) => {
+  console.log('recievePhoto :  ',photocode)
+  return {
+    type: GET_HOS_PHOTO,
+    photocode
   }
 }

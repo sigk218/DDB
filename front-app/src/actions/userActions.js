@@ -22,6 +22,8 @@ let config = sessionStorage.getItem('user') ? {
   }
 } : null
 
+console.log(config)
+
 // 1. 로그인 요청하기
 export const signIn = (user_id, user_pw) => {
   console.log("signin")
@@ -37,6 +39,7 @@ export const signIn = (user_id, user_pw) => {
 // 1.1. 유저 정보를 user 에 저장하기
 export const signedIn = (userInfo) => {
   console.log('signedIn')
+  console.log('userInfo: ', userInfo)
   window.sessionStorage.setItem('user', JSON.stringify(userInfo))
   return {
     type: SIGNIN,
@@ -49,7 +52,7 @@ export const register = (user_id, user_pw) => {
   console.log('register')
   const body = { uid: user_id, upw: user_pw }
   return dispatch => {
-    return apis.post('/user/signup', body, config=config)
+    return apis.post('/user/signup', body, config)
       .then(() => dispatch(signIn(user_id, user_pw)))
   }
 }

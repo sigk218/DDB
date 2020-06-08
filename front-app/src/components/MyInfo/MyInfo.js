@@ -45,10 +45,10 @@ class MyInfo extends Component {
         // history.push('/')
     }
     render() {
-        // console.log(this.props)
-        // if(!this.props.mypage) {
-        //     user.getMyPage();
-        // }
+        console.log(this.props)
+        if(!this.props.mypage) {
+            user.getMyPage();
+        }
         console.log('PROPS: ', this.state)
         console.log('props: ', this.state.user)
         return (
@@ -82,7 +82,7 @@ const mapStateToDispatch = dispatch => {
     return {
         register: (id, pwd) => {dispatch(user.register(id, pwd))},
         logOut: () => {dispatch(user.logOut())},
-        getMyPage: () => {dispatch(user.getMyPage())}
+        getMyPage: (user) => {dispatch(user.getMyPage())}
     }
 }
 
