@@ -87,6 +87,18 @@ class ResTab extends React.Component {
 		const { curr, near, map } = this.state
 		const { filter } = this.props.hos.mainSearch
 		const floating = (map === true) ? <ListIcon/> : <MapIcon/>
+		let hosfilterbar
+		if (curr === 'hos') {
+			hosfilterbar = <>
+			<div className={near === true ? cx('tab-box', 'active-tab') : cx('tab-box')} onClick={() => this.changeNearFilter()}><p>3km 이내</p></div>
+			<div className={filter.includes('Star') ? cx('tab-box', 'active-tab') : cx('tab-box')} onClick={() => this.changeFilter('nearHosByStar')}><p>별점순</p></div>
+			<div className={filter.includes('Review') ? cx('tab-box', 'active-tab') : cx('tab-box')} onClick={() => this.changeFilter('nearHosByReview')}><p>도움이됐어요순</p></div>
+			</>
+		} else {
+			hosfilterbar = null
+		}
+			
+		
 		let resDisplay
 		if (curr === 'hos') {
 			if (map === true) { resDisplay = <BigMap/> } else { resDisplay = <HosRes/> }
@@ -110,15 +122,8 @@ class ResTab extends React.Component {
 				</div>
 				<div className={(filter === 'hosByWord')&&(this.state.curr === 'hos') ? 
 				cx('hide') : cx('tab-container')}>
-					<div className={near === true ? 
-						cx('tab-box', 'active-tab') : cx('tab-box')} 
-						onClick={() => this.changeNearFilter()}><p>3km 이내</p></div>
-					<div className={filter.includes('Star') ? 
-						cx('tab-box', 'active-tab') : cx('tab-box')} 
-						onClick={() => this.changeFilter('nearHosByStar')}><p>별점순</p></div>
-					<div className={filter.includes('Review') ? 
-						cx('tab-box', 'active-tab') : cx('tab-box')} 
-						onClick={() => this.changeFilter('nearHosByReview')}><p>도움이됐어요순</p></div>
+					{ hosfilterbar }
+					
 				</div>
 				<div className={cx('res-box')}>
 					{resDisplay}
