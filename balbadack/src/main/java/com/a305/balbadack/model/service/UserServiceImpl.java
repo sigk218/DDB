@@ -16,9 +16,16 @@ public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
 
+    // 회원가입
     @Override
     public boolean create(User user) throws Exception {
         try {
+            System.out.println("USER: " + user.toString());
+            
+            User check = userRepository.findByUserId(user.getUId());
+            System.out.println("CHECK: " + check);
+            if(check != null) return false;
+            
             userRepository.save(user);
         } catch (Exception e) {
             e.printStackTrace();
@@ -61,7 +68,8 @@ public class UserServiceImpl implements UserService{
         if(user == null) { // 회원정보가 없는 경우(아이디 틀림)
             return false;
         } else {
-            if(user.getU_pw().equals(password)) { // 비밀번호가 맞았을 때
+            System.out.println("Password: "+ user.getUPw()+" "+password);
+            if(user.getUPw().equals(password)) { // 비밀번호가 맞았을 때
                 return true;
             } else { // 아이디는 맞는데 비밀번호가 틀렸을 때
                 return false;
@@ -73,7 +81,10 @@ public class UserServiceImpl implements UserService{
     public User findById(String id) throws Exception {
         User user = null;
         try {
-            user = userRepository.findById(id).get();
+            System.out.println(id);
+            user = userRepository.findByUserId(id);
+            if(user == null)
+                System.out.println("IS NULL");
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("회원정보 조회 중 오류가 발생했습니다.");
