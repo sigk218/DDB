@@ -1,167 +1,128 @@
 import {
-  GET_NEAR_HOS,
-  GET_NEAR_HOS_BY_STAR,
-  GET_NEAR_HOS_BY_REVIEW,
+  MAIN_SEARCH,
+  SEARCH_STATUS,
+  GET_HOS_BY_LOC,
   GET_HOS_BY_WORD,
-  GET_HOS_BY_STAR,
-  GET_HOS_BY_REVIEW,
-  SET_NEAR_HOS_STATUS,
-  SET_NEAR_HOS_BY_STAR_STATUS,
-  SET_NEAR_HOS_BY_REVIEW_STATUS,
-  SET_HOS_BY_WORD_STATUS,
-  SET_HOS_BY_STAR_STATUS,
-  SET_HOS_BY_REVIEW_STATUS,
   HOS_LIKED,
   HOS_DISLIKED,
   GET_MY_LIKE_HOS
 } from './types'
 import apis from '../apis/apis';
 
+// ---------- main.js ---------------------
+export const mainSearch = (searchWord, lat, long, category, filter) => {
+  console.log('mainSearch')
+  return dispatch => {
+    dispatch(setSearchStatus(false))
+    dispatch(setMainSearch(searchWord, lat, long, category, filter))
+    if (category === 'hosByLoc') {
+      if (filter === 'hosByReview') {
+        return dispatch(getHosByReview(lat, long, 0, null, category, filter))
+      } else if (filter === 'hosByStar') {
+        return dispatch(getHosByStar(lat, long, 0, null, category, filter))
+      } else {
+        let mode
+        if (filter === 'nearHosByReview') {
+          mode = 'review'
+        } else if (filter === 'nearHosByStar') {
+          mode = 'starrating'
+        } else {
+          mode = null
+        }
+        console.log('mode----------', mode)
+        return dispatch(getNearHos(lat, long, 0, mode, category, filter))
+      }
+    } else {
+      return dispatch(getHosByWord(searchWord, 0, category, filter))
+    }
+  }
+}
+
+export const setMainSearch = (searchWord, lat, long, category, filter) => {
+  console.log('setMainSearch')
+  const item = {searchWord: searchWord,lat: lat,long: long,category: category,filter: filter}
+  window.localStorage.setItem('mainSearch', JSON.stringify(item))
+  return {
+    type: MAIN_SEARCH,
+    searchWord, lat, long, category, filter
+  }
+}
+
+export const setSearchStatus = (code) => {
+  console.log('setSearchStatus')
+  return {
+    type: SEARCH_STATUS,
+    code
+  }
+}
+
 // ------------- hospital 관련 action --------
 // 1. 현재 내 위치에서 3km 이내의 병원 조회 with 필터
-export const getNearHos = (lat, long, page, mode) => {
+export const getNearHos = (lat, long, page, mode, category, filter) => {
   console.log('getNearHospitals')
   const url = 'hospital/location/'+page+ '?latitude=' + lat + '&longtitude=' + long
-  const reqURL = mode === '' ? url : url + '&mode=' + mode
+  const reqURL = mode === null ? url : url + '&mode=' + mode
   return dispatch => {
     return apis.post(reqURL)
       .then(res => {
-        dispatch(recieveNearHos(mode, lat, long, res.data.hospital))
-        dispatch(setNearHosStatus(mode, lat, long, page, res.data.next))
+        dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }
 
-// 1.1 현재 검색 중인 위치와 받았던 페이지와 next여부 status에 저장하기
-export const setNearHosStatus = (mode, lat, long, page, next) => {
-  if (mode === '') {
-    return {
-      type: SET_NEAR_HOS_STATUS,
-      mode, lat, long, page, next
-    }
-  } else if (mode === 'starrating') {
-    return {
-      type: SET_NEAR_HOS_BY_STAR_STATUS,
-      mode, lat, long, page, next
-    }
-  } else {
-    return {
-      type: SET_NEAR_HOS_BY_REVIEW_STATUS,
-      mode, lat, long, page, next
-    }
+// 3. 전체 지역 병원 검색 리뷰순 요청하기
+export const getHosByReview = (lat, long, page, category, filter) => {
+  console.log('getHosByReview')
+  return dispatch => {
+    return apis.post('hospital/reviewcnt/'+page+ '?latitude=' + lat + '&longtitude=' + long)
+      .then(res => {
+        dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
+      })
+  }
+}
+
+// 4. 전체 지역 병원 검색 별점순 요청하기
+export const getHosByStar = (lat, long, page, category, filter) => {
+  console.log('getHosByStar')
+  return dispatch => {
+    return apis.post('hospital/starrating/'+page+ '?latitude=' + lat + '&longtitude=' + long)
+      .then(res => {
+        dispatch(recieveHosByLoc(lat, long, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
+      })
   }
 }
 
 // 1.2 getNearHospitals로 받은 병원 리스트를 hos_info 에 저장하기
-export const recieveNearHos = (mode, lat, long, list) => {
-  if (mode === '') {
-    return {
-      type: GET_NEAR_HOS,
-      lat, long, list
-    }
-  } else if (mode === 'starrating') {
-    return {
-      type: GET_NEAR_HOS_BY_STAR,
-      lat, long, list
-    }
-  } else {
-    return {
-      type: GET_NEAR_HOS_BY_REVIEW,
-      lat, long, list
-    }
+export const recieveHosByLoc = (lat, long, page, next, list, category, filter) => {
+  console.log('recieveHos')
+  return {
+    type: GET_HOS_BY_LOC,
+    lat, long, page, next, list, category, filter
   }
 }
 
 
 // 2. 병원 키워드로 검색하기
-export const getHosByword = (keyword, page) => {
+export const getHosByWord = (keyword, page, category, filter) => {
   console.log('getHosByword')
   return dispatch => {
     return apis.post('hospital/name/'+page+'?keyword='+keyword)
       .then(res => {
-        dispatch(recieveHosByWord(res.data))
-        dispatch(setHosByWordStatus(keyword, page, res.data.next))
+        dispatch(recieveHosByWord(keyword, page, res.data.next, res.data.hospital, category, filter))
+        dispatch(setSearchStatus(true))
       })
   }
 }
 
 // 2.1. 키워드 검색 결과 hos_info에 저장하기
-export const recieveHosByWord = (keyword, list) => {
+export const recieveHosByWord = (keyword, page, next, list, category, filter) => {
   console.log('recieveHosByWord')
   return {
     type: GET_HOS_BY_WORD,
-    keyword, list
-  }
-}
-
-
-// 2.2. 키워드 검색 관련 인자들 status에 저장하기
-export const setHosByWordStatus = (keyword, page, next) => {
-  return {
-    type: SET_HOS_BY_WORD_STATUS,
-    keyword, page, next
-  }
-}
-
-
-// 3. 전체 지역 병원 검색 리뷰순 요청하기
-export const getHosByReview = (lat, long, page) => {
-  console.log('getHosByReview')
-  return dispatch => {
-    return apis.post('hospital/starrating/'+page+ '?latitude=' + lat + '&longtitude=' + long)
-      .then(res => {
-        dispatch(recieveHosByReview(lat, long, res.data.hospital))
-        dispatch(setHosByReviewStatus(lat, long, page, res.data.next))
-      })
-  }
-}
-
-
-// 3.1. 전체 지역 병원 검색 리뷰순 hos_info에 저장하기
-export const recieveHosByReview = (lat, long, list) => {
-  console.log('recieveHosByReview')
-  return {
-    type: GET_HOS_BY_REVIEW,
-    lat, long, list
-  }
-}
-
-
-// 3.2. 전체 지역 병원 검색 리뷰순 관련 인자들 status에 저장하기
-export const setHosByReviewStatus = (lat, long, page, next) => {
-  return {
-    type: SET_HOS_BY_REVIEW_STATUS,
-    lat, long, page, next
-  }
-}
-
-
-// 4. 전체 지역 병원 검색 별점순 요청하기
-export const getHosByStar = (lat, long, page) => {
-  console.log('getHosByStar')
-  return dispatch => {
-    return apis.post('hospital/starrating/'+page+ '?latitude=' + lat + '&longtitude=' + long)
-      .then(res => {
-        dispatch(recieveHosByStar(lat, long, res.data.hospital))
-        dispatch(setHosByStarStatus(lat, long, page, res.data.next))
-      })
-  }
-}
-
-// 4.1. 전체 지역 병원 검색 별점순 hos_info에 저장하기
-export const recieveHosByStar = (lat, long, list) => {
-  console.log('recieveHosByStar')
-  return {
-    type: GET_HOS_BY_STAR,
-    lat, long, list
-  }
-}
-
-// 4.2. 전체 지역 병원 검색 별점순 관련 인자들 status에 저장하기
-export const setHosByStarStatus = (lat, long, page, next) => {
-  return {
-    type: SET_HOS_BY_STAR_STATUS,
-    lat, long, page, next
+    keyword, page, next, list, category, filter
   }
 }
 

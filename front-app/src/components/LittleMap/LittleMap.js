@@ -17,9 +17,16 @@ class LittleMap extends Component {
         script.onload = () => {
             kakao.maps.load(() => {
                 let el = document.getElementById('map');
+
                 let map = new kakao.maps.Map(el, {
-                    center: new kakao.maps.Coords(523951.25, 1085073.75)
+                    center: new kakao.maps.LatLng(this.props.lat, this.props.long),
+                    level: 3
                 });
+                var markerPosition  = new kakao.maps.LatLng(this.props.lat, this.props.long); 
+                var marker = new kakao.maps.Marker({
+                    position: markerPosition,
+                })
+                marker.setMap(map);
             });
         };
     }

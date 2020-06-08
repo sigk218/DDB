@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button';
 import classNames from 'classnames/bind';
 import LittleMap from "../../components/LittleMap/LittleMap";
 import HosGrades from '../../components/HosGrades/HosGrades';
+import history from '../../history';
+import { connect } from "react-redux";
+import { review, user} from '../../actions';
 //썸내일은... 리사이징...
 const images = [
     {
@@ -23,39 +26,8 @@ const images = [
         thumbnail: 'https://picsum.photos/id/1019/250/150/',
     },
 ];
-const VetData = [
-    {
-        Name: '홍길동',
-        image: 'https://picsum.photos/id/1019/250/150/',
-        hompage: "https://balbbakdoc.com",
-        phone: '02-1234-1234'
-    }
-]
-const hosData = [
-    {
-        h_code: 1,
-        h_name: "행복 동물 병원",
-        h_location: "서울시 역삼동 123번지",
-        h_city: "서울시",
-        h_gu: "강남구",
-        h_station: "역삼역",
-        h_tel: "02-123-1234",
-        h_holidaytreatment: true,
-        h_open: true,
-        h_monday: "10:00 ~ 18:00",
-        h_tuesday: "10:00 ~ 18:00",
-        h_wednesday: "10:00 ~ 18:00",
-        h_thursday: "10:00 ~ 18:00",
-        h_friday: "10:00 ~ 18:00",
-        h_saturday: "10:00 ~ 18:00",
-        h_sunday: "10:00 ~ 18:00",
-        h_website: "http://edu.ssafy.com",
-        h_dong: "역삼동",
-        h_address: "서울시 역삼동 123번지",
-        h_image: "https://picsum.photos/id/1018/250/150/"
-    },
 
-]
+
 const reviewData = {
     r_no: 0,
     u_id: 'aestas',
@@ -118,10 +90,13 @@ const cx = classNames.bind(styles)
 class HosDetail extends Component {
     componentDidMount() {
 
+        this.state.current_hos = this.props.location.state.localhos;
+        review.setHosInfo(this.state.current_hos.hcode, this.state.current_hos.hname, this.state.current_hos.haddress);
     }
     constructor(props) {
         super(props);
         this.state = {
+            current_hos: [],
             grade: [
                 {
                     name: '적절한 치료',
@@ -147,67 +122,88 @@ class HosDetail extends Component {
 
     }
     setHos() {
+        if (this.state.current_hos.length < 1) {
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaa')
+            this.state.current_hos = this.props.location.state.localhos
+            console.log(this.state.current_hos.hname)
+        }
         return (
             <>
                 <div className={cx('hos-container')}>
                     <div className={cx('hos-box')}>
                         <br />
-                        <div className={cx('hos-name')}>행복 동물 병원</div>
-                        <span className={cx('vet-name')}>{VetData[0].Name} <span className={cx('pipe')}>|</span> </span>
-                        <span className={cx('vet-name')}>{hosData[0].h_location}</span>
-                    </div>
-                    <div className={cx('hos-box')}>
-                        <br />
-
+                        <div className={cx('hos-name')}>{this.state.current_hos.hname}</div>
+                        <span className={cx('vet-name')}>{this.state.current_hos.hcity} <span className={cx('pipe')}>|</span> </span>
+                        <span className={cx('vet-name')}>{this.state.current_hos.haddress}</span>
                     </div>
 
                 </div>
 
                 <div className={cx('home-container')} >
                     <button className={cx('homepage')} type="button"> 병원 홈페이지 </button>
-                    <button className={cx('phone')} type="button"> {hosData[0].h_tel} </button>
+                    <button className={cx('phone')} type="button"> {this.state.current_hos.htel} </button>
                 </div>
 
             </>
         );
 
     }
+    handleOnclick() {
+        history.push("/ReviewForm")
+    }
+    setAverageGrade() {
+        var avg = 0;
+        for (var i = 0; i < this.state.grade.length; i++) {
+            avg += this.state.grade[i].score;
+        }
+        return avg / 4;
+    }
+    clickReviewList() {
+        console.log(this.state.current_hos.hcode)
+
+        review.getHosReview(this.state.current_hos.hcode, this.props.userData.accessToken)
+        console.log(this.props.userData.accessToken)
+    }
     setRunningTime() {
         return (
             <div className={cx('column-box')}>
                 <p className={cx('day')} >
                     <span> 월  <span className={cx('pipe')}> </span>  </span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hmonday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 화  <span className={cx('pipe')}>  </span> </span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.htuesday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 수  <span className={cx('pipe')}>  </span> </span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hwednesday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 목   <span className={cx('pipe')}>  </span></span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hthursday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 금   <span className={cx('pipe')}>  </span></span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hfriday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 토  <span className={cx('pipe')}>  </span> </span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hsaturday} </span>
                 </p>
                 <p className={cx('day')}>
                     <span> 일  <span className={cx('pipe')}>  </span> </span>
-                    <span> {hosData[0].h_monday} </span>
+                    <span> {this.state.current_hos.hsunday} </span>
                 </p>
             </div>
         );
     }
     render() {
-
+        console.log(this.props.hosInfo)
+        if (!this.props.hosInfo) {
+            this.props.setHosInfo(this.state.current_hos.hcode, this.state.current_hos.hname, this.state.current_hos.haddress);
+            console.log(this.props.hosInfo)
+        }
         return (
             <div className={cx('container')}>
                 <div className={cx('basic-box')}>
@@ -224,23 +220,62 @@ class HosDetail extends Component {
                     {this.setHos()}
                 </div>
                 <div className={cx('time-box')}>
-                    <LittleMap />
+
+                    <LittleMap
+                        lat={this.state.current_hos.hlatitude}
+                        long={this.state.current_hos.hlongitude}
+                    />
+
+
                     {this.setRunningTime()}
                 </div>
+                <div className={cx('review-main')}>리뷰 정보</div>
 
-                <div>
-                    <HosGrades grade={this.state.grade} />
+                <div className={cx('grade-box')}>
+                    <div className={cx('grade')}>
+                        <HosGrades grade={this.state.grade} />
+                    </div>
+                    <div className={cx('grade-avg')}>
+                        {this.setAverageGrade()}/5
+                        <br />
+                        <br />
+
+                        <div className={cx('day')} onClick={() => this.clickReviewList()}>
+                            리뷰 더보기
+                        </div>
+
+                    </div>
                 </div>
-                <div className={styles.button__container}>
-                    <Button variant="outlined" size="large" color="primary" fullWidth={true}>
-                        리뷰 작성하기
-                    </Button>
+                <br />
+                <br />
+
+
+                <div className={cx('button-container')}>
+                    <button className={cx('border-button')} onClick={() => this.handleOnclick()}>리뷰 작성하기</button>
                 </div>
+
             </div>
         );
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        hosInfo: state.review.hosInfo,
+        reviewData: state.review.hosReview,
+        userData: state.user.user
+    };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        setHosInfo: (id, name, address) => dispatch(review.setHosInfo(id, name, address)),
+    }
+}
 
 
-export default HosDetail;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(HosDetail)
+
