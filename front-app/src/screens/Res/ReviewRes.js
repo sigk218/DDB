@@ -12,7 +12,7 @@ class ReviewRes extends Component {
     console.log(searchWord, lat, long, distance, filter, 'yeayeah')
     console.log('---------------', props.review)
     if (props.review.review.length !== 0) {
-      if (!(props.review.find(s => 
+      if (!(props.review.review.find(s => 
         ((s.searchWord === searchWord) && 
         (s.distance === distance) && 
         (s.filter === filter) && 
@@ -25,9 +25,11 @@ class ReviewRes extends Component {
 
   render() {
     let resInfo, list, reviewCards;
+    console.log('here', this.props.review)
+    console.log('real', this.props.review.mainSearch)
 		const { searchWord, lat, long, distance, filter } = this.props.review.mainSearch
 		if (this.props.search === true) {
-      resInfo = this.props.review.find(s => 
+      resInfo = this.props.review.review.find(s => 
         (s.searchWord === searchWord) && 
         (s.distance === distance) && 
         (s.filter === filter) && 
