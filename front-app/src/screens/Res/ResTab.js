@@ -90,7 +90,7 @@ class ResTab extends React.Component {
 		let resDisplay
 		if (curr === 'hos') {
 			if (map === true) { resDisplay = <BigMap/> } else { resDisplay = <HosRes/> }
-		} else { resDisplay = <ReviewRes /> }
+		} else { resDisplay = <ReviewRes filter={this.state.filter} /> }
 		return (
 			<div className={cx('res-page')}>
 				<div className={cx('tab-container')}>
@@ -108,7 +108,7 @@ class ResTab extends React.Component {
 					}}
 						><p>HOSPITAL</p></div>
 				</div>
-				<div className={filter === 'hosByWord' ? 
+				<div className={(filter === 'hosByWord')&&(this.state.curr === 'hos') ? 
 				cx('hide') : cx('tab-container')}>
 					<div className={near === true ? 
 						cx('tab-box', 'active-tab') : cx('tab-box')} 
@@ -118,12 +118,12 @@ class ResTab extends React.Component {
 						onClick={() => this.changeFilter('nearHosByStar')}><p>별점순</p></div>
 					<div className={filter.includes('Review') ? 
 						cx('tab-box', 'active-tab') : cx('tab-box')} 
-						onClick={() => this.changeFilter('nearHosByReview')}><p>리뷰순</p></div>
+						onClick={() => this.changeFilter('nearHosByReview')}><p>도움이됐어요순</p></div>
 				</div>
 				<div className={cx('res-box')}>
 					{resDisplay}
 				</div>
-				<div className={cx('map-btn')}
+				<div className={this.state.curr === 'hos' ? cx('map-btn') : cx('hide')}
 				onClick={this.goMap.bind(this)}>
 					{floating}
 				</div>

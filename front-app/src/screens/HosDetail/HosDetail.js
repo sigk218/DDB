@@ -141,7 +141,7 @@ class HosDetail extends Component {
         
     }
     setImage() {
-        // console.log(this.props.location.state.localhos)
+        console.log(this.props.location.state.localhos)
         var hosPic = this.props.location.state.localhos.hospitalPicture;
         if (!hosPic) {
             this.state.image.push({
@@ -290,18 +290,21 @@ class HosDetail extends Component {
 
     setReviewList() {
         // console.log(this.props.reviewData.length)
-        if(this.props.reviewData.length > 0) {
-            return(
-                <div>
-                    <HosReviewInfo hospitalData={this.props.reviewData[0]} key={`newCard${this.props.reviewData[0].review.hcode}`} />
-                    <div className={cx('more-rev')} onClick={() => this.clickReviewList()}>
-                        리뷰 더보기...
-                        </div>
-                </div>
-                
-            )
+        if(this.props.reviewData) {
+            if(this.props.reviewData.length > 0) {
+                return(
+                    <div>
+                        <HosReviewInfo hospitalData={this.props.reviewData[0]} key={`newCard${this.props.reviewData[0].review.hcode}`} />
+                        <div className={cx('more-rev')} onClick={() => this.clickReviewList()}>
+                            리뷰 더보기...
+                            </div>
+                    </div>
+                    
+                )
+            }
+            else return null
         }
-        else return null
+        
     }
     setRunningTime() {
         if (!this.state.current_hos.hmonday) {
@@ -364,9 +367,7 @@ class HosDetail extends Component {
         if (this.state.image.length < 1) {
             this.setImage();
         }
-        if(this.props.reviewData.length > 0) {
-
-        }
+        
         // console.log(this.props)
         if(!this.state.chk_fav) {
             if(this.props.userlike) {
