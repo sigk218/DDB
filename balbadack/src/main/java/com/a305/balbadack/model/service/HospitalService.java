@@ -19,19 +19,13 @@ public interface HospitalService {
   public List<Hospital> searchAll();
   
   // 병원 검색하기
-  public Map<String, Object> findByKeyword(String keyword, Integer page);
-
-  // 병원 검색하기
-  public List<Hospital> findByKeyword(String keyword);
+  public List<Hospital> findByKeyword(String keyword, Double latitude, Double longtitude);
 
   // 위치로 병원 조회하기 
   public List<Hospital> findByLocation(Double latitude, Double longtitude, Integer page);
 
   // 위치로 병원 조회하기 
   public List<Hospital> findAllByLocation(Double latitude, Double longtitude);
-
-  // 병원 코드 목록으로 병원 목록 조회
-  public List<Hospital> findByCode(List<Integer> hCodeList);
 
   // 별점에 따라 병원 목록 조회 
   public List<Hospital> findByStar(Double latitude, Double longtitude, Integer page);
@@ -54,5 +48,7 @@ public interface HospitalService {
   // 리뷰 순 조회 마지막 확인
   public Hospital isLastPageReview(Double latitude, Double longtitude, Integer page);
   
+  // 병원 이름으로 검색하기
+  public List<Hospital> findByHName(String Name);
 
 }
