@@ -290,7 +290,7 @@ class HosDetail extends Component {
         if(this.props.reviewData.length > 0) {
             return(
                 <div>
-                    <HosReviewInfo hospitalData={this.props.reviewData} key={`newCard${this.props.reviewData.hcode}`} />
+                    <HosReviewInfo hospitalData={this.props.reviewData[0].review} key={`newCard${this.props.reviewData[0].review.hcode}`} />
                     <div className={cx('more-rev')} onClick={() => this.clickReviewList()}>
                         리뷰 더보기...
                         </div>
