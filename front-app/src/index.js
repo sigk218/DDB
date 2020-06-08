@@ -6,7 +6,7 @@ import reduxThunk from "redux-thunk";
 import App from './App';
 import './index.css';
 import reducers from './reducers';
-// import { getReviewList, getMyReviewList } from './actions'
+import { user } from './actions'
 // import {getNearHospitals, getNearHosByStar, getHosSearchList} from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -15,14 +15,16 @@ const store = createStore(
   composeEnhancers(applyMiddleware(reduxThunk))
 );
 
-// console.log(store.getState())
 
-// const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-// store.dispatch(getReviewList(10))
-// .then(() =>
-//   console.log('-------------', store.getState().review_info.list)
-// )
+console.log(store.getState())
+
+const unsubscribe = store.subscribe(() => console.log(store.getState()))
+
+store.dispatch(user.getMyPets('psj'))
+.then(() =>
+  console.log('-------------')
+)
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>
@@ -38,7 +40,7 @@ const store = createStore(
 // store.dispatch(getHosSearchList('동물병원', 0))
 // .then(() => console.log('search', store.getState().hos_info, store.getState().status))
 
-// unsubscribe()
+unsubscribe()
 
 ReactDOM.render(
 
