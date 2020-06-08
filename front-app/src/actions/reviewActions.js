@@ -88,8 +88,9 @@ export const recieveReview = (searchWord, lat, long, list, distance, filter) => 
 // 1. 리뷰 병원별로 요청하기
 export const getHosReview = (hcode, atoken) => {
   console.log('getHosReview')
+  console.log(config)
   return dispatch => {
-    return apis.post('review/findByHospital?h_code=' + hcode , null, {Authorization: atoken})
+    return apis.post('review/findByHospital?h_code=' + hcode, null, config)
       .then(res => dispatch(recieveHosReview(res.data)))
   }
 }

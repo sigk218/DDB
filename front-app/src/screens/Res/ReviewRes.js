@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReviewInfoCard from '../../components/ReviewInfoCard/ReviewInfoCard';
-<<<<<<< HEAD
-import { review } from '../../actions'
-=======
+import { review} from '../../actions'
 const widthLength = 100;
 
 
@@ -130,7 +128,6 @@ const reviewData = [
     h_code: 1
   },
 ]
->>>>>>> 8cb9cb7126d7f4328a681cbf9924b88cadade81f
 
 class ReviewRes extends Component {
   constructor(props) {

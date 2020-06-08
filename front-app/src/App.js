@@ -21,7 +21,7 @@ import ReviewDetail from "./screens/ReviewDetail/ReviewDetail";
 import SelectOption from "./screens/ReviewForm/selectOption";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
 
-
+import hosRevForDetail from './screens/HosDetail/hosRevForDetail';
 const App = () => {
   return (
     <div>
@@ -46,7 +46,7 @@ const App = () => {
 
             <Route path="/SelectOption" exact component={SelectOption} />
             <Route path="/ReviewForm" exact component={ReviewForm} />
-
+            <Route path="/hosRevForDetail" exact component={hosRevForDetail} />
           </div>
         </Navigation>
 
