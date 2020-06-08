@@ -5,8 +5,6 @@ import styles from './mystyle.module.scss';
 import ThumbIcon from '@material-ui/icons/ThumbUpAlt';
 import SportsIcon from '@material-ui/icons/Sports';
 import classNames from 'classnames/bind';
-import { connect } from "react-redux";
-// import { review } from '../../actions';
 
 const cx = classNames.bind(styles)
 

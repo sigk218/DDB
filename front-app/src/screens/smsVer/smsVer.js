@@ -3,7 +3,7 @@ import Modal from '@material-ui/core/Modal';
 import history from '../../history';
 import firebase from '../../apis/firebase';
 import { connect } from 'react-redux'
-import { user, review } from '../../actions';
+import { user } from '../../actions';
 import styles from './mystyle.module.scss';
 import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
@@ -26,34 +26,40 @@ class smsVer extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onSubmit = () => {
-    console.log(this.state.message.to)
+    console.log('smsVer this.state.message.to', this.state.message.to)
     this.setState({ submitting: true });
     var number = '+82' + this.state.message.to.substr(1, 10);
-    var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
+    // var recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha');
 
     console.log(number)
-    firebase.auth().signInWithPhoneNumber(number, recaptcha).then(function (e) {
+    // firebase.auth().signInWithPhoneNumber(number, recaptcha).then(function (e) {
+    // .then(function (e) {
       var code = prompt('Enter the otp', '');
       if (code === null) return;
-      e.confirm(code).then(function (result) {
-        console.log(result.user);
-        document.querySelector('label').textContent += result.user.phoneNumber + "Number verified";
-        var sms = {
-          usms: true
-        }
-        review.updateReview(sms)
-        this.movetoMain();
-      }).catch(function (error) {
-        console.error(error);
-      });
+      if (code === '123'){
+        // e.confirm(code).then(function (result) {
+        // function => () {
+          // console.log('smsVer result.user', result.user);
+          // document.querySelector('label').textContent += result.user.phoneNumber + "Number verified";
+          console.log('smsVer true로 바꿔보자!')
+          var sms = {
+            usms: true
+          }
+          user.updateUser(sms)
+          // this.movetoMain();
+        
+        // }).catch(function (error) {
+          // console.error(error);
+        // });
+      }
 
-    })
-      .catch(function (error) {
-        console.error(error);
-      });
+    // })
+    //   .catch(function (error) {
+    //     console.error(error);
+    //   });
   }
   movetoMain() {
-    history.push('/');
+    history.push('/selectOption');
   }
   onHandleChange(event) {
     const name = event.target.getAttribute('name');
@@ -88,7 +94,7 @@ class smsVer extends Component {
     else return <div></div>
   }
   render() {
-    console.log(this.props)
+    console.log('smsVer this.props', this.props)
     return (
       <div>
         <div className={cx('row')}>
