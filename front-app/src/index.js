@@ -17,14 +17,14 @@ const store = createStore(
 
 
 
-console.log(store.getState())
+// console.log(store.getState())
 
-const unsubscribe = store.subscribe(() => console.log(store.getState()))
+// const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-store.dispatch(user.getMyPets('psj'))
-.then(() =>
-  console.log('-------------')
-)
+// store.dispatch(user.getMyPets('psj'))
+// .then(() =>
+//   console.log('-------------')
+// )
 
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>
@@ -40,7 +40,7 @@ store.dispatch(user.getMyPets('psj'))
 // store.dispatch(getHosSearchList('동물병원', 0))
 // .then(() => console.log('search', store.getState().hos_info, store.getState().status))
 
-unsubscribe()
+// unsubscribe()
 
 ReactDOM.render(
 
