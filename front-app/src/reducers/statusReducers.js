@@ -19,7 +19,7 @@ import {
 } from '../actions/types'
 
 const initializer = {
-  userUpdated: null,
+  userUpdated: false,
   petRegistered: null,
   petUpdated: null,
   petDeleted: null,
