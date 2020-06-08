@@ -215,14 +215,14 @@ export const hosDisliked = (code) => {
 
 // 4. 특정 병원 사진 가져오기
 
-export const getHosPhoto = (photocode) => {
-  console.log('photocode')
-  console.log(photocode)
-  return dispatch => {
-    return apis.post('favoriteHospital/findById', body, config)
-      .then(res => dispatch(recieveMyLikeHos(res.data)))
-  }
-}
+// export const getHosPhoto = (photocode) => {
+//   console.log('photocode')
+//   console.log(photocode)
+//   return dispatch => {
+//     return apis.post('favoriteHospital/findById', photocode, config)
+//       .then(res => dispatch(recieveMyLikeHos(res.data)))
+//   }
+// }
 
 export const recievePhoto = (photocode) => {
   console.log('recievePhoto :  ',photocode)
