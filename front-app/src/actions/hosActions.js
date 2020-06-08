@@ -138,8 +138,11 @@ export const recieveHosByLoc = (lat, long, page, next, list, category, filter) =
 // 2. 병원 키워드로 검색하기
 export const getHosByWord = (keyword, page, category, filter) => {
   console.log('getHosByword')
+  const lat = 37.504909
+  const long = 127.048463
+  const req = 'hospital/keyword/'+page+'?keyword='+keyword+'&latitude='+lat+'&longtitude='+long
   return dispatch => {
-    return apis.post('hospital/name/'+page+'?keyword='+keyword, null, config)
+    return apis.post(req, null, config)
       .then(res => {
         dispatch(recieveHosByWord(keyword, page, res.data.next, res.data.hospital, category, filter))
         dispatch(setSearchStatus(true))

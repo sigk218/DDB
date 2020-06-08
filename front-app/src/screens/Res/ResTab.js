@@ -19,9 +19,9 @@ class ResTab extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			curr: 'res',
+			curr: 'hos',
 			near: true,
-			// filter: 'nearHos',
+			filter: 'nearHos',
 			map: false
 		}
 	}
