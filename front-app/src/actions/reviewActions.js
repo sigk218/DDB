@@ -1,6 +1,9 @@
 import {
   GET_HOS_REVIEW,
   GET_MY_REVIEW,
+  REVIEW_MAIN_SEARCH,
+  REVIEW_SEARCH_STATUS,
+  GET_REVIEW,
   REVIEW_POSTED,
   REVIEW_UPDATED,
   REVIEW_DELETED,
@@ -20,12 +23,73 @@ import {
 } from './types'
 import apis from '../apis/apis';
 
+let config = sessionStorage.getItem('user') ? {
+  headers: {
+    Authorization: JSON.parse(sessionStorage.getItem('user')).accessToken,
+    'Content-Type':'application/json',
+    'Access-Control-Allow-Origin': '*'
+  }
+} : null
+
+// ---------- main.js ---------------------
+export const mainSearch = (searchWord, lat, long, distance, filter) => {
+  console.log('rmainSearch')
+  return dispatch => {
+    dispatch(setSearchStatus(false))
+    dispatch(setMainSearch(searchWord, lat, long, distance, filter))
+    return dispatch(getReview(searchWord, lat, long, distance, filter))
+  }
+}
+
+export const setMainSearch = (searchWord, lat, long, distance, filter) => {
+  console.log('rsetMainSearch')
+  const item = {searchWord: searchWord,lat: lat,long: long,distance: distance,filter: filter}
+  window.localStorage.setItem('rmainSearch', JSON.stringify(item))
+  return {
+    type: REVIEW_MAIN_SEARCH,
+    searchWord, lat, long, distance, filter
+  }
+}
+
+export const setSearchStatus = (code) => {
+  console.log('rsetSearchStatus')
+  return {
+    type: REVIEW_SEARCH_STATUS,
+    code
+  }
+}
+
+// ------------- review 관련 action --------
+// 1. 현재 내 위치에서 3km 이내의 리뷰 조회 with 필터
+export const getReview = (searchWord, lat, long, distance, filter) => {
+  console.log('getReview')
+  return dispatch => {
+    return apis.post(`/review/findByKeyword/${distance}/${filter}/${searchWord}?latitude=${lat}&longtitude=${long}`, null, config)
+      .then(res => {
+        dispatch(recieveReview(searchWord, lat, long, res.data, distance, filter))
+        dispatch(setSearchStatus(true))
+      })
+  }
+}
+
+// 1.2 getNearHospitals로 받은 병원 리스트를 hos_info 에 저장하기
+export const recieveReview = (searchWord, lat, long, list, distance, filter) => {
+  console.log('recieveHos')
+  return {
+    type: GET_REVIEW,
+    searchWord, lat, long, list, distance, filter
+  }
+}
+
+
+
+
 // ------------- review 관련 action --------
 // 1. 리뷰 병원별로 요청하기
 export const getHosReview = (hcode, atoken) => {
   console.log('getHosReview')
   return dispatch => {
-    return apis.post('review/findByHospital?h_code=' + hcode ,{Authorization: atoken})
+    return apis.post('review/findByHospital?h_code=' + hcode , null, {Authorization: atoken})
       .then(res => dispatch(recieveHosReview(res.data)))
   }
 }
@@ -43,7 +107,7 @@ export const recieveHosReview = (list) => {
 export const getMyReview = (uid) => {
   console.log('getMyReview')
   return dispatch => {
-    return apis.post('review/findByUser?u_id=' + uid)
+    return apis.post('review/findByUser?u_id=' + uid, null, config)
       .then(res => dispatch(recieveMyReview(res.data)))
   }
 }
@@ -61,7 +125,7 @@ export const postReview = (body) => {
   console.log('postReview')
   return dispatch => {
     dispatch(reviewPosted(false))
-    return apis.post('review/insert', body)
+    return apis.post('review/insert', body, config)
       .then(() => dispatch(reviewPosted(true)))
   }
 }
@@ -80,7 +144,7 @@ export const updateReview = (body) => {
   console.log('updateReview')
   return dispatch => {
     dispatch(reviewUpdated(false))
-    return apis.put('review/update', body)
+    return apis.put('review/update', body, config)
       .then(() => dispatch(reviewUpdated(true)))
   }
 }
@@ -99,7 +163,7 @@ export const deleteReview = (r_code) => {
   console.log('deleteReview')
   return dispatch => {
     dispatch(reviewDeleted(false))
-    return apis.post('review/update?r_code=', r_code)
+    return apis.post('review/update?r_code='+r_code, null, config)
       .then(() => dispatch(reviewDeleted(true)))
   }
 }
@@ -186,7 +250,7 @@ export const reportReview = (reCode) => {
   }
   return dispatch => {
     dispatch(reviewReported(false))
-    return apis.post('report/insert', report)
+    return apis.post('report/insert', report, config)
       .then(() => dispatch(reviewReported(true)))
   }
 }
@@ -205,7 +269,7 @@ export const reportCancel = (reCode) => {
   console.log('reportCancel')
   return dispatch => {
     dispatch(reportCanceled(false))
-    return apis.post('report/delete', reCode)
+    return apis.post('report/delete', reCode, config)
       .then(() => dispatch(reportCanceled(true)))
   }
 }
@@ -226,7 +290,7 @@ export const getMyReport = (u_id) => {
     u_id: u_id
   }
   return dispatch => {
-    return apis.post('report/findById', body)
+    return apis.post('report/findById', body, config)
       .then(res => dispatch(recieveMyReport(res.data)))
   }
 }
@@ -248,7 +312,7 @@ export const getReviewReport = (r_code) => {
     r_code: r_code
   }
   return dispatch => {
-    return apis.post('report/findByReview', body)
+    return apis.post('report/findByReview', body, config)
       .then(res => dispatch(recieveReviewReport(res.data)))
   }
 }
@@ -277,7 +341,7 @@ export const goodReview = (hcode, rcode, ucode) => {
   }
   return dispatch => {
     dispatch(reviewGood(false))
-    return apis.post('good/insert', good)
+    return apis.post('good/insert', good, config)
     .then(() => dispatch(reviewGood(true)))
   }
 }
@@ -303,7 +367,7 @@ export const badReview = (hcode, rcode, ucode) => {
   }
   return dispatch => {
     dispatch(reviewBad(false))
-    return apis.delete('good/delete', good)
+    return apis.delete('good/delete', good, config)
     .then(res => dispatch(reviewBad(true)))
   }
 }
