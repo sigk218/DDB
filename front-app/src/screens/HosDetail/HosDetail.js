@@ -94,19 +94,19 @@ class HosDetail extends Component {
             grade: [
                 {
                     name: '적절한 치료',
-                    score: reviewData.r_overtreatement
+                    score: this.props.location.state.localhos.scoreOvertreatment
                 },
                 {
                     name: '친절함',
-                    score: reviewData.r_kindness
+                    score: this.props.location.state.localhos.scoreKindness
                 },
                 {
                     name: '치료결과',
-                    score: reviewData.r_result
+                    score: this.props.location.state.localhos.scoreResult
                 },
                 {
                     name: '청결',
-                    score: reviewData.r_clean
+                    score: this.props.location.state.localhos.scoreClean
                 }
             ]
         };
