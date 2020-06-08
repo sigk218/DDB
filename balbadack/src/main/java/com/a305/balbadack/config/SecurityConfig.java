@@ -1,13 +1,9 @@
 package com.a305.balbadack.config;
 
-import com.a305.balbadack.model.dto.CustomUserdetails;
-import com.a305.balbadack.security.*;
-import com.a305.balbadack.model.dto.Role;
 import com.a305.balbadack.model.service.CustomUserDetailService;
 import com.a305.balbadack.security.JwtAuthenticationEntryPoint;
 import com.a305.balbadack.security.JwtAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

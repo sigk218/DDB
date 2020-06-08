@@ -26,12 +26,6 @@ const unsubscribe = store.subscribe(() => console.log(store.getState()))
 //   console.log('-------------')
 // )
 
-// store.dispatch(user.getMyPage())
-// .then(() => 
-//   console.log('----MyPage-----')
-// )
-
-
 // store.dispatch(getMyReviewList('sim'))
 // .then(() =>
 // console.log(store.getState().review_info.mylist))
