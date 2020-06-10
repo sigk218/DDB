@@ -241,10 +241,10 @@ export const getHosPhoto = (photocode) => {
   }
 }
 
-export const recievePhoto = (photocode) => {
-  console.log('recievePhoto :  ',photocode)
-  return {
-    type: GET_HOS_PHOTO,
-    photocode
-  }
-}
+// export const recievePhoto = (photocode) => {
+//   console.log('recievePhoto :  ',photocode)
+//   return {
+//     type: GET_HOS_PHOTO,
+//     photocode
+//   }
+// }

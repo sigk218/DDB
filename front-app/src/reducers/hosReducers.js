@@ -2,6 +2,7 @@ import {
   MAIN_SEARCH,
   GET_HOS_BY_LOC,
   GET_HOS_BY_WORD,
+  GET_HOS_PHOTO,
   NAME_LIST
 } from '../actions/types'
 

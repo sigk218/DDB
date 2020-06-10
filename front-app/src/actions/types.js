@@ -18,7 +18,6 @@ export const MAIN_SEARCH = 'MAIN_SEARCH'
 export const SEARCH_STATUS = 'SEARCH_STATUS'
 export const GET_HOS_BY_LOC = 'GET_HOS_BY_LOC'
 export const GET_HOS_BY_WORD = 'GET_HOS_BY_WORD'
-export const GET_HOS_PHOTO = 'GET_HOS_PHOTO'
 
 export const HOS_LIKED = 'HOS_LIKED'
 export const HOS_DISLIKED = 'HOS_DISLIKED'
