@@ -9,7 +9,6 @@ import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import MyPage from "./screens/MyPage/MyPage";
 import MyPetList from './components/MyPetList/MyPetList'; //..?왜있지?
-import smsVer from './screens/ReviewForm/smsVer'; //..?왜있지?
 
 import ResTab from "./screens/Res/ResTab";
 import HosRes from "./screens/Res/HosRes";
@@ -29,7 +28,6 @@ const App = () => {
       <Router history={history}>
         <Navigation>
           <div>
-            <Route path="/smsVer" exact component={smsVer} />
             <Route path="/" exact component={Main} />
             <Route path="/Main" exact component={Main} />
             <Route path="/SignIn" exact component={SignIn} />
