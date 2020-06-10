@@ -1,10 +1,12 @@
 import {
+  REVIEW_ACTION,
   USER_UPDATED,
   PET_REGISTERED,
   PET_UPDATED,
   PET_DELETED,
   SEARCH_STATUS,
   REVIEW_SEARCH_STATUS,
+  SEARCH_FLAG,
   HOS_LIKED,
   HOS_DISLIKED,
   REVIEW_GOOD,
@@ -13,16 +15,18 @@ import {
   REVIEW_UPDATED,
   REVIEW_DELETED,
   REVIEW_REPORTED, // report 관련
-  REPORT_CANCELED
+  REPORT_CANCELED,
+  SELECT_HOS,
 } from '../actions/types'
 
 const initializer = {
-  userUpdated: null,
+  userUpdated: false,
   petRegistered: null,
   petUpdated: null,
   petDeleted: null,
   search: false,
   reviewSearch: false,
+  searchFlag: 'hos',
   hosLiked: null,
   hosDisLiked: null,
   reviewGood: null,
@@ -38,12 +42,18 @@ const initializer = {
   hosByWord: [],
   hosByReview: [],
   hosByStar: [],
+  isSearching: false,
+  isSms: false,
+  isReciepting: false,
+  hosName: '',
 }
 
 
 
 export default (state = initializer, action) => {
   switch (action.type) {
+    case REVIEW_ACTION:
+      return { ...state, [action.now]: action.code }
     case USER_UPDATED:
       return { ...state, userUpdated: action.code }
     case PET_REGISTERED:
@@ -56,6 +66,8 @@ export default (state = initializer, action) => {
       return { ...state, search: action.code }
     case REVIEW_SEARCH_STATUS:
       return { ...state, reviewSearch: action.code }
+    case SEARCH_FLAG:
+      return { ...state, searchFlag: action.flag }
     case HOS_LIKED:
       return { ...state, hosLiked: action.code }
     case HOS_DISLIKED:
@@ -74,6 +86,8 @@ export default (state = initializer, action) => {
       return { ...state, reviewReported: action.code }
     case REPORT_CANCELED:
       return { ...state, reportCanceled: action.code }
+    case SELECT_HOS:
+      return { ...state, hosName: action.pathname }
     default:
       return state;
   }

@@ -1,4 +1,5 @@
 import {
+  REVIEW_ACTION,
   SIGNIN, // 유저 
   GET_MY_PAGE,
   USER_UPDATED,
@@ -8,9 +9,12 @@ import {
   GET_PET_DETAIL,
   PET_REGISTERED,
   PET_UPDATED,
-  PET_DELETED
+  PET_DELETED,
+  GET_MY_LIKE_HOS,
 } from './types'
 import apis from '../apis/apis';
+
+
 
 // ------------- user 관련 action --------------
 
@@ -22,11 +26,20 @@ let config = sessionStorage.getItem('user') ? {
   }
 } : null
 
-console.log(config)
+export const reviewIng = ( now, code) => {
+  console.log('reviewIng')
+  return {
+    type: REVIEW_ACTION,
+    now, code
+  }
+}
+
+
 
 // 1. 로그인 요청하기
 export const signIn = (user_id, user_pw) => {
   console.log("signin")
+  console.log(user_id, user_pw)
   return dispatch => {
     return apis.post('/user/login?uId=' + user_id + '&uPw=' + user_pw)
       .then(res => {
@@ -52,7 +65,7 @@ export const register = (user_id, user_pw) => {
   console.log('register')
   const body = { uid: user_id, upw: user_pw }
   return dispatch => {
-    return apis.post('/user/signup', body, config)
+    return apis.post('user/signup', body, config)
       .then(() => dispatch(signIn(user_id, user_pw)))
   }
 }
@@ -60,8 +73,15 @@ export const register = (user_id, user_pw) => {
 // 3. 마이페이지 조회 요청하기
 export const getMyPage = () => {
   console.log('getMyPage')
+  config = sessionStorage.getItem('user') ? {
+    headers: {
+      Authorization: JSON.parse(sessionStorage.getItem('user')).accessToken,
+      'Content-Type':'application/json',
+      'Access-Control-Allow-Origin': '*'
+    }
+  } : null
   return dispatch => {
-    return apis.post('/user/mypage', null, config)
+    return apis.post('user/mypage', null, config)
       .then((res) => dispatch(recieveMyPage(res.data)))
   }
 }
@@ -69,8 +89,10 @@ export const getMyPage = () => {
 // 3.1. 마이페이지 user 에 저장하기
 export const recieveMyPage = (mypage) => {
   console.log('recieveMyPage')
+  console.log(mypage)
   console.log(mypage.message)
   const result = mypage.message
+  window.sessionStorage.removeItem('myPage')
   window.sessionStorage.setItem('myPage', JSON.stringify(result))
   return {
     type: GET_MY_PAGE,
@@ -79,12 +101,15 @@ export const recieveMyPage = (mypage) => {
 }
 
 // 4. 회원정보 수정 요청하기
-export const updateUser = (user) => {
+export const updateUser = (sms) => {
   console.log('updateUser')
   return dispatch => {
     dispatch(userUpdated(false))
-    return apis.post('user/update', user, config)
-      .then(() => dispatch(userUpdated(true)))
+    return apis.post('user/sms?sms='+sms, null, config)
+      .then(() => {
+        dispatch(userUpdated(true))
+        dispatch(getMyPage())
+      })
   }
 }
 
@@ -226,5 +251,30 @@ export const petDeleted = (code) => {
   return {
     type: PET_DELETED,
     code
+  }
+}
+
+
+
+
+// 6. 유저의 병원 즐겨찾기 조회 요청
+export const getMyLikeHos = (u_id) => {
+  console.log('getMyLikeHos', u_id)
+  console.log(config)
+  const body = {
+    u_id: u_id
+  }
+  return dispatch => {
+    return apis.post('favoriteHospital/findById?uId=' + u_id, null, config)
+      .then(res => dispatch(recieveMyLikeHos(res.data)))
+  }
+}
+
+// 6.1. 즐겨찾기 결과 user에 저장
+export const recieveMyLikeHos = (data) => {
+  console.log('recieveMyLikeHos', data)
+  return {
+    type: GET_MY_LIKE_HOS,
+    data
   }
 }

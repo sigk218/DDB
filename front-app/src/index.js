@@ -6,7 +6,7 @@ import reduxThunk from "redux-thunk";
 import App from './App';
 import './index.css';
 import reducers from './reducers';
-import { user } from './actions'
+import { hos } from './actions'
 // import {getNearHospitals, getNearHosByStar, getHosSearchList} from './actions'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -17,13 +17,13 @@ const store = createStore(
 
 
 
-console.log(store.getState())
+// console.log(store.getState())
 
-const unsubscribe = store.subscribe(() => console.log(store.getState()))
+// const unsubscribe = store.subscribe(() => console.log(store.getState()))
 
-// store.dispatch(user.getMyPets('psj'))
+// store.dispatch(hos.likeHos(10))
 // .then(() =>
-//   console.log('-------------')
+//   console.log(store.getState().hos)
 // )
 
 // store.dispatch(getMyReviewList('sim'))
@@ -40,7 +40,7 @@ const unsubscribe = store.subscribe(() => console.log(store.getState()))
 // store.dispatch(getHosSearchList('동물병원', 0))
 // .then(() => console.log('search', store.getState().hos_info, store.getState().status))
 
-unsubscribe()
+// unsubscribe()
 
 ReactDOM.render(
 
@@ -48,8 +48,6 @@ ReactDOM.render(
     <React.StrictMode>
     <App />
     </React.StrictMode>
-      
-    
   </Provider>,
   document.querySelector("#root")
 );

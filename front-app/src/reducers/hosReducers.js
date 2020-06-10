@@ -2,7 +2,7 @@ import {
   MAIN_SEARCH,
   GET_HOS_BY_LOC,
   GET_HOS_BY_WORD,
-  GET_HOS_PHOTO,
+  NAME_LIST
 } from '../actions/types'
 
 import apis from '../apis/apis'
@@ -21,11 +21,32 @@ const initializer = {
   hosByWord: [],
   hosByReview: [],
   hosByStar: [],
+  hosSearchList: null
 }
 
 
 export default (state = initializer, action) => {
   switch (action.type) {
+    case NAME_LIST:
+      if (state.hosSearchList === null ) {
+        return {
+          ...state,
+          hosSearchList: [{
+            searchWord: action.searchWord,
+            list : action.list
+          }]
+        }
+      } else if (state.hosSearchList.some(s => (s.searchWord === action.searchWord))) {
+        return state
+      } else {
+        return {
+          ...state,
+          hosSearchList: state.hosSearchList.concat({
+            searchWord: action.searchWord,
+            list : action.list
+          })
+        }
+      }
     case MAIN_SEARCH:
       return {
         ...state, 

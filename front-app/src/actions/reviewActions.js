@@ -3,6 +3,7 @@ import {
   GET_MY_REVIEW,
   REVIEW_MAIN_SEARCH,
   REVIEW_SEARCH_STATUS,
+  SEARCH_FLAG,
   GET_REVIEW,
   REVIEW_POSTED,
   REVIEW_UPDATED,
@@ -59,10 +60,19 @@ export const setSearchStatus = (code) => {
   }
 }
 
+export const SearchFlag = (flag) => {
+  console.log('SearchFlag', flag)
+  return {
+    type: SEARCH_FLAG,
+    flag
+  }
+}
+
 // ------------- review 관련 action --------
 // 1. 현재 내 위치에서 3km 이내의 리뷰 조회 with 필터
 export const getReview = (searchWord, lat, long, distance, filter) => {
   console.log('getReview')
+  console.log('reviewActions config', config)
   return dispatch => {
     return apis.post(`/review/findByKeyword/${distance}/${filter}/${searchWord}?latitude=${lat}&longtitude=${long}`, null, config)
       .then(res => {
@@ -74,7 +84,8 @@ export const getReview = (searchWord, lat, long, distance, filter) => {
 
 // 1.2 getNearHospitals로 받은 병원 리스트를 hos_info 에 저장하기
 export const recieveReview = (searchWord, lat, long, list, distance, filter) => {
-  console.log('recieveHos')
+  console.log('recieveReview')
+  console.log(list)
   return {
     type: GET_REVIEW,
     searchWord, lat, long, list, distance, filter
@@ -88,8 +99,9 @@ export const recieveReview = (searchWord, lat, long, list, distance, filter) => 
 // 1. 리뷰 병원별로 요청하기
 export const getHosReview = (hcode, atoken) => {
   console.log('getHosReview')
+  console.log(config)
   return dispatch => {
-    return apis.post('review/findByHospital?h_code=' + hcode , null, {Authorization: atoken})
+    return apis.post('review/findByHospital?h_code=' + hcode, null, config)
       .then(res => dispatch(recieveHosReview(res.data)))
   }
 }
@@ -233,6 +245,7 @@ export const doDojang = (dojang) => {
 
 // 3. 영수증 정보 store에 저장
 export const uploadReciept = (bff, dateIs, hasHos, items) => {
+  console.log(bff, dateIs, hasHos, items)
   console.log("upload reciept")
   return {
     type: UPLOAD_RECIEPT,

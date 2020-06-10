@@ -133,35 +133,92 @@ class ReviewRes extends Component {
   constructor(props) {
     super(props);
     console.log('---', props.review)
-    const { searchWord, lat, long, distance, filter } = props.review.mainSearch
+    // const { searchWord, lat, long, distance, filter } = props.review.mainSearch
+    if(this.props.review.mainSearch === undefined){
+      var { searchWord, lat, long, distance, filter } = this.props.review.state.mainSearch
+    }
+    else{ 
+      var { searchWord, lat, long, distance, filter } = this.props.review.mainSearch
+    }
     console.log(props.review)
     console.log(searchWord, lat, long, distance, filter, 'yeayeah')
     console.log('---------------', props.review)
-    if (props.review.review.length !== 0) {
-      if (!(props.review.find(s => 
-        ((s.searchWord === searchWord) && 
-        (s.distance === distance) && 
-        (s.filter === filter) && 
-        (s.lat === lat) && 
-        (s.long === long))))) { props.mainSearch(searchWord, lat, long, distance, filter) }
-		} else {
-			props.mainSearch(searchWord, lat, long, distance, filter)
-		}
+    if(this.props.review.review === undefined){
+      if (props.review.state.review.length !== 0) {
+        if (!(props.review.state.review.find(s => 
+          ((s.searchWord === searchWord) && 
+          (s.distance === distance) && 
+          (s.filter === filter) && 
+          (s.lat === lat) && 
+          (s.long === long))))) { 
+            console.log('여기?')
+            props.mainSearch(searchWord, lat, long, distance, filter) 
+          }
+      } else {
+        console.log('여기??')
+        props.mainSearch(searchWord, lat, long, distance, filter)
+      }
+    }
+    else{
+      if (props.review.review.length !== 0) {
+        if (!(props.review.review.find(s => 
+          ((s.searchWord === searchWord) && 
+          (s.distance === distance) && 
+          (s.filter === filter) && 
+          (s.lat === lat) && 
+          (s.long === long))))) { 
+            console.log('여기?')
+            props.mainSearch(searchWord, lat, long, distance, filter) 
+          }
+      } else {
+        console.log('여기??')
+        props.mainSearch(searchWord, lat, long, distance, filter)
+      }
+    }
+
   }
 
   render() {
     let resInfo, list, reviewCards;
-		const { searchWord, lat, long, distance, filter } = this.props.review.mainSearch
+    console.log('ReviewRes this.props.review', this.props.review)
+    console.log('ReviewRes this.props.review.mainSearch', this.props.review.mainSearch)
+    console.log('ReviewRes this.props.search', this.props.search)
+    console.log('ReviewRes this.props.review.state', this.props.review.state)
+    // console.log('ReviewRes this.props.review.state.mainSearch', this.props.review.state.mainSearch)
+    if(this.props.review.mainSearch === undefined){
+      var { searchWord, lat, long, distance, filter } = this.props.review.state.mainSearch
+    }
+    else{ 
+      var { searchWord, lat, long, distance, filter } = this.props.review.mainSearch
+    }
 		if (this.props.search === true) {
-      resInfo = this.props.review.find(s => 
-        (s.searchWord === searchWord) && 
-        (s.distance === distance) && 
-        (s.filter === filter) && 
-        (s.lat === lat) && 
-        (s.long === long))
+      console.log('ReviewRes true안에 ', this.props.review.review)
+      if(this.props.review.review === undefined){
+        resInfo = this.props.review.state.review.find(s => 
+          (s.searchWord === searchWord) && 
+          (s.distance === distance) && 
+          (s.filter === filter) && 
+          (s.lat === lat) && 
+          (s.long === long))
+      }else{
+        resInfo = this.props.review.review.find(s => 
+          (s.searchWord === searchWord) && 
+          (s.distance === distance) && 
+          (s.filter === filter) && 
+          (s.lat === lat) && 
+          (s.long === long))
+      }
       
       list = resInfo.list
-      reviewCards = list.map(r => <ReviewInfoCard hospitalData={r} key={`newCard${r.hospital.hcode}`}/>)
+      console.log('ReviewRes list', list)
+      // if ( this.props.filter.includes('Star') ) { // 별점
+      //   console.log(list)
+      //   list = list.sort((a, b) => b.review.rstarrating - a.review.rstarrating)
+      // } else if (this.props.filter.includes('Review')) {  // 도움이
+      //   list = list.sort((a, b) => b.review.rtotalgood - a.review.rtotalgood )
+      // }
+      reviewCards = list.map(r => <ReviewInfoCard hospitalData={r} key={`newCard${r.review.rcode}`}/>)
+      // reviewCards = {reviewData}.reviewData.map(r => <ReviewInfoCard hospitalData={r} key={`newCard${r.hcode}`}/>)
     } else {
       return (
         reviewCards = null

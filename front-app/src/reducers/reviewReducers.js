@@ -21,11 +21,11 @@ const grade = scorelist.map((g, i) => ({ name: scorelabel[i], score: g }))
 
 const initializer = {
 	mainSearch: JSON.parse(window.localStorage.getItem('rmainSearch')) || {
-		searchWord: '병원',
+		searchWord: '슬개골탈구',
 		lat: 37.504909,
 		long: 127.048463,
 		distance: 'yes',
-		filter: 'star',
+		filter: 'a',
 	},
 	review: [],
 	hosReview: [],
