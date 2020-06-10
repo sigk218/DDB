@@ -21,10 +21,12 @@ import SelectOption from "./screens/ReviewForm/selectOption";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
 
 import hosRevForDetail from './screens/HosDetail/hosRevForDetail';
-import ErrorBoundary from './components/ErrorBoundary'
+import Error from './components/Error/Error';
+import EmptyList from './components/Error/EmptyList';
 const App = () => {
   return (
-    <ErrorBoundary>
+
+    <div>
       <Router history={history}>
         <Navigation>
           <div>
@@ -42,11 +44,13 @@ const App = () => {
             <Route path="/SelectOption" exact component={SelectOption} />
             <Route path="/ReviewForm" exact component={ReviewForm} />
             <Route path="/hosRevForDetail" exact component={hosRevForDetail} />
+            <Route path="/error" exact component={Error} />
+            <Route path="/EmptyList" exact component={EmptyList} />
           </div>
         </Navigation>
 
       </Router>
-    </ErrorBoundary>
+    </div>
   );
 };
 
