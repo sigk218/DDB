@@ -8,17 +8,12 @@ const cx = classNames.bind(styles)
 const HosInfoCard = props => {
   let {hname, haddress, hospitalPicture, htag, hstarrating, hreviewCount} = props.hospitalData;
   const localhos= props.hospitalData;
-  console.log(props.hospitalData)
   function handleOnClick() {
-    console.log("=====here=====")
-    console.log(localhos)
-    console.log(props.hospitalData)
-    console.log("=====there=====")
     history.push("/HosDetail", { localhos })
   }
   const hosImage = ((hospitalPicture !== null) && (hospitalPicture.length > 0)) ? 
-  <img className={cx('hos-photo')} src={hospitalPicture[0].himage}/>
-  : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}/>
+  <img className={cx('hos-photo')} src={hospitalPicture[0].himage} alt='hosphoto'/>
+  : <img className={cx('hos-photo')} src={require('../../assets/imgA.png')}  alt='hosphoto'/>
   let tagList, ing
   if (htag !== null) {
     if (htag.length > 0) {

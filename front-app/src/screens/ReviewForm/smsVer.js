@@ -25,7 +25,6 @@ class smsVer extends Component {
     const code = prompt('문자로 전달받은 코드를 입력해주세요', '')
     if (code) {
       const final = res.confirm(code)
-      console.log(final)
       if (final) {
         await this.props.updateUser(true)
         await this.props.reviewIng('isSms', false)
