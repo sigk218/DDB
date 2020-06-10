@@ -9,6 +9,7 @@ import SignIn from './screens/SignIn/SignIn';
 import SignUp from './screens/SignUp/SignUp';
 import MyPage from "./screens/MyPage/MyPage";
 import MyPetList from './components/MyPetList/MyPetList'; //..?왜있지?
+import smsVer from './screens/ReviewForm/smsVer'; //..?왜있지?
 
 import ResTab from "./screens/Res/ResTab";
 import HosRes from "./screens/Res/HosRes";
@@ -21,12 +22,14 @@ import SelectOption from "./screens/ReviewForm/selectOption";
 import ReviewForm from "./screens/ReviewForm/ReviewForm";
 
 import hosRevForDetail from './screens/HosDetail/hosRevForDetail';
+import ErrorBoundary from './components/ErrorBoundary'
 const App = () => {
   return (
-    <div>
+    <ErrorBoundary>
       <Router history={history}>
         <Navigation>
           <div>
+            <Route path="/smsVer" exact component={smsVer} />
             <Route path="/" exact component={Main} />
             <Route path="/Main" exact component={Main} />
             <Route path="/SignIn" exact component={SignIn} />
@@ -45,7 +48,7 @@ const App = () => {
         </Navigation>
 
       </Router>
-    </div>
+    </ErrorBoundary>
   );
 };
 
