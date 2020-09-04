@@ -19,7 +19,7 @@
     "firebase": "^7.14.6",
     "moment": "^2.26.0",
     "node-sass": "^4.14.1",
-    "react": "0.0.0-33c3af284",
+    "react": "0.14.0",
     "react-cloud-vision-api": "^0.3.0",
     "react-dom": "0.0.0-33c3af284",
     "react-image-gallery": "^1.0.7",
